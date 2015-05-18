@@ -7,12 +7,14 @@ public class Case extends JButton {
 	private int numero;
 	private int valeur;
 	private int nbBombeVoisin;
+	private boolean marque;
 	
 	public Case(int p_numero) {
 		super();
 		setNumero(p_numero);
 		setValeur(0);
 		setNbBombeVoisin(0);
+		setMarque(false);
 	}
 
 	public int getNumero() {
@@ -37,6 +39,14 @@ public class Case extends JButton {
 
 	public void setValeur(int valeur) {
 		this.valeur = valeur;
+	}
+
+	public boolean isMarque() {
+		return marque;
+	}
+
+	public void setMarque(boolean marque) {
+		this.marque = marque;
 	}
 
 }

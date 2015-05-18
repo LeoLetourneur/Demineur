@@ -4,6 +4,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -12,12 +14,13 @@ import java.util.Observer;
 
 import javax.swing.*;
 
-public class View extends JFrame implements ActionListener, Observer {
+public class View extends JFrame implements ActionListener, MouseListener, Observer {
 	private static final long serialVersionUID = 3267840040749382412L;
 	
 	private Icon iconCase;
 	private Icon iconVide;
 	private Icon iconBombe;
+	private Icon iconDrapeau;
 	
 	private Model model;
 	private ArrayList<Case> listeCase;
@@ -45,6 +48,7 @@ public class View extends JFrame implements ActionListener, Observer {
 		iconCase = new ImageIcon(ClassLoader.getSystemResource("case.png"));
 		iconVide = new ImageIcon(ClassLoader.getSystemResource("vide.png"));
 		iconBombe = new ImageIcon(ClassLoader.getSystemResource("bombe.png"));
+		iconDrapeau = new ImageIcon(ClassLoader.getSystemResource("drapeau.png"));
 	}
 
 	public void buildFrame() {
@@ -88,6 +92,7 @@ public class View extends JFrame implements ActionListener, Observer {
             box.setFont(font);
             box.setForeground(Color.white);
             box.addActionListener(this);
+            box.addMouseListener(this);
             listeCase.add(box);
             pan.add(box);
         }
@@ -96,11 +101,12 @@ public class View extends JFrame implements ActionListener, Observer {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() instanceof JButton) {
+		if(e.getSource() instanceof Case) {
 			Case button = (Case)e.getSource();
 			int command = button.getValeur();
 			if(command == Model.Case.EMPTY.value) {
 				button.setIcon(iconVide);
+				button.setMarque(true);
 				if(button.getNbBombeVoisin() != 0)
 					button.setText(button.getNbBombeVoisin()+"");
 				else {
@@ -111,10 +117,9 @@ public class View extends JFrame implements ActionListener, Observer {
 				button.setIcon(iconBombe);
 				retournerBombe();
 			}
-		}
-				
+		}	
 	}
-
+	
 	private void retournerVoisin(int numero) {
 		
 		int minI = 0;
@@ -127,17 +132,20 @@ public class View extends JFrame implements ActionListener, Observer {
 		for(int i=minI;i<maxI;i++)
 			for(int j=0;j<3;j++) {
 				int index = numero+i-1+(j-1)*model.NB_CASE;
-				if(index>=0 && index*model.NB_CASE<Math.pow(model.NB_CASE,2)
-				&& listeCase.get(index).getValeur() == 0)
-					retournerVoisin(index);
-				else {
-					listeCase.get(index).setIcon(iconVide);
-					listeCase.get(index).setText(listeCase.get(index).getNbBombeVoisin()+"");
+				System.out.println("Index : "+index);
+				if(index>=0 && index<Math.pow(model.NB_CASE,2)) {
+					if(listeCase.get(index).getNbBombeVoisin() == 0
+					&& !listeCase.get(index).isMarque()){
+						listeCase.get(index).setMarque(true);
+						retournerVoisin(index);
+					}
+					else {
+						listeCase.get(index).setIcon(iconVide);
+						if(listeCase.get(index).getNbBombeVoisin() != 0)
+							listeCase.get(index).setText(listeCase.get(index).getNbBombeVoisin()+"");
+					}
 				}
 			}
-		
-		
-		
 	}
 
 	private void retournerBombe() {
@@ -158,4 +166,22 @@ public class View extends JFrame implements ActionListener, Observer {
 		// TODO
 		
 	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(e.getButton() == MouseEvent.BUTTON3) {
+            if(e.getComponent() instanceof Case) {
+            	((Case)e.getComponent()).setIcon(iconDrapeau);
+            }
+        }
+    }
+
+	@Override
+	public void mousePressed(MouseEvent e) {}
+	@Override
+	public void mouseReleased(MouseEvent e) {}
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+	@Override
+	public void mouseExited(MouseEvent e) {}
 }
