@@ -22,6 +22,18 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 	private Icon iconBombe;
 	private Icon iconDrapeau;
 	
+	private JPanel container;
+	private JPanel panelCases;
+	private JPanel panelBouton;
+	private JPanel panelTexte;
+	
+	private JButton btnQuitter;
+	private JButton btnRejouer;
+	private JButton btnDecouvrir;
+	
+	private JLabel bombeRestante;
+	private JLabel temps;
+	
 	private Model model;
 	private ArrayList<Case> listeCase;
 	
@@ -40,8 +52,6 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
                 System.exit(0);
             }
         });
-        
-        
     }
     
     private void loadIcon() {
@@ -54,35 +64,68 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 	public void buildFrame() {
         
         setTitle("Démineur");
-        setSize(800, 615);
+        setSize(800, 592);
         setLocationRelativeTo(null);
         setResizable(false);
         
-        JMenuBar menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
-        JMenu menu = new JMenu("Quitter");
-        menu.setMnemonic(KeyEvent.VK_A);
-        menuBar.add(menu);
-
-        /*menuItem = new JMenuItem("A text-only menu item", KeyEvent.VK_T);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
-        menu.add(menuItem);*/
-      
-        JPanel container = new JPanel();
+        btnQuitter = new JButton("Quitter");
+        btnQuitter.addActionListener(this);
+        
+    	btnRejouer = new JButton("Rejouer");
+    	btnRejouer.addActionListener(this);
+    	
+    	btnDecouvrir = new JButton("Découvrir");
+    	btnDecouvrir.addActionListener(this);
+        
+    	Font font = new Font("Courier New", Font.BOLD, 30);
+    	
+    	JLabel lblBombe = new JLabel("BombeRestante");
+    	lblBombe.setHorizontalAlignment(SwingConstants.CENTER);
+    	bombeRestante = new JLabel("80");
+    	bombeRestante.setFont(font);
+    	bombeRestante.setHorizontalAlignment(SwingConstants.CENTER);
+    	
+    	JLabel lblTemps = new JLabel("Temps");
+    	lblTemps.setHorizontalAlignment(SwingConstants.CENTER);
+    	temps = new JLabel("0");
+    	temps.setFont(font);
+    	temps.setHorizontalAlignment(SwingConstants.CENTER);
+    	
+        panelCases = new JPanel (new GridLayout(model.NB_CASE, model.NB_CASE));
+        panelCases.setBounds(0, 0, 570, 570);
+        chargerJeu();
+        
+        panelBouton = new JPanel (new GridLayout(2, 2));
+        panelBouton.setBounds(580, 360, 210, 200);
+        panelBouton.add(btnRejouer);
+        panelBouton.add(btnQuitter);
+        panelBouton.add(btnDecouvrir);
+        
+        panelTexte = new JPanel (new GridLayout(4, 1));
+        panelTexte.setBounds(580, 10, 210, 300);
+        panelTexte.add(lblBombe);
+        panelTexte.add(bombeRestante);
+        panelTexte.add(lblTemps);
+        panelTexte.add(temps);
+        
+        container = new JPanel();
         container.setLayout(null);
+        container.add(panelCases);
+        container.add(panelBouton);
+        container.add(panelTexte);
         setContentPane(container);
-        
-        JPanel pan = new JPanel (new GridLayout(model.NB_CASE, model.NB_CASE));
-        pan.setSize(570, 570);
-        
-        int[][] tableauBombe = model.construireGrille();
-        
+    }
+	
+	public void chargerJeu()
+	{
+		int[][] tableauBombe = model.construireGrille();
+		bombeRestante.setText(model.getNbBombe()+"");
         Font font = new Font("Courier New", Font.BOLD, 14);
         
+        panelCases.removeAll();
         listeCase = new ArrayList<Case>();
-        for(int i = 0; i<Math.pow(model.NB_CASE, 2);i++){
-        	
+        for(int i = 0; i<Math.pow(model.NB_CASE, 2);i++)
+        {
         	Case box = new Case(i);
         	box.setValeur(tableauBombe[i][0]);
         	box.setNbBombeVoisin(tableauBombe[i][1]);
@@ -94,14 +137,19 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
             box.addActionListener(this);
             box.addMouseListener(this);
             listeCase.add(box);
-            pan.add(box);
+            panelCases.add(box);
         }
-        container.add(pan);
-    }
+	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() instanceof Case) {
+	public void actionPerformed(ActionEvent e)
+	{
+		if(e.getSource() == btnRejouer)
+			rejouer();
+		else if(e.getSource() == btnQuitter)
+			this.dispose();
+		
+		else if(e.getSource() instanceof Case) {
 			Case button = (Case)e.getSource();
 			int command = button.getValeur();
 			if(command == Model.Case.EMPTY.value) {
@@ -120,6 +168,10 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 		}	
 	}
 	
+	private void rejouer() {
+		chargerJeu();
+	}
+
 	private void retournerVoisin(int numero) {
 		
 		int minI = 0;
@@ -132,7 +184,6 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 		for(int i=minI;i<maxI;i++)
 			for(int j=0;j<3;j++) {
 				int index = numero+i-1+(j-1)*model.NB_CASE;
-				System.out.println("Index : "+index);
 				if(index>=0 && index<Math.pow(model.NB_CASE,2)) {
 					if(listeCase.get(index).getNbBombeVoisin() == 0
 					&& !listeCase.get(index).isMarque()){
@@ -172,6 +223,8 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 		if(e.getButton() == MouseEvent.BUTTON3) {
             if(e.getComponent() instanceof Case) {
             	((Case)e.getComponent()).setIcon(iconDrapeau);
+            	model.setNbBombe(model.getNbBombe()-1);
+            	bombeRestante.setText(model.getNbBombe()+"");
             }
         }
     }
