@@ -149,7 +149,7 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 		else if(e.getSource() == btnQuitter)
 			this.dispose();
 		
-		else if(e.getSource() instanceof Case) {
+		else if(e.getSource() instanceof Case && ((Case)e.getSource()).getIcon() != iconDrapeau) {
 			Case button = (Case)e.getSource();
 			int command = button.getValeur();
 			if(command == Model.Case.EMPTY.value) {
@@ -222,8 +222,14 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON3) {
             if(e.getComponent() instanceof Case) {
-            	((Case)e.getComponent()).setIcon(iconDrapeau);
-            	model.setNbBombe(model.getNbBombe()-1);
+            	if(((Case)e.getComponent()).getIcon() == iconCase) {
+            		((Case)e.getComponent()).setIcon(iconDrapeau);
+            		model.setNbBombe(model.getNbBombe()-1);
+            	}
+            	else if(((Case)e.getComponent()).getIcon() == iconDrapeau){
+            		((Case)e.getComponent()).setIcon(iconCase);
+            		model.setNbBombe(model.getNbBombe()+1);
+            	}
             	bombeRestante.setText(model.getNbBombe()+"");
             }
         }
