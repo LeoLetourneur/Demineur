@@ -2,7 +2,7 @@
 public class Main {
 	
 	public static void main (String[] args){
-	    System.out.println("Démineur par Léo Letourneur");
+	    System.out.println("Démineur par Léo Letourneur et Cyril Couturier");
 	    Model model = new Model();
 		View view = new View(model);
 		Controler controler =  new Controler(model, view);
