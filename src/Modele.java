@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
-public class Model extends Observable {
+public class Modele extends Observable {
 
 	public final int NB_CASE = 20;
 	public final int NB_BOMBE = 80;
@@ -20,7 +20,7 @@ public class Model extends Observable {
 	
 	private int nbBombe;
 	
-	public Model() {
+	public Modele() {
 		
 	}
 
@@ -42,7 +42,7 @@ public class Model extends Observable {
 		while(nbBombe<NB_BOMBE) {
 			random = rnd.nextInt(listeCaseVide.size());
 			if(tableauValeur[listeCaseVide.get(random)][0] == 1)
-				System.out.println("ERROR : Déjà à 1");
+				System.out.println("ERROR : Dï¿½jï¿½ ï¿½ 1");
 			tableauValeur[listeCaseVide.get(random)][0] = 1;
 			tableauValeur = incrementerVoisin(listeCaseVide.get(random), tableauValeur,1);
 			listeCaseVide.remove(random);

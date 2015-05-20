@@ -1,7 +1,7 @@
 import javax.swing.JButton;
 
 
-public class Case extends JButton {
+public class CaseVue extends JButton {
 	private static final long serialVersionUID = 3969339859887656340L;
 	
 	private int numero;
@@ -9,7 +9,9 @@ public class Case extends JButton {
 	private int nbBombeVoisin;
 	private boolean marque;
 	
-	public Case(int p_numero) {
+	private CaseModele modele;
+	
+	public CaseVue(int p_numero) {
 		super();
 		setNumero(p_numero);
 		setValeur(0);

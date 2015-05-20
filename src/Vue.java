@@ -14,7 +14,7 @@ import java.util.Observer;
 
 import javax.swing.*;
 
-public class View extends JFrame implements ActionListener, MouseListener, Observer {
+public class Vue extends JFrame implements ActionListener, MouseListener, Observer {
 	private static final long serialVersionUID = 3267840040749382412L;
 	
 	private Icon iconCase;
@@ -34,12 +34,12 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 	private JLabel bombeRestante;
 	private JLabel temps;
 	
-	private Model model;
-	private ArrayList<Case> listeCase;
+	private Modele model;
+	private ArrayList<CaseVue> listeCase;
 
 	private boolean premierTour = true;
 	
-    public View(Model p_model) {
+    public Vue(Modele p_model) {
         super();
         model = p_model;
         model.addObserver(this);
@@ -65,7 +65,7 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 
 	public void buildFrame() {
         
-        setTitle("Démineur");
+        setTitle("Dï¿½mineur");
         setSize(800, 592);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -76,7 +76,7 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
     	btnRejouer = new JButton("Rejouer");
     	btnRejouer.addActionListener(this);
     	
-    	btnDecouvrir = new JButton("Découvrir");
+    	btnDecouvrir = new JButton("Dï¿½couvrir");
     	btnDecouvrir.addActionListener(this);
         
     	Font font = new Font("Courier New", Font.BOLD, 30);
@@ -125,10 +125,10 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
         Font font = new Font("Courier New", Font.BOLD, 14);
         
         panelCases.removeAll();
-        listeCase = new ArrayList<Case>();
+        listeCase = new ArrayList<CaseVue>();
         for(int i = 0; i<Math.pow(model.NB_CASE, 2);i++)
         {
-        	Case box = new Case(i);
+        	CaseVue box = new CaseVue(i);
         	box.setValeur(tableauBombe[i][0]);
         	box.setNbBombeVoisin(tableauBombe[i][1]);
         	box.setIcon(iconCase);
@@ -151,10 +151,10 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 		else if(e.getSource() == btnQuitter)
 			this.dispose();
 		
-		else if(e.getSource() instanceof Case && ((Case)e.getSource()).getIcon() != iconDrapeau) {
-			Case button = (Case)e.getSource();
+		else if(e.getSource() instanceof CaseVue && ((CaseVue)e.getSource()).getIcon() != iconDrapeau) {
+			CaseVue button = (CaseVue)e.getSource();
 			int command = button.getValeur();
-			if(command == Model.Case.EMPTY.value) {
+			if(command == Modele.Case.EMPTY.value) {
 				if(premierTour)
 					premierTour =false ;
 				button.setIcon(iconVide);
@@ -206,8 +206,8 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 	}
 
 	private void retournerBombe() {
-		for(Case box : listeCase) {
-			if(box.getValeur() == Model.Case.BOMB.value)
+		for(CaseVue box : listeCase) {
+			if(box.getValeur() == Modele.Case.BOMB.value)
 				box.setIcon(iconBombe);
 		}
 		//looseGame();
@@ -227,13 +227,13 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON3) {
-            if(e.getComponent() instanceof Case) {
-            	if(((Case)e.getComponent()).getIcon() == iconCase) {
-            		((Case)e.getComponent()).setIcon(iconDrapeau);
+            if(e.getComponent() instanceof CaseVue) {
+            	if(((CaseVue)e.getComponent()).getIcon() == iconCase) {
+            		((CaseVue)e.getComponent()).setIcon(iconDrapeau);
             		model.setNbBombe(model.getNbBombe()-1);
             	}
-            	else if(((Case)e.getComponent()).getIcon() == iconDrapeau){
-            		((Case)e.getComponent()).setIcon(iconCase);
+            	else if(((CaseVue)e.getComponent()).getIcon() == iconDrapeau){
+            		((CaseVue)e.getComponent()).setIcon(iconCase);
             		model.setNbBombe(model.getNbBombe()+1);
             	}
             	bombeRestante.setText(model.getNbBombe()+"");

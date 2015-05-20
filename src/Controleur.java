@@ -2,12 +2,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class Controler implements ActionListener {
+public class Controleur implements ActionListener {
 
-	Model model;
-    View view;
+	Modele model;
+    Vue view;
     
-	public Controler(Model p_model, View p_view) {
+	public Controleur(Modele p_model, Vue p_view) {
 		model = p_model;
 		view = p_view;
 	}
