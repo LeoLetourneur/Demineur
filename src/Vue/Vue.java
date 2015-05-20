@@ -1,9 +1,9 @@
+package Vue;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -13,6 +13,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.*;
+
+import Modele.CaseModele;
+import Modele.Modele;
 
 public class Vue extends JFrame implements ActionListener, MouseListener, Observer {
 	private static final long serialVersionUID = 3267840040749382412L;
@@ -128,9 +131,10 @@ public class Vue extends JFrame implements ActionListener, MouseListener, Observ
         listeCase = new ArrayList<CaseVue>();
         for(int i = 0; i<Math.pow(model.NB_CASE, 2);i++)
         {
-        	CaseVue box = new CaseVue(i);
-        	box.setValeur(tableauBombe[i][0]);
-        	box.setNbBombeVoisin(tableauBombe[i][1]);
+        	CaseModele boxModele = new CaseModele(i);
+        	CaseVue box = new CaseVue(boxModele);
+        	boxModele.setValeur(tableauBombe[i][0]);
+        	boxModele.setNbBombeVoisin(tableauBombe[i][1]);
         	box.setIcon(iconCase);
             box.setIconTextGap( - iconCase.getIconWidth() );
             box.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -150,8 +154,8 @@ public class Vue extends JFrame implements ActionListener, MouseListener, Observ
 			rejouer();
 		else if(e.getSource() == btnQuitter)
 			this.dispose();
-		
-		else if(e.getSource() instanceof CaseVue && ((CaseVue)e.getSource()).getIcon() != iconDrapeau) {
+			
+		/*else if(e.getSource() instanceof CaseVue && ((CaseVue)e.getSource()).getIcon() != iconDrapeau) {
 			CaseVue button = (CaseVue)e.getSource();
 			int command = button.getValeur();
 			if(command == Modele.Case.EMPTY.value) {
@@ -172,13 +176,13 @@ public class Vue extends JFrame implements ActionListener, MouseListener, Observ
 					}
 				retournerBombe();
 			}
-		}	
+		}*/
 	}
 	
 	private void rejouer() {
 		chargerJeu();
 	}
-
+	/*
 	private void retournerVoisin(int numero) {
 		
 		int minI = 0;
@@ -211,7 +215,7 @@ public class Vue extends JFrame implements ActionListener, MouseListener, Observ
 				box.setIcon(iconBombe);
 		}
 		//looseGame();
-	}
+	}*/
 
 	private void looseGame() {
 		javax.swing.JOptionPane.showMessageDialog(null, "C'est perdu"); 
@@ -228,14 +232,7 @@ public class Vue extends JFrame implements ActionListener, MouseListener, Observ
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON3) {
             if(e.getComponent() instanceof CaseVue) {
-            	if(((CaseVue)e.getComponent()).getIcon() == iconCase) {
-            		((CaseVue)e.getComponent()).setIcon(iconDrapeau);
-            		model.setNbBombe(model.getNbBombe()-1);
-            	}
-            	else if(((CaseVue)e.getComponent()).getIcon() == iconDrapeau){
-            		((CaseVue)e.getComponent()).setIcon(iconCase);
-            		model.setNbBombe(model.getNbBombe()+1);
-            	}
+            	
             	bombeRestante.setText(model.getNbBombe()+"");
             }
         }

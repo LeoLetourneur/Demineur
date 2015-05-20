@@ -1,9 +1,10 @@
+package Modele;
 import java.util.Observable;
 
 
 public class CaseModele extends Observable {
 
-	private int numero;
+	private int index;
 	private int valeur;
 	private int nbBombeVoisin;
 	private boolean marque;
@@ -17,11 +18,11 @@ public class CaseModele extends Observable {
 	}
 	
 	public int getNumero() {
-		return numero;
+		return index;
 	}
 
 	public void setNumero(int numero) {
-		this.numero = numero;
+		this.index = numero;
 	}
 
 	public int getNbBombeVoisin() {
@@ -46,6 +47,8 @@ public class CaseModele extends Observable {
 
 	public void setMarque(boolean marque) {
 		this.marque = marque;
+		setChanged();
+		notifyObservers();
 	}
 
 }

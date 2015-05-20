@@ -1,6 +1,9 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Modele.Modele;
+import Vue.Vue;
+
 
 public class Controleur implements ActionListener {
 
