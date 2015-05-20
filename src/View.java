@@ -36,6 +36,8 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 	
 	private Model model;
 	private ArrayList<Case> listeCase;
+
+	private boolean premierTour = true;
 	
     public View(Model p_model) {
         super();
@@ -63,7 +65,7 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 
 	public void buildFrame() {
         
-        setTitle("DÃ©mineur");
+        setTitle("Démineur");
         setSize(800, 592);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -74,7 +76,7 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
     	btnRejouer = new JButton("Rejouer");
     	btnRejouer.addActionListener(this);
     	
-    	btnDecouvrir = new JButton("DÃ©couvrir");
+    	btnDecouvrir = new JButton("Découvrir");
     	btnDecouvrir.addActionListener(this);
         
     	Font font = new Font("Courier New", Font.BOLD, 30);
@@ -153,6 +155,8 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 			Case button = (Case)e.getSource();
 			int command = button.getValeur();
 			if(command == Model.Case.EMPTY.value) {
+				if(premierTour)
+					premierTour =false ;
 				button.setIcon(iconVide);
 				button.setMarque(true);
 				if(button.getNbBombeVoisin() != 0)
@@ -162,7 +166,10 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 				}
 			}
 			else {
-				button.setIcon(iconBombe);
+				if(premierTour)
+					{
+						premierTour=false;
+					}
 				retournerBombe();
 			}
 		}	
@@ -192,8 +199,7 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 					}
 					else {
 						listeCase.get(index).setIcon(iconVide);
-						if(listeCase.get(index).getNbBombeVoisin() != 0)
-							listeCase.get(index).setText(listeCase.get(index).getNbBombeVoisin()+"");
+						listeCase.get(index).setText(listeCase.get(index).getNbBombeVoisin()+"");
 					}
 				}
 			}
@@ -204,7 +210,7 @@ public class View extends JFrame implements ActionListener, MouseListener, Obser
 			if(box.getValeur() == Model.Case.BOMB.value)
 				box.setIcon(iconBombe);
 		}
-		looseGame();
+		//looseGame();
 	}
 
 	private void looseGame() {

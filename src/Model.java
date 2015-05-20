@@ -42,16 +42,16 @@ public class Model extends Observable {
 		while(nbBombe<NB_BOMBE) {
 			random = rnd.nextInt(listeCaseVide.size());
 			if(tableauValeur[listeCaseVide.get(random)][0] == 1)
-				System.out.println("ERROR : DÃ©jÃ  Ã  1");
+				System.out.println("ERROR : Déjà à 1");
 			tableauValeur[listeCaseVide.get(random)][0] = 1;
-			tableauValeur = incrementerVoisin(listeCaseVide.get(random), tableauValeur);
+			tableauValeur = incrementerVoisin(listeCaseVide.get(random), tableauValeur,1);
 			listeCaseVide.remove(random);
 			nbBombe++;
 		}
 		return tableauValeur;
 	}
 
-	private int[][] incrementerVoisin(int index, int[][] tableauValeur)
+	private int[][] incrementerVoisin(int index, int[][] tableauValeur, int modificateur)
 	{
 		int minI = 0;
 		int maxI = 3;
@@ -64,10 +64,11 @@ public class Model extends Observable {
 			for(int j=0;j<3;j++) {
 				if(index+i-1+(j-1)*NB_CASE>=0 && index+i-1+(j-1)*NB_CASE<Math.pow(NB_CASE,2)
 				&& tableauValeur[index+i-1+(j-1)*NB_CASE][0] != 1)
-					tableauValeur[index+i-1+(j-1)*NB_CASE][1]++;
+					tableauValeur[index+i-1+(j-1)*NB_CASE][1] += modificateur;
 			}
 		return tableauValeur;
 	}
+
 
 	public int getNbBombe() {
 		return nbBombe;
