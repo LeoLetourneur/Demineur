@@ -8,12 +8,23 @@ public class Modele extends Observable {
 	public final int NB_CASE = 20;
 	public final int NB_BOMBE = 80;
 	
-	public static enum Case { 
-		EMPTY("empty",0), BOMB("bombe",1), COVER("case",2), QUESTION("question",3);
+	public static enum typeCase { 
+		EMPTY("empty",0), BOMB("bombe",1);
 		public final String name;
 		public final int value;
 		  
-		Case(String name, int valeur){
+		typeCase(String name, int valeur){
+		    this.name = name;
+		    this.value = valeur;
+		}
+	}
+	
+	public static enum etatCase { 
+		COVER("cover",0), DISCOVER("discover",1), FLAG("flag",2), QUESTION("question",3);
+		public final String name;
+		public final int value;
+		  
+		etatCase(String name, int valeur){
 		    this.name = name;
 		    this.value = valeur;
 		}
@@ -43,7 +54,7 @@ public class Modele extends Observable {
 		while(nbBombe<NB_BOMBE) {
 			random = rnd.nextInt(listeCaseVide.size());
 			if(tableauValeur[listeCaseVide.get(random)][0] == 1)
-				System.out.println("ERROR : D�j� � 1");
+				System.out.println("ERROR : Déjà à 1");
 			tableauValeur[listeCaseVide.get(random)][0] = 1;
 			tableauValeur = incrementerVoisin(listeCaseVide.get(random), tableauValeur,1);
 			listeCaseVide.remove(random);

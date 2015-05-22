@@ -20,11 +20,6 @@ import Modele.Modele;
 public class Vue extends JFrame implements ActionListener, MouseListener, Observer {
 	private static final long serialVersionUID = 3267840040749382412L;
 	
-	private Icon iconCase;
-	private Icon iconVide;
-	private Icon iconBombe;
-	private Icon iconDrapeau;
-	
 	private JPanel container;
 	private JPanel panelCases;
 	private JPanel panelBouton;
@@ -47,7 +42,6 @@ public class Vue extends JFrame implements ActionListener, MouseListener, Observ
         model = p_model;
         model.addObserver(this);
         
-        loadIcon();
         buildFrame();
         
         addWindowListener(new WindowAdapter() {
@@ -58,13 +52,6 @@ public class Vue extends JFrame implements ActionListener, MouseListener, Observ
             }
         });
     }
-    
-    private void loadIcon() {
-		iconCase = new ImageIcon(ClassLoader.getSystemResource("case.png"));
-		iconVide = new ImageIcon(ClassLoader.getSystemResource("vide.png"));
-		iconBombe = new ImageIcon(ClassLoader.getSystemResource("bombe.png"));
-		iconDrapeau = new ImageIcon(ClassLoader.getSystemResource("drapeau.png"));
-	}
 
 	public void buildFrame() {
         
@@ -135,9 +122,6 @@ public class Vue extends JFrame implements ActionListener, MouseListener, Observ
         	CaseVue box = new CaseVue(boxModele);
         	boxModele.setValeur(tableauBombe[i][0]);
         	boxModele.setNbBombeVoisin(tableauBombe[i][1]);
-        	box.setIcon(iconCase);
-            box.setIconTextGap( - iconCase.getIconWidth() );
-            box.setHorizontalTextPosition(SwingConstants.CENTER);
             box.setFont(font);
             box.setForeground(Color.white);
             box.addActionListener(this);

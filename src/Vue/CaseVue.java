@@ -6,6 +6,7 @@ import java.util.Observer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
 
 import Controleur.CaseControleur;
 import Modele.CaseModele;
@@ -29,6 +30,14 @@ public class CaseVue extends JButton implements Observer {
 		CaseControleur controleur = new CaseControleur(modele, this);
 		addMouseListener(controleur);
 		
+		loadIcon();
+		
+		this.setIcon(iconCase);
+        this.setIconTextGap( - iconCase.getIconWidth() );
+        this.setHorizontalTextPosition(SwingConstants.CENTER);
+	}
+	
+    private void loadIcon() {
 		iconCase = new ImageIcon(ClassLoader.getSystemResource("case.png"));
 		iconVide = new ImageIcon(ClassLoader.getSystemResource("vide.png"));
 		iconBombe = new ImageIcon(ClassLoader.getSystemResource("bombe.png"));
