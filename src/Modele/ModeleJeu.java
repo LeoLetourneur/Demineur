@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
+import javax.swing.Timer;
+
 public class ModeleJeu extends Observable {
 
 	public final int NB_CASE = 20;
@@ -33,9 +35,12 @@ public class ModeleJeu extends Observable {
 
 	private ArrayList<CaseModele> listeCase;
 	private int nbBombe;
+	private Timer timer;
+	private int secondes;
 	
 	public ModeleJeu() {
 		listeCase = new ArrayList<CaseModele>();
+		setSecondes(0);
 	}
 
 	public int[][] construireGrille() {
@@ -107,7 +112,6 @@ public class ModeleJeu extends Observable {
 			}
 	}
 	
-	
 	public void retournerBombes() {
 		for(CaseModele caseMod : listeCase) {
 			if(caseMod.getValeur() == ModeleJeu.typeCase.BOMB.value)
@@ -131,6 +135,24 @@ public class ModeleJeu extends Observable {
 		this.nbBombe = nbBombe;
 		setChanged();
 		notifyObservers();
+	}
+
+	public int getSecondes() {
+		return secondes;
+	}
+
+	public void setSecondes(int secondes) {
+		this.secondes = secondes;
+		setChanged();
+		notifyObservers();
+	}
+
+	public Timer getTimer() {
+		return timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
 	}
 
 }

@@ -109,10 +109,10 @@ public class VueJeu extends JFrame implements Observer {
         }
 	}
 
-
 	@Override
 	public void update(Observable o, Object arg) {
 		bombeRestante.setText(modele.getNbBombe()+"");
+		temps.setText(modele.getSecondes()+"");
 	}
 
 }

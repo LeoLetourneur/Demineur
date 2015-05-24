@@ -11,8 +11,8 @@ public class CaseModele extends Observable {
 	public CaseModele(int p_numero) {
 		super();
 		setIndex(p_numero);
-		setValeur(0);
 		setNbBombeVoisin(0);
+		setValeur(ModeleJeu.typeCase.EMPTY.value);
 		setEtat(ModeleJeu.etatCase.COVER.value);
 	}
 	
