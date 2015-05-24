@@ -2,14 +2,12 @@ package Vue;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.*;
 
+import Controleur.CaseControleur;
 import Modele.CaseModele;
 import Modele.ModeleJeu;
 
@@ -28,23 +26,14 @@ public class VueJeu extends JFrame implements Observer {
 	private JLabel bombeRestante;
 	private JLabel temps;
 	
-	private ModeleJeu model;
-	private ArrayList<CaseVue> listeCase;
+	private ModeleJeu modele;
 	
     public VueJeu(ModeleJeu p_model) {
         super();
-        model = p_model;
-        model.addObserver(this);
+        modele = p_model;
+        modele.addObserver(this);
         
         buildFrame();
-        
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent arg0) {
-                super.windowClosing(arg0);
-                System.exit(0);
-            }
-        });
     }
 
 	public void buildFrame() {
@@ -72,7 +61,7 @@ public class VueJeu extends JFrame implements Observer {
     	temps.setFont(font);
     	temps.setHorizontalAlignment(SwingConstants.CENTER);
     	
-        panelCases = new JPanel (new GridLayout(model.NB_CASE, model.NB_CASE));
+        panelCases = new JPanel (new GridLayout(modele.NB_CASE, modele.NB_CASE));
         panelCases.setBounds(0, 0, 570, 570);
         chargerJeu();
         
@@ -99,70 +88,31 @@ public class VueJeu extends JFrame implements Observer {
 	
 	public void chargerJeu()
 	{
-		int[][] tableauBombe = model.construireGrille();
-		bombeRestante.setText(model.getNbBombe()+"");
+		int[][] tableauBombe = modele.construireGrille();
+		bombeRestante.setText(modele.getNbBombe()+"");
         Font font = new Font("Courier New", Font.BOLD, 14);
         
         panelCases.removeAll();
-        listeCase = new ArrayList<CaseVue>();
-        for(int i = 0; i<Math.pow(model.NB_CASE, 2);i++)
+        
+        for(int i = 0; i<Math.pow(modele.NB_CASE, 2);i++)
         {
-        	CaseModele boxModele = new CaseModele(i);
-        	CaseVue box = new CaseVue(boxModele);
-        	boxModele.setValeur(tableauBombe[i][0]);
-        	boxModele.setNbBombeVoisin(tableauBombe[i][1]);
-            box.setFont(font);
-            box.setForeground(Color.white);
-            listeCase.add(box);
-            panelCases.add(box);
+        	CaseModele caseModele = new CaseModele(i);
+        	CaseVue caseVue = new CaseVue(caseModele);
+        	CaseControleur caseControleur = new CaseControleur(caseModele, caseVue, modele);
+        	caseModele.setValeur(tableauBombe[i][0]);
+        	caseModele.setNbBombeVoisin(tableauBombe[i][1]);
+            caseVue.setFont(font);
+            caseVue.setForeground(Color.white);
+            caseVue.addMouseListener(caseControleur);
+            modele.getListeCase().add(caseModele);
+            panelCases.add(caseVue);
         }
 	}
 
-	
-	/*
-	private void retournerVoisin(int numero) {
-		
-		int minI = 0;
-		int maxI = 3;
-		if(numero%model.NB_CASE < 1)
-			minI = 1;
-		else if(numero%model.NB_CASE > model.NB_CASE-2)
-			maxI = 2;
-		
-		for(int i=minI;i<maxI;i++)
-			for(int j=0;j<3;j++) {
-				int index = numero+i-1+(j-1)*model.NB_CASE;
-				if(index>=0 && index<Math.pow(model.NB_CASE,2)) {
-					if(listeCase.get(index).getNbBombeVoisin() == 0
-					&& !listeCase.get(index).isMarque()){
-						listeCase.get(index).setMarque(true);
-						retournerVoisin(index);
-					}
-					else {
-						listeCase.get(index).setIcon(iconVide);
-						listeCase.get(index).setText(listeCase.get(index).getNbBombeVoisin()+"");
-					}
-				}
-			}
-	}
-
-	private void retournerBombe() {
-		for(CaseVue box : listeCase) {
-			if(box.getValeur() == Modele.Case.BOMB.value)
-				box.setIcon(iconBombe);
-		}
-		//looseGame();
-	}*/
-
-	private void looseGame() {
-		javax.swing.JOptionPane.showMessageDialog(null, "C'est perdu"); 
-		
-	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO
-		
+		bombeRestante.setText(modele.getNbBombe()+"");
 	}
 
 }

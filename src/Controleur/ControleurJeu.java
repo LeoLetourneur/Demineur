@@ -25,8 +25,10 @@ public class ControleurJeu implements ActionListener {
 	{
 		if(e.getSource() == vue.btnRejouer)
 			System.out.println("Rejouer");
-		else if(e.getSource() == vue.btnQuitter)
+		else if(e.getSource() == vue.btnQuitter) {
 			System.out.println("Quitter");
+			System.exit(0);
+		}
 	}
 
 }

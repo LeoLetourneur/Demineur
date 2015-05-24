@@ -30,10 +30,12 @@ public class ModeleJeu extends Observable {
 		}
 	}
 	
+
+	private ArrayList<CaseModele> listeCase;
 	private int nbBombe;
 	
 	public ModeleJeu() {
-		
+		listeCase = new ArrayList<CaseModele>();
 	}
 
 	public int[][] construireGrille() {
@@ -80,14 +82,55 @@ public class ModeleJeu extends Observable {
 			}
 		return tableauValeur;
 	}
+	
+	public void retournerVoisin(int numero) {
+		int minI = 0;
+		int maxI = 3;
+		if(numero%NB_CASE < 1)
+			minI = 1;
+		else if(numero%NB_CASE > NB_CASE-2)
+			maxI = 2;
+		
+		for(int i=minI;i<maxI;i++)
+			for(int j=0;j<3;j++) {
+				int index = numero+i-1+(j-1)*NB_CASE;
+				if(index>=0 && index<Math.pow(NB_CASE,2)) {
+					if(listeCase.get(index).getNbBombeVoisin() == 0
+					&& listeCase.get(index).getEtat() != ModeleJeu.etatCase.DISCOVER.value){
+						listeCase.get(index).setEtat(ModeleJeu.etatCase.DISCOVER.value);
+						retournerVoisin(index);
+					}
+					else {
+						listeCase.get(index).setEtat(ModeleJeu.etatCase.DISCOVER.value);
+					}
+				}
+			}
+	}
+	
+	
+	public void retournerBombes() {
+		for(CaseModele caseMod : listeCase) {
+			if(caseMod.getValeur() == ModeleJeu.typeCase.BOMB.value)
+				caseMod.setEtat(ModeleJeu.etatCase.DISCOVER.value);
+		}
+	}
 
+	public ArrayList<CaseModele> getListeCase() {
+		return listeCase;
+	}
 
+	public void setListeCase(ArrayList<CaseModele> listeCase) {
+		this.listeCase = listeCase;
+	}
+	
 	public int getNbBombe() {
 		return nbBombe;
 	}
 
 	public void setNbBombe(int nbBombe) {
 		this.nbBombe = nbBombe;
+		setChanged();
+		notifyObservers();
 	}
 
 }

@@ -8,7 +8,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
-import Controleur.CaseControleur;
 import Modele.CaseModele;
 import Modele.ModeleJeu;
 
@@ -28,9 +27,6 @@ public class CaseVue extends JButton implements Observer {
 		super();
 		setModele(p_modele);
 		modele.addObserver(this);
-		
-		CaseControleur controleur = new CaseControleur(modele, this);
-		addMouseListener(controleur);
 		
 		loadIcon();
 		
