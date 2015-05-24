@@ -1,27 +1,26 @@
 package Modele;
 import java.util.Observable;
 
-
 public class CaseModele extends Observable {
 
 	private int index;
 	private int valeur;
+	private int etat;
 	private int nbBombeVoisin;
-	private boolean marque;
 	
 	public CaseModele(int p_numero) {
 		super();
-		setNumero(p_numero);
+		setIndex(p_numero);
 		setValeur(0);
 		setNbBombeVoisin(0);
-		setMarque(false);
+		setEtat(ModeleJeu.etatCase.COVER.value);
 	}
 	
-	public int getNumero() {
+	public int getIndex() {
 		return index;
 	}
 
-	public void setNumero(int numero) {
+	public void setIndex(int numero) {
 		this.index = numero;
 	}
 
@@ -41,12 +40,12 @@ public class CaseModele extends Observable {
 		this.valeur = valeur;
 	}
 
-	public boolean isMarque() {
-		return marque;
+	public int getEtat() {
+		return etat;
 	}
 
-	public void setMarque(boolean marque) {
-		this.marque = marque;
+	public void setEtat(int etat) {
+		this.etat = etat;
 		setChanged();
 		notifyObservers();
 	}

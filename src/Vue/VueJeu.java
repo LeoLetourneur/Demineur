@@ -2,10 +2,6 @@ package Vue;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -15,9 +11,9 @@ import java.util.Observer;
 import javax.swing.*;
 
 import Modele.CaseModele;
-import Modele.Modele;
+import Modele.ModeleJeu;
 
-public class Vue extends JFrame implements ActionListener, MouseListener, Observer {
+public class VueJeu extends JFrame implements Observer {
 	private static final long serialVersionUID = 3267840040749382412L;
 	
 	private JPanel container;
@@ -25,19 +21,17 @@ public class Vue extends JFrame implements ActionListener, MouseListener, Observ
 	private JPanel panelBouton;
 	private JPanel panelTexte;
 	
-	private JButton btnQuitter;
-	private JButton btnRejouer;
-	private JButton btnDecouvrir;
+	public JButton btnQuitter;
+	public JButton btnRejouer;
+	public JButton btnDecouvrir;
 	
 	private JLabel bombeRestante;
 	private JLabel temps;
 	
-	private Modele model;
+	private ModeleJeu model;
 	private ArrayList<CaseVue> listeCase;
-
-	private boolean premierTour = true;
 	
-    public Vue(Modele p_model) {
+    public VueJeu(ModeleJeu p_model) {
         super();
         model = p_model;
         model.addObserver(this);
@@ -55,19 +49,14 @@ public class Vue extends JFrame implements ActionListener, MouseListener, Observ
 
 	public void buildFrame() {
         
-        setTitle("D�mineur");
+        setTitle("Démineur");
         setSize(800, 592);
         setLocationRelativeTo(null);
         setResizable(false);
         
         btnQuitter = new JButton("Quitter");
-        btnQuitter.addActionListener(this);
-        
     	btnRejouer = new JButton("Rejouer");
-    	btnRejouer.addActionListener(this);
-    	
-    	btnDecouvrir = new JButton("D�couvrir");
-    	btnDecouvrir.addActionListener(this);
+    	btnDecouvrir = new JButton("Découvrir");
         
     	Font font = new Font("Courier New", Font.BOLD, 30);
     	
@@ -124,48 +113,12 @@ public class Vue extends JFrame implements ActionListener, MouseListener, Observ
         	boxModele.setNbBombeVoisin(tableauBombe[i][1]);
             box.setFont(font);
             box.setForeground(Color.white);
-            box.addActionListener(this);
-            box.addMouseListener(this);
             listeCase.add(box);
             panelCases.add(box);
         }
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e)
-	{
-		if(e.getSource() == btnRejouer)
-			rejouer();
-		else if(e.getSource() == btnQuitter)
-			this.dispose();
-			
-		/*else if(e.getSource() instanceof CaseVue && ((CaseVue)e.getSource()).getIcon() != iconDrapeau) {
-			CaseVue button = (CaseVue)e.getSource();
-			int command = button.getValeur();
-			if(command == Modele.Case.EMPTY.value) {
-				if(premierTour)
-					premierTour =false ;
-				button.setIcon(iconVide);
-				button.setMarque(true);
-				if(button.getNbBombeVoisin() != 0)
-					button.setText(button.getNbBombeVoisin()+"");
-				else {
-					retournerVoisin(button.getNumero());
-				}
-			}
-			else {
-				if(premierTour)
-					{
-						premierTour=false;
-					}
-				retournerBombe();
-			}
-		}*/
-	}
 	
-	private void rejouer() {
-		chargerJeu();
-	}
 	/*
 	private void retournerVoisin(int numero) {
 		
@@ -212,22 +165,4 @@ public class Vue extends JFrame implements ActionListener, MouseListener, Observ
 		
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON3) {
-            if(e.getComponent() instanceof CaseVue) {
-            	
-            	bombeRestante.setText(model.getNbBombe()+"");
-            }
-        }
-    }
-
-	@Override
-	public void mousePressed(MouseEvent e) {}
-	@Override
-	public void mouseReleased(MouseEvent e) {}
-	@Override
-	public void mouseEntered(MouseEvent e) {}
-	@Override
-	public void mouseExited(MouseEvent e) {}
 }

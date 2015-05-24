@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import Modele.CaseModele;
+import Modele.ModeleJeu;
 import Vue.CaseVue;
 
 public class CaseControleur implements MouseListener {
@@ -18,8 +19,18 @@ public class CaseControleur implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON3) {
-			modele.setMarque(!modele.isMarque());
+		if(e.getButton() == MouseEvent.BUTTON1) {
+			if(modele.getEtat() == ModeleJeu.etatCase.COVER.value) {
+				modele.setEtat(ModeleJeu.etatCase.DISCOVER.value);
+			}
+		}
+		else if(e.getButton() == MouseEvent.BUTTON3) {
+			if(modele.getEtat() == ModeleJeu.etatCase.COVER.value)
+				modele.setEtat(ModeleJeu.etatCase.FLAG.value);
+			else if(modele.getEtat() == ModeleJeu.etatCase.FLAG.value)
+				modele.setEtat(ModeleJeu.etatCase.QUESTION.value);
+			else if(modele.getEtat() == ModeleJeu.etatCase.QUESTION.value)
+				modele.setEtat(ModeleJeu.etatCase.COVER.value);
 		}
 	}
 	@Override

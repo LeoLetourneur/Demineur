@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
-public class Modele extends Observable {
+public class ModeleJeu extends Observable {
 
 	public final int NB_CASE = 20;
 	public final int NB_BOMBE = 80;
@@ -32,7 +32,7 @@ public class Modele extends Observable {
 	
 	private int nbBombe;
 	
-	public Modele() {
+	public ModeleJeu() {
 		
 	}
 

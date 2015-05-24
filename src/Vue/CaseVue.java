@@ -10,6 +10,7 @@ import javax.swing.SwingConstants;
 
 import Controleur.CaseControleur;
 import Modele.CaseModele;
+import Modele.ModeleJeu;
 
 
 public class CaseVue extends JButton implements Observer {
@@ -19,6 +20,7 @@ public class CaseVue extends JButton implements Observer {
 	private Icon iconVide;
 	private Icon iconBombe;
 	private Icon iconDrapeau;
+	private Icon iconQuestion;
 	
 	private CaseModele modele;
 	
@@ -42,6 +44,7 @@ public class CaseVue extends JButton implements Observer {
 		iconVide = new ImageIcon(ClassLoader.getSystemResource("vide.png"));
 		iconBombe = new ImageIcon(ClassLoader.getSystemResource("bombe.png"));
 		iconDrapeau = new ImageIcon(ClassLoader.getSystemResource("drapeau.png"));
+		iconQuestion = new ImageIcon(ClassLoader.getSystemResource("question.png"));
 	}
 
 	public CaseModele getModele() {
@@ -54,10 +57,28 @@ public class CaseVue extends JButton implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if(modele.isMarque())
-			this.setIcon(iconDrapeau);
-		else {
-			this.setIcon(iconCase);
-		}	
+		switch(modele.getEtat()) {
+			case 0 :
+				this.setIcon(iconCase);
+				break;
+			case 1 :
+				if(modele.getValeur() == ModeleJeu.typeCase.EMPTY.value) {
+					this.setIcon(iconVide);
+					if(modele.getNbBombeVoisin() != 0)
+						this.setText(modele.getNbBombeVoisin()+"");
+				}
+				else
+					this.setIcon(iconBombe);
+			    break;
+			case 2 :
+				this.setIcon(iconDrapeau);
+			    break;
+			case 3 :
+				this.setIcon(iconQuestion);
+			    break;
+		  default:
+		    	break;
+		}
+		
 	}
 }
