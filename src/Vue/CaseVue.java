@@ -36,11 +36,11 @@ public class CaseVue extends JButton implements Observer {
 	}
 	
     private void loadIcon() {
-		iconCase = new ImageIcon(ClassLoader.getSystemResource("case.png"));
-		iconVide = new ImageIcon(ClassLoader.getSystemResource("vide.png"));
-		iconBombe = new ImageIcon(ClassLoader.getSystemResource("bombe.png"));
-		iconDrapeau = new ImageIcon(ClassLoader.getSystemResource("drapeau.png"));
-		iconQuestion = new ImageIcon(ClassLoader.getSystemResource("question.png"));
+		iconCase = new ImageIcon("sprite/case.png");
+		iconVide = new ImageIcon("sprite/vide.png");
+		iconBombe = new ImageIcon("sprite/bombe.png");
+		iconDrapeau = new ImageIcon("sprite/drapeau.png");
+		iconQuestion = new ImageIcon("sprite/question.png");
 	}
 
 	public CaseModele getModele() {
