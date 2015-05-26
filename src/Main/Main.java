@@ -1,3 +1,4 @@
+package Main;
 import Controleur.ControleurJeu;
 import Modele.ModeleJeu;
 import Vue.VueJeu;
