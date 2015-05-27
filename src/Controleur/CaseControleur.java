@@ -19,14 +19,14 @@ public class CaseControleur implements MouseListener {
 		setModeleJeu(p_modeleJeu);
 	}
 
-	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1) {
 			if(modele.getEtat() == ModeleJeu.etatCase.COVER.value) {
 				if(modele.getValeur() == ModeleJeu.typeCase.EMPTY.value) {
 					modele.setEtat(ModeleJeu.etatCase.DISCOVER.value);
 					if(modele.getNbBombeVoisin() == 0)
-						modeleJeu.retournerVoisin(modele.getIndex());
+						modele.retournerVoisin();
+						
 				}
 				else {
 					modeleJeu.retournerBombes();

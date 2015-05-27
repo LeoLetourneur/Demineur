@@ -36,11 +36,11 @@ public class CaseVue extends JButton implements Observer {
 	}
 	
     private void loadIcon() {
-		iconCase = new ImageIcon("sprite/theme3/case.png");
-		iconVide = new ImageIcon("sprite/theme3/vide.png");
-		iconBombe = new ImageIcon("sprite/theme3/bombe.png");
-		iconDrapeau = new ImageIcon("sprite/theme3/drapeau.png");
-		iconQuestion = new ImageIcon("sprite/theme3/question.png");
+		iconCase = new ImageIcon("sprite/theme4/case.png");
+		iconVide = new ImageIcon("sprite/theme4/vide.png");
+		iconBombe = new ImageIcon("sprite/theme4/bombe.png");
+		iconDrapeau = new ImageIcon("sprite/theme4/drapeau.png");
+		iconQuestion = new ImageIcon("sprite/theme4/question.png");
 	}
 
 	public CaseModele getModele() {
@@ -51,7 +51,6 @@ public class CaseVue extends JButton implements Observer {
 		this.modele = modele;
 	}
 
-	@Override
 	public void update(Observable o, Object arg) {
 		switch(modele.getEtat()) {
 			case 0 :

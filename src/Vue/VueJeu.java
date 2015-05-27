@@ -61,9 +61,8 @@ public class VueJeu extends JFrame implements Observer {
     	temps.setFont(font);
     	temps.setHorizontalAlignment(SwingConstants.CENTER);
     	
-        panelCases = new JPanel (new GridLayout(modele.NB_CASE, modele.NB_CASE));
+        panelCases = new JPanel (new GridLayout(ModeleJeu.NB_CASE, ModeleJeu.NB_CASE));
         panelCases.setBounds(0, 0, 570, 570);
-        chargerJeu();
         
         panelBouton = new JPanel (new GridLayout(2, 2));
         panelBouton.setBounds(580, 360, 210, 200);
@@ -84,27 +83,23 @@ public class VueJeu extends JFrame implements Observer {
         container.add(panelBouton);
         container.add(panelTexte);
         setContentPane(container);
+        
+        chargerJeu();
     }
 	
 	public void chargerJeu()
 	{
-		int[][] tableauBombe = modele.construireGrille();
 		bombeRestante.setText(modele.getNbBombe()+"");
         Font font = new Font("Courier New", Font.BOLD, 14);
         
         panelCases.removeAll();
-        
-        for(int i = 0; i<Math.pow(modele.NB_CASE, 2);i++)
+        for(CaseModele caseM : modele.getListeCase())
         {
-        	CaseModele caseModele = new CaseModele(i);
-        	CaseVue caseVue = new CaseVue(caseModele);
-        	CaseControleur caseControleur = new CaseControleur(caseModele, caseVue, modele);
-        	caseModele.setValeur(tableauBombe[i][0]);
-        	caseModele.setNbBombeVoisin(tableauBombe[i][1]);
+        	CaseVue caseVue = new CaseVue(caseM);
+        	CaseControleur caseControleur = new CaseControleur(caseM, caseVue, modele);
             caseVue.setFont(font);
             caseVue.setForeground(Color.white);
             caseVue.addMouseListener(caseControleur);
-            modele.getListeCase().add(caseModele);
             panelCases.add(caseVue);
         }
 	}
