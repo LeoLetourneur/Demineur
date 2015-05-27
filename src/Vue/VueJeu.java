@@ -7,6 +7,7 @@ import java.util.Observer;
 
 import javax.swing.*;
 
+import Commun.VarCommun;
 import Controleur.CaseControleur;
 import Modele.CaseModele;
 import Modele.ModeleJeu;
@@ -61,8 +62,8 @@ public class VueJeu extends JFrame implements Observer {
     	temps.setFont(font);
     	temps.setHorizontalAlignment(SwingConstants.CENTER);
     	
-        panelCases = new JPanel (new GridLayout(ModeleJeu.NB_CASE, ModeleJeu.NB_CASE));
-        panelCases.setBounds(0, 0, 28*ModeleJeu.NB_CASE, 28*ModeleJeu.NB_CASE);
+        panelCases = new JPanel (new GridLayout(VarCommun.NB_CASE, VarCommun.NB_CASE));
+        panelCases.setBounds(0, 0, 28 * VarCommun.NB_CASE, 28 * VarCommun.NB_CASE);
         
         panelBouton = new JPanel (new GridLayout(2, 2));
         panelBouton.setBounds(580, 360, 210, 200);

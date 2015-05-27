@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import Commun.VarCommun;
 import Modele.CaseModele;
 import Modele.ModeleJeu;
 
@@ -57,7 +58,7 @@ public class CaseVue extends JButton implements Observer {
 				this.setIcon(iconCase);
 				break;
 			case 1 :
-				if(modele.getValeur() == ModeleJeu.typeCase.EMPTY.value) {
+				if(modele.getValeur() == VarCommun.typeCase.EMPTY.value) {
 					this.setIcon(iconVide);
 					if(modele.getNbBombeVoisin() != 0)
 						this.setText(modele.getNbBombeVoisin()+"");

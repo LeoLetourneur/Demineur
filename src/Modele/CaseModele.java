@@ -2,6 +2,8 @@ package Modele;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import Commun.VarCommun;
+
 public class CaseModele extends Observable {
 
 	private int index;
@@ -14,30 +16,29 @@ public class CaseModele extends Observable {
 		super();
 		setIndex(p_numero);
 		setNbBombeVoisin(0);
-		setValeur(ModeleJeu.typeCase.EMPTY.value);
-		setEtat(ModeleJeu.etatCase.COVER.value);
+		setValeur(VarCommun.typeCase.EMPTY.value);
+		setEtat(VarCommun.etatCase.COVER.value);
 		caseVoisines= new ArrayList<CaseModele>();
-		
 	}
 	
 	public void sAjouterAuxVoisins(ArrayList<CaseModele> listeCase){
-		if(index>=ModeleJeu.NB_CASE){
-			caseVoisines.add(listeCase.get(index-ModeleJeu.NB_CASE));
-			listeCase.get(index-ModeleJeu.NB_CASE).addVoisine(this);
+		if(index>=VarCommun.NB_CASE){
+			caseVoisines.add(listeCase.get(index-VarCommun.NB_CASE));
+			listeCase.get(index-VarCommun.NB_CASE).addVoisine(this);
 			
-			if(index%ModeleJeu.NB_CASE<ModeleJeu.NB_CASE-1)
+			if(index%VarCommun.NB_CASE<VarCommun.NB_CASE-1)
 			{
-				caseVoisines.add(listeCase.get(index-ModeleJeu.NB_CASE+1));
-				listeCase.get(index-ModeleJeu.NB_CASE+1).addVoisine(this);
+				caseVoisines.add(listeCase.get(index-VarCommun.NB_CASE+1));
+				listeCase.get(index-VarCommun.NB_CASE+1).addVoisine(this);
 			}
 			
-			if(index%ModeleJeu.NB_CASE>0)
+			if(index%VarCommun.NB_CASE>0)
 			{
-				caseVoisines.add(listeCase.get(index-ModeleJeu.NB_CASE-1));
-				listeCase.get(index-ModeleJeu.NB_CASE-1).addVoisine(this);
+				caseVoisines.add(listeCase.get(index-VarCommun.NB_CASE-1));
+				listeCase.get(index-VarCommun.NB_CASE-1).addVoisine(this);
 			}
 		}
-		if(index%ModeleJeu.NB_CASE>0)
+		if(index%VarCommun.NB_CASE>0)
 		{
 			caseVoisines.add(listeCase.get(index-1));
 			listeCase.get(index-1).addVoisine(this);
@@ -93,12 +94,12 @@ public class CaseModele extends Observable {
 	public void retournerVoisin() {
 		for(CaseModele caseVoisine : caseVoisines) {
 			if(caseVoisine.getNbBombeVoisin() == 0
-			&& caseVoisine.getEtat() != ModeleJeu.etatCase.DISCOVER.value){
-				caseVoisine.setEtat(ModeleJeu.etatCase.DISCOVER.value);
+			&& caseVoisine.getEtat() != VarCommun.etatCase.DISCOVER.value){
+				caseVoisine.setEtat(VarCommun.etatCase.DISCOVER.value);
 				caseVoisine.retournerVoisin();
 			}
 			else {
-				caseVoisine.setEtat(ModeleJeu.etatCase.DISCOVER.value);
+				caseVoisine.setEtat(VarCommun.etatCase.DISCOVER.value);
 			}
 		}
 	}

@@ -3,6 +3,7 @@ package Controleur;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import Commun.VarCommun;
 import Modele.CaseModele;
 import Modele.ModeleJeu;
 import Vue.CaseVue;
@@ -21,9 +22,9 @@ public class CaseControleur implements MouseListener {
 
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1) {
-			if(modele.getEtat() == ModeleJeu.etatCase.COVER.value) {
-				if(modele.getValeur() == ModeleJeu.typeCase.EMPTY.value) {
-					modele.setEtat(ModeleJeu.etatCase.DISCOVER.value);
+			if(modele.getEtat() == VarCommun.etatCase.COVER.value) {
+				if(modele.getValeur() == VarCommun.typeCase.EMPTY.value) {
+					modele.setEtat(VarCommun.etatCase.DISCOVER.value);
 					if(modele.getNbBombeVoisin() == 0)
 						modele.retournerVoisin();
 						
@@ -34,16 +35,16 @@ public class CaseControleur implements MouseListener {
 			}
 		}
 		else if(e.getButton() == MouseEvent.BUTTON3) {
-			if(modele.getEtat() == ModeleJeu.etatCase.COVER.value) {
-				modele.setEtat(ModeleJeu.etatCase.FLAG.value);
+			if(modele.getEtat() == VarCommun.etatCase.COVER.value) {
+				modele.setEtat(VarCommun.etatCase.FLAG.value);
 				modeleJeu.setNbBombe(modeleJeu.getNbBombe()-1);
 			}
-			else if(modele.getEtat() == ModeleJeu.etatCase.FLAG.value) {
-				modele.setEtat(ModeleJeu.etatCase.QUESTION.value);
+			else if(modele.getEtat() == VarCommun.etatCase.FLAG.value) {
+				modele.setEtat(VarCommun.etatCase.QUESTION.value);
 				modeleJeu.setNbBombe(modeleJeu.getNbBombe()+1);
 			}
-			else if(modele.getEtat() == ModeleJeu.etatCase.QUESTION.value)
-				modele.setEtat(ModeleJeu.etatCase.COVER.value);
+			else if(modele.getEtat() == VarCommun.etatCase.QUESTION.value)
+				modele.setEtat(VarCommun.etatCase.COVER.value);
 		}
 	}
 	@Override

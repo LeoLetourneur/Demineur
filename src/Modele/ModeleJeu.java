@@ -5,33 +5,9 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
-public class ModeleJeu extends Observable {
+import Commun.VarCommun;
 
-	public final static int NB_CASE = 15;
-	public final int NB_BOMBE = 15;
-	
-	public static enum typeCase { 
-		EMPTY("empty",0), BOMB("bombe",1);
-		public final String name;
-		public final int value;
-		  
-		typeCase(String name, int valeur){
-		    this.name = name;
-		    this.value = valeur;
-		}
-	}
-	
-	public static enum etatCase { 
-		COVER("cover",0), DISCOVER("discover",1), FLAG("flag",2), QUESTION("question",3);
-		public final String name;
-		public final int value;
-		  
-		etatCase(String name, int valeur){
-		    this.name = name;
-		    this.value = valeur;
-		}
-	}
-	
+public class ModeleJeu extends Observable {
 
 	private ArrayList<CaseModele> listeCase;
 	private int nbBombe;
@@ -45,7 +21,7 @@ public class ModeleJeu extends Observable {
 	}
 
 	public void construireCases() {
-		int nbCase = (int) Math.pow(NB_CASE, 2);
+		int nbCase = (int) Math.pow(VarCommun.NB_CASE, 2);
 		nbBombe = 0;
 		
 		ArrayList<Integer> listeCaseVide = new ArrayList<Integer>();
@@ -60,7 +36,7 @@ public class ModeleJeu extends Observable {
 		
 		Random rnd = new Random();
 		int random;
-		while(nbBombe<NB_BOMBE) {
+		while(nbBombe<VarCommun.NB_BOMBE) {
 			random = rnd.nextInt(listeCaseVide.size());
 			if(listeCase.get(listeCaseVide.get(random)).getValeur() == 1)
 				System.out.println("ERROR : Déjà à 1");
@@ -73,8 +49,8 @@ public class ModeleJeu extends Observable {
 	
 	public void retournerBombes() {
 		for(CaseModele caseMod : listeCase) {
-			if(caseMod.getValeur() == ModeleJeu.typeCase.BOMB.value)
-				caseMod.setEtat(ModeleJeu.etatCase.DISCOVER.value);
+			if(caseMod.getValeur() == VarCommun.typeCase.BOMB.value)
+				caseMod.setEtat(VarCommun.etatCase.DISCOVER.value);
 		}
 	}
 
