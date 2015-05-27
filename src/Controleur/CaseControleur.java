@@ -2,7 +2,7 @@ package Controleur;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Random;
+import java.util.ArrayList;
 
 import Commun.VarCommun;
 import Modele.CaseModele;
@@ -21,49 +21,56 @@ public class CaseControleur implements MouseListener {
 		setModeleJeu(p_modeleJeu);
 	}
 
+	public void switchCaseBombe() {
+		System.out.println("Case bombe switchée");
+		modeleJeu.setPremierTour(false);
+		
+		//Si il n'y à que des bombes à coté de la case, pas de switch
+		if(modele.getNbBombeVoisin() == modele.getVoisins().size())
+			return;
+		
+		ArrayList<CaseModele> caseNonBombe = new ArrayList<CaseModele>();
+		for(CaseModele caseM : modele.getVoisins()) {
+			if(caseM.getValeur() == VarCommun.typeCase.EMPTY.value)
+				caseNonBombe.add(caseM);
+		}
+		
+		int random;
+		random=(int)(Math.random()*caseNonBombe.size());
+		caseNonBombe.get(random).setValeur(VarCommun.typeCase.BOMB.value);
+		caseNonBombe.get(random).incrementerVoisin(1);
+		caseNonBombe.get(random).setNbBombeVoisin(0);
+		
+		int nbBombe = 0;
+		for(CaseModele caseM : modele.getVoisins()) {
+			if(caseM.getValeur() == VarCommun.typeCase.BOMB.value)
+				nbBombe++;
+		}
+		modele.setValeur(VarCommun.typeCase.EMPTY.value);
+		modele.incrementerVoisin(-1);
+		modele.setNbBombeVoisin(nbBombe);
+	}
+	
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1) {
-			if(modele.getEtat() == VarCommun.etatCase.COVER.value) {
+			if(modele.getEtat() == VarCommun.etatCase.COVER.value)
+			{
+				
+				if(modeleJeu.isPremierTour() 
+				&& modele.getValeur() == VarCommun.typeCase.BOMB.value) {
+					switchCaseBombe();
+				}
+				
 				if(modele.getValeur() == VarCommun.typeCase.EMPTY.value) {
-					if(modeleJeu.getPremierTour())
-						{
-							modeleJeu.setPremierTour(false);
-						}
 					modele.setEtat(VarCommun.etatCase.DISCOVER.value);
 					if(modele.getNbBombeVoisin() == 0)
 						modele.retournerVoisin();
+					if(modeleJeu.isPremierTour())
+						modeleJeu.setPremierTour(false);
 						
 				}
-				else {
-					if(!modeleJeu.getPremierTour())
-						{
-							modeleJeu.retournerBombes();
-						}
-					else
-						{
-						System.out.println("test");
-							modeleJeu.setPremierTour(false);
-							modele.setValeur(VarCommun.typeCase.EMPTY.value);
-							Boolean test = true;
-							while(test)
-								{
-									int random2;
-									random2=(int)(Math.random()*modele.getVoisins().size());
-									if(modele.getVoisins().get(random2).getValeur()!=1)
-										{
-											modele.getVoisins().get(random2).setValeur(1);
-											modele.incrementerVoisin(-1);
-											modele.getVoisins().get(random2).incrementerVoisin(1);
-											test=false;
-										}
-								}
-							modele.setEtat(VarCommun.etatCase.DISCOVER.value);
-							if(modele.getNbBombeVoisin() == 0)
-								modele.retournerVoisin();
-							
-						}
-					
-				}
+				else
+					modeleJeu.retournerBombes();
 			}
 		}
 		else if(e.getButton() == MouseEvent.BUTTON3) {

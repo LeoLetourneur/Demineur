@@ -13,20 +13,26 @@ public class ModeleJeu extends Observable {
 	private int nbBombe;
 	private Timer timer;
 	private int secondes;
-	private Boolean premierTour=true;;
+	private Boolean premierTour;
 	
 	public ModeleJeu() {
 		
-		setSecondes(0);
 		construireCases();
+	}
+	
+	public void initialiser() {
+		setSecondes(0);
+		setPremierTour(true);
+		setNbBombe(0);
+		setListeCase(new ArrayList<CaseModele>());
 	}
 
 	public void construireCases() {
-		int nbCase = (int) Math.pow(VarCommun.NB_CASE, 2);
-		nbBombe = 0;
 		
+		initialiser();
+		
+		int nbCase = (int) Math.pow(VarCommun.NB_CASE, 2);
 		ArrayList<Integer> listeCaseVide = new ArrayList<Integer>();
-		listeCase = new ArrayList<CaseModele>();
 		
 		for(int i=0; i<nbCase; i++) {
 			CaseModele caseModele = new CaseModele(i);
@@ -91,7 +97,7 @@ public class ModeleJeu extends Observable {
 		this.timer = timer;
 	}
 
-	public Boolean getPremierTour() {
+	public Boolean isPremierTour() {
 		return premierTour;
 	}
 
