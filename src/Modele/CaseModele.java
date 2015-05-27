@@ -45,11 +45,12 @@ public class CaseModele extends Observable {
 		}
 	}
 	
-	public void incrementerVoisin()
+	public void incrementerVoisin(int valeur)
 	{
 		for(CaseModele caseVoisine : caseVoisines) {
 			if(caseVoisine.getValeur() != 1)
-				caseVoisine.setNbBombeVoisin(caseVoisine.getNbBombeVoisin()+1);
+				if(valeur>0||(valeur<0 && caseVoisine.getValeur()>0))
+				caseVoisine.setNbBombeVoisin(caseVoisine.getNbBombeVoisin()+valeur);
 		}
 	}
 	
@@ -91,6 +92,11 @@ public class CaseModele extends Observable {
 		notifyObservers();
 	}
 
+	public ArrayList<CaseModele> getVoisins()
+	{
+		return caseVoisines;
+	}
+	
 	public void retournerVoisin() {
 		for(CaseModele caseVoisine : caseVoisines) {
 			if(caseVoisine.getNbBombeVoisin() == 0

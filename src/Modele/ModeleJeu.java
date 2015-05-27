@@ -13,6 +13,7 @@ public class ModeleJeu extends Observable {
 	private int nbBombe;
 	private Timer timer;
 	private int secondes;
+	private Boolean premierTour=true;;
 	
 	public ModeleJeu() {
 		
@@ -41,7 +42,7 @@ public class ModeleJeu extends Observable {
 			if(listeCase.get(listeCaseVide.get(random)).getValeur() == 1)
 				System.out.println("ERROR : Déjà à 1");
 			listeCase.get(listeCaseVide.get(random)).setValeur(1);
-			listeCase.get(listeCaseVide.get(random)).incrementerVoisin();
+			listeCase.get(listeCaseVide.get(random)).incrementerVoisin(1);
 			listeCaseVide.remove(random);
 			nbBombe++;
 		}
@@ -88,6 +89,14 @@ public class ModeleJeu extends Observable {
 
 	public void setTimer(Timer timer) {
 		this.timer = timer;
+	}
+
+	public Boolean getPremierTour() {
+		return premierTour;
+	}
+
+	public void setPremierTour(Boolean premierTour) {
+		this.premierTour = premierTour;
 	}
 
 }

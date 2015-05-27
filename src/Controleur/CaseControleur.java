@@ -2,6 +2,7 @@ package Controleur;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Random;
 
 import Commun.VarCommun;
 import Modele.CaseModele;
@@ -24,13 +25,44 @@ public class CaseControleur implements MouseListener {
 		if(e.getButton() == MouseEvent.BUTTON1) {
 			if(modele.getEtat() == VarCommun.etatCase.COVER.value) {
 				if(modele.getValeur() == VarCommun.typeCase.EMPTY.value) {
+					if(modeleJeu.getPremierTour())
+						{
+							modeleJeu.setPremierTour(false);
+						}
 					modele.setEtat(VarCommun.etatCase.DISCOVER.value);
 					if(modele.getNbBombeVoisin() == 0)
 						modele.retournerVoisin();
 						
 				}
 				else {
-					modeleJeu.retournerBombes();
+					if(!modeleJeu.getPremierTour())
+						{
+							modeleJeu.retournerBombes();
+						}
+					else
+						{
+						System.out.println("test");
+							modeleJeu.setPremierTour(false);
+							modele.setValeur(VarCommun.typeCase.EMPTY.value);
+							Boolean test = true;
+							while(test)
+								{
+									int random2;
+									random2=(int)(Math.random()*modele.getVoisins().size());
+									if(modele.getVoisins().get(random2).getValeur()!=1)
+										{
+											modele.getVoisins().get(random2).setValeur(1);
+											modele.incrementerVoisin(-1);
+											modele.getVoisins().get(random2).incrementerVoisin(1);
+											test=false;
+										}
+								}
+							modele.setEtat(VarCommun.etatCase.DISCOVER.value);
+							if(modele.getNbBombeVoisin() == 0)
+								modele.retournerVoisin();
+							
+						}
+					
 				}
 			}
 		}
