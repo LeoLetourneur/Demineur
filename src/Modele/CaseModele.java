@@ -25,7 +25,7 @@ public class CaseModele extends Observable {
 			caseVoisines.add(listeCase.get(index-ModeleJeu.NB_CASE));
 			listeCase.get(index-ModeleJeu.NB_CASE).addVoisine(this);
 			
-			if(index%ModeleJeu.NB_CASE<19)
+			if(index%ModeleJeu.NB_CASE<ModeleJeu.NB_CASE-1)
 			{
 				caseVoisines.add(listeCase.get(index-ModeleJeu.NB_CASE+1));
 				listeCase.get(index-ModeleJeu.NB_CASE+1).addVoisine(this);

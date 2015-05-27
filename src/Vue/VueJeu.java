@@ -62,7 +62,7 @@ public class VueJeu extends JFrame implements Observer {
     	temps.setHorizontalAlignment(SwingConstants.CENTER);
     	
         panelCases = new JPanel (new GridLayout(ModeleJeu.NB_CASE, ModeleJeu.NB_CASE));
-        panelCases.setBounds(0, 0, 570, 570);
+        panelCases.setBounds(0, 0, 28*ModeleJeu.NB_CASE, 28*ModeleJeu.NB_CASE);
         
         panelBouton = new JPanel (new GridLayout(2, 2));
         panelBouton.setBounds(580, 360, 210, 200);

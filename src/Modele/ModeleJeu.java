@@ -7,8 +7,8 @@ import javax.swing.Timer;
 
 public class ModeleJeu extends Observable {
 
-	public final static int NB_CASE = 20;
-	public final int NB_BOMBE = 80;
+	public final static int NB_CASE = 15;
+	public final int NB_BOMBE = 15;
 	
 	public static enum typeCase { 
 		EMPTY("empty",0), BOMB("bombe",1);
