@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 import Modele.ModeleJeu;
+import Vue.ParametreVue;
 import Vue.VueJeu;
 
 
@@ -17,9 +18,10 @@ public class ControleurJeu implements ActionListener {
 		modele = p_model;
 		vue = p_view;
 		
-		vue.btnDecouvrir.addActionListener(this);
-		vue.btnQuitter.addActionListener(this);
-		vue.btnRejouer.addActionListener(this);
+		vue.mntmNouvellePartie.addActionListener(this);
+		vue.mntmDecouvrir.addActionListener(this);
+		vue.mntmParametres.addActionListener(this);
+		vue.mntmQuitter.addActionListener(this);
 		
 		modele.setTimer(new Timer(1000, this));
 		modele.getTimer().start();
@@ -28,12 +30,22 @@ public class ControleurJeu implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if(e.getSource() == vue.btnRejouer) {
+		if(e.getSource() == vue.mntmNouvellePartie) {
 			System.out.println("Rejouer");
+			modele.construireCases();
+			vue.chargerJeu();
 		}
-		else if(e.getSource() == vue.btnQuitter) {
+		else if(e.getSource() == vue.mntmDecouvrir) {
+			System.out.println("Découvrir");
+			ParametreVue pv = new ParametreVue();
+			pv.setVisible(true);
+		}
+		else if(e.getSource() == vue.mntmQuitter) {
 			System.out.println("Quitter");
 			System.exit(0);
+		}
+		else if(e.getSource() == vue.mntmParametres) {
+			System.out.println("Parametre");
 		}
 		else if(e.getSource() == modele.getTimer()) {
 			modele.setSecondes(modele.getSecondes()+1);

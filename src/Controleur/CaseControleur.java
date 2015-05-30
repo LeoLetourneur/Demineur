@@ -70,7 +70,7 @@ public class CaseControleur implements MouseListener {
 						
 				}
 				else
-					modeleJeu.retournerBombes();
+					modeleJeu.setEtat(VarCommun.etatJeu.PERDU.value);
 			}
 		}
 		else if(e.getButton() == MouseEvent.BUTTON3) {

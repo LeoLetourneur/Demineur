@@ -26,5 +26,16 @@ public class VarCommun {
 		    this.value = valeur;
 		}
 	}
+	
+	public static enum etatJeu { 
+		DEBUT("debut",0), ENJEU("enjeu",1), PERDU("perdu",2), GAGNE("gagne",3);
+		public final String name;
+		public final int value;
+		  
+		etatJeu(String name, int valeur){
+		    this.name = name;
+		    this.value = valeur;
+		}
+	}
 
 }

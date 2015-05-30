@@ -47,7 +47,6 @@ public class CaseModele extends Observable {
 	
 	public void incrementerVoisin(int valeur)
 	{
-		System.out.println(getIndex());
 		for(CaseModele caseVoisine : caseVoisines) {
 			if(caseVoisine.getValeur() != VarCommun.typeCase.BOMB.value)
 				if( valeur>0 || ( valeur<0 && caseVoisine.getNbBombeVoisin()>0 ))

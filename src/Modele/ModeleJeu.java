@@ -14,6 +14,7 @@ public class ModeleJeu extends Observable {
 	private Timer timer;
 	private int secondes;
 	private Boolean premierTour;
+	private int etat;
 	
 	public ModeleJeu() {
 		
@@ -103,6 +104,18 @@ public class ModeleJeu extends Observable {
 
 	public void setPremierTour(Boolean premierTour) {
 		this.premierTour = premierTour;
+	}
+
+	public int getEtat() {
+		return etat;
+	}
+
+	public void setEtat(int etat) {
+		this.etat = etat;
+		if(etat == VarCommun.etatJeu.PERDU.value)
+			retournerBombes();
+		setChanged();
+		notifyObservers();
 	}
 
 }
