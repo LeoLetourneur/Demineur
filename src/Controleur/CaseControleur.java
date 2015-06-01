@@ -52,23 +52,30 @@ public class CaseControleur implements MouseListener {
 		if(modele.getModeleJeu().isFini())
 			return;
 		
+		if (e.getClickCount() == 2 && !e.isConsumed() && e.getButton() == MouseEvent.BUTTON1) {
+			if(modele.getEtat() != VarCommun.etatCase.DISCOVER.value)
+				return;
+		     e.consume();
+		     modele.retournerVoisin();
+		}
+		
 		if(e.getButton() == MouseEvent.BUTTON1) {
-			if(modele.getEtat() == VarCommun.etatCase.COVER.value)
-			{
-				if(modele.getModeleJeu().isPremierTour() 
-				&& modele.getValeur() == VarCommun.typeCase.BOMB.value) {
-					switchCaseBombe();
-				}
-				
-				if(modele.getValeur() == VarCommun.typeCase.BOMB.value)
-					modele.getModeleJeu().setEtat(VarCommun.etatJeu.PERDU.value);
-				else {
-					modele.setEtat(VarCommun.etatCase.DISCOVER.value);
-					if(modele.getNbBombeVoisin() == 0)
-						modele.retournerVoisin();
-					if(modele.getModeleJeu().isPremierTour())
-						modele.getModeleJeu().setPremierTour(false);
-				}
+			if(modele.getEtat() != VarCommun.etatCase.COVER.value)
+				return;
+			
+			if(modele.getModeleJeu().isPremierTour() 
+			&& modele.getValeur() == VarCommun.typeCase.BOMB.value) {
+				switchCaseBombe();
+			}
+			
+			if(modele.getValeur() == VarCommun.typeCase.BOMB.value)
+				modele.getModeleJeu().setEtat(VarCommun.etatJeu.PERDU.value);
+			else {
+				modele.setEtat(VarCommun.etatCase.DISCOVER.value);
+				if(modele.getNbBombeVoisin() == 0)
+					modele.retournerVoisin();
+				if(modele.getModeleJeu().isPremierTour())
+					modele.getModeleJeu().setPremierTour(false);
 			}
 		}
 		else if(e.getButton() == MouseEvent.BUTTON3) {
