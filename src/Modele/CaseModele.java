@@ -10,10 +10,12 @@ public class CaseModele extends Observable {
 	private int valeur;
 	private int etat;
 	private int nbBombeVoisin;
+	private boolean changeTheme;
 	private ArrayList<CaseModele> caseVoisines;
 
 	public CaseModele(int p_numero) {
 		super();
+		setChangeTheme(false);
 		setIndex(p_numero);
 		setNbBombeVoisin(0);
 		setValeur(VarCommun.typeCase.EMPTY.value);
@@ -112,5 +114,13 @@ public class CaseModele extends Observable {
 	
 	public void addVoisin(CaseModele caseAAjouter){
 		this.caseVoisines.add(caseAAjouter);
+	}
+
+	public boolean isChangeTheme() {
+		return changeTheme;
+	}
+
+	public void setChangeTheme(boolean changeTheme) {
+		this.changeTheme = changeTheme;
 	}
 }

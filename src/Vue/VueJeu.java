@@ -32,7 +32,7 @@ public class VueJeu extends JFrame implements Observer {
 	public JMenuItem mntmDecouvrir;
 	public JMenuItem mntmParametres;
 	public JMenuItem mntmQuitter;
-	public JMenuItem mntmBase;
+	public JMenuItem mntmMario;
 	public JMenuItem mntmCaisse;
 	public JMenuItem mntmDisco;
 	public JMenuItem mntmGolf;
@@ -49,10 +49,13 @@ public class VueJeu extends JFrame implements Observer {
         modele = p_model;
         modele.addObserver(this);
         
-        iconTete = new ImageIcon("sprite/theme1/tete.png");
-        iconPerdu = new ImageIcon("sprite/theme1/perdu.png");
-		
+        loadIcons();
         buildFrame();
+    }
+    
+    private void loadIcons() {
+    	iconTete = new ImageIcon("sprite/"+ModeleJeu.themeJeu+"/tete.png");
+        iconPerdu = new ImageIcon("sprite/"+ModeleJeu.themeJeu+"/perdu.png");
     }
 
 	public void buildFrame() {
@@ -85,8 +88,8 @@ public class VueJeu extends JFrame implements Observer {
     	mnTheme = new JMenu("Thème");
     	menuBar.add(mnTheme);
     	
-    	mntmBase = new JMenuItem("Base");
-    	mnTheme.add(mntmBase);
+    	mntmMario = new JMenuItem("Mario");
+    	mnTheme.add(mntmMario);
     	
     	mntmCaisse = new JMenuItem("Caisse");
     	mnTheme.add(mntmCaisse);
@@ -159,6 +162,14 @@ public class VueJeu extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		if(arg != null && arg.equals("ChangeTheme")){
+			loadIcons();
+			if(modele.getEtat() != VarCommun.etatJeu.PERDU.value)
+				btnTete.setIcon(iconTete);
+			else
+				btnTete.setIcon(iconPerdu);
+		}
+		
 		if(modele.getEtat() != VarCommun.etatJeu.PERDU.value) {
 			bombeRestante.setText(modele.getNbBombe()+"");
 			temps.setText(modele.getSecondes()+"");

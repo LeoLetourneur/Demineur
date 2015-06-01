@@ -38,4 +38,5 @@ public class VarCommun {
 		}
 	}
 
+	public static enum themeJeu { Mario, Caisse, Disco, Golf, Pacman }
 }

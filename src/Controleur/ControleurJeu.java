@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+import Commun.VarCommun;
 import Modele.ModeleJeu;
 import Vue.ParametreVue;
 import Vue.VueJeu;
@@ -22,6 +23,12 @@ public class ControleurJeu implements ActionListener {
 		vue.mntmDecouvrir.addActionListener(this);
 		vue.mntmParametres.addActionListener(this);
 		vue.mntmQuitter.addActionListener(this);
+		
+		vue.mntmMario.addActionListener(this);
+		vue.mntmCaisse.addActionListener(this);
+		vue.mntmDisco.addActionListener(this);
+		vue.mntmGolf.addActionListener(this);
+		vue.mntmPacman.addActionListener(this);
 		
 		modele.setTimer(new Timer(1000, this));
 		modele.getTimer().start();
@@ -50,6 +57,16 @@ public class ControleurJeu implements ActionListener {
 		else if(e.getSource() == modele.getTimer()) {
 			modele.setSecondes(modele.getSecondes()+1);
 		}
+		else if(e.getSource() == vue.mntmMario) 
+			modele.setThemeJeu(VarCommun.themeJeu.Mario);
+		else if(e.getSource() == vue.mntmCaisse)
+			modele.setThemeJeu(VarCommun.themeJeu.Caisse);
+		else if(e.getSource() == vue.mntmDisco)
+			modele.setThemeJeu(VarCommun.themeJeu.Disco);
+		else if(e.getSource() == vue.mntmGolf)
+			modele.setThemeJeu(VarCommun.themeJeu.Golf);
+		else if(e.getSource() == vue.mntmPacman)
+			modele.setThemeJeu(VarCommun.themeJeu.Pacman);
 	}
 
 }

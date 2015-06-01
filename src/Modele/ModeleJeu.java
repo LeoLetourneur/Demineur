@@ -15,6 +15,7 @@ public class ModeleJeu extends Observable {
 	private int secondes;
 	private Boolean premierTour;
 	private int etat;
+	public static VarCommun.themeJeu themeJeu;
 	
 	public ModeleJeu() {
 		
@@ -22,6 +23,7 @@ public class ModeleJeu extends Observable {
 	}
 	
 	public void initialiser() {
+		themeJeu = VarCommun.themeJeu.Mario;
 		setSecondes(0);
 		setPremierTour(true);
 		setNbBombe(0);
@@ -116,6 +118,20 @@ public class ModeleJeu extends Observable {
 			retournerBombes();
 		setChanged();
 		notifyObservers();
+	}
+
+	public VarCommun.themeJeu getThemeJeu() {
+		return themeJeu;
+	}
+
+	public void setThemeJeu(VarCommun.themeJeu themeJeu) {
+		ModeleJeu.themeJeu = themeJeu;
+		for(CaseModele caseMode : getListeCase()) {
+			caseMode.setChangeTheme(true);
+			caseMode.setEtat(caseMode.getEtat());
+		}
+		setChanged();
+		notifyObservers("ChangeTheme");
 	}
 
 }
