@@ -43,8 +43,11 @@ public class ControleurJeu implements ActionListener {
 		}
 		else if(e.getSource() == vue.mntmDecouvrir) {
 			System.out.println("Découvrir");
-			ParametreVue pv = new ParametreVue();
-			pv.setVisible(true);
+			modele.setFini(true);
+			for(int i=0;i<Math.pow(VarCommun.NB_CASE,2);i++)
+			{
+				modele.getListeCase().get(i).setEtat(VarCommun.etatCase.DISCOVER.value);
+			}
 		}
 		else if(e.getSource() == vue.mntmQuitter) {
 			System.out.println("Quitter");
