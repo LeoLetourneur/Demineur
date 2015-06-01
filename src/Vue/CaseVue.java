@@ -62,6 +62,7 @@ public class CaseVue extends JButton implements Observer {
 		switch(modele.getEtat()) {
 			case 0 :
 				this.setIcon(iconCase);
+				this.setText("");
 				break;
 			case 1 :
 				if(modele.getValeur() == VarCommun.typeCase.EMPTY.value) {

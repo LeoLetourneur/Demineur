@@ -132,12 +132,11 @@ public class VueJeu extends JFrame implements Observer {
         panelTexte.add(horizontalStrut_3);
         
         panelCases = new JPanel (new GridLayout(modele.getNbLigne(), modele.getNbColonne()));
-        panelCases.setBounds(192, 86, 28 * modele.getNbColonne(), 28 * modele.getNbLigne());
         
         container = new JPanel();
         container.setLayout(null);
-        container.add(panelTexte);
         container.add(panelCases);
+        container.add(panelTexte);
         setContentPane(container);
         
         chargerJeu();
@@ -145,12 +144,13 @@ public class VueJeu extends JFrame implements Observer {
 	
 	public void chargerJeu()
 	{
-		bombeRestante.setText(modele.getNbBombeRestante()+"");
-		temps.setText(modele.getSecondes()+"");
+		container.remove(panelCases);
+		panelCases = new JPanel (new GridLayout(modele.getNbLigne(), modele.getNbColonne()));
+        panelCases.setBounds((this.getWidth()/2-14 * modele.getNbColonne()), (this.getHeight()/2-14 * modele.getNbLigne()), 28 * modele.getNbColonne(), 28 * modele.getNbLigne());
+        container.add(panelCases);
+        
 		btnTete.setIcon(iconTete);
         Font font = new Font("Courier New", Font.BOLD, 14);
-        
-        panelCases.removeAll();
         for(CaseModele caseM : modele.getListeCase())
         {
         	CaseVue caseVue = new CaseVue(caseM);
@@ -160,7 +160,6 @@ public class VueJeu extends JFrame implements Observer {
             caseVue.addMouseListener(caseControleur);
             panelCases.add(caseVue);
         }
-        repaint();
 	}
 
 	@Override
@@ -175,10 +174,8 @@ public class VueJeu extends JFrame implements Observer {
 				btnTete.setIcon(iconTete);
 		}
 		
-		if(modele.getEtat() == VarCommun.etatJeu.ENJEU.value) {
-			bombeRestante.setText(modele.getNbBombeRestante()+"");
-			temps.setText(modele.getSecondes()+"");
-		}
+		bombeRestante.setText(modele.getNbBombeRestante()+"");
+		temps.setText(modele.getSecondes()+"");
 		
 		if(!modele.isFini()) {
 			if(modele.getEtat() == VarCommun.etatJeu.PERDU.value) {

@@ -37,27 +37,25 @@ public class ControleurJeu implements ActionListener {
 	public void actionPerformed(ActionEvent e)
 	{
 		if(e.getSource() == vue.mntmNouvellePartie) {
-			System.out.println("Rejouer");
 			modele.getTimer().stop();
-			modele.construireCases();
-			vue.chargerJeu();
+			modele.reinitialiserCase();
 		}
 		else if(e.getSource() == vue.mntmDecouvrir) {
-			System.out.println("Découvrir");
 			modele.setFini(true);
 			for(int i=0;i<(modele.getNbColonne()*modele.getNbLigne());i++)
-			{
 				modele.getListeCase().get(i).setEtat(VarCommun.etatCase.DISCOVER.value);
-			}
 		}
 		else if(e.getSource() == vue.mntmQuitter) {
-			System.out.println("Quitter");
 			System.exit(0);
 		}
 		else if(e.getSource() == vue.mntmParametres) {
-			System.out.println("Parametre");
-			ParametreVue pv = new ParametreVue();
+			ParametreVue pv = new ParametreVue(modele);
 			pv.setVisible(true);
+			if(pv.getAccept()) {
+				modele.construireCases();
+				vue.chargerJeu();
+			}
+			pv.dispose();
 		}
 		else if(e.getSource() == modele.getTimer()) {
 			modele.setSecondes(modele.getSecondes()+1);

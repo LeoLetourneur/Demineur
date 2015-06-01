@@ -20,7 +20,6 @@ public class ModeleJeu extends Observable {
 	private VarCommun.themeJeu themeJeu;
 	private Boolean premierTour;
 	private boolean fini;
-	
 	private ArrayList<CaseModele> listeCase;
 	
 	public ModeleJeu() {
@@ -40,23 +39,24 @@ public class ModeleJeu extends Observable {
 		setSecondes(0);
 		setPremierTour(true);
 		setNbBombeRestante(0);
-		setListeCase(new ArrayList<CaseModele>());
 	}
 
 	public void construireCases() {
 		
 		initialiser();
-		
+		setListeCase(new ArrayList<CaseModele>());
 		int nbCase = nbLigne*nbColonne;
 		ArrayList<Integer> listeCaseVide = new ArrayList<Integer>();
-		
 		for(int i=0; i<nbCase; i++) {
 			CaseModele caseModele = new CaseModele(i, this);
 			listeCase.add(caseModele);
 			caseModele.sAjouterAuxVoisins(listeCase);
 			listeCaseVide.add(i);
 		}
-		
+		repartirBombe(listeCaseVide);
+	}
+	
+	public void repartirBombe(ArrayList<Integer> listeCaseVide) {
 		Random rnd = new Random();
 		int random;
 		while(nbBombeRestante<nbBombe) {
@@ -66,8 +66,22 @@ public class ModeleJeu extends Observable {
 			listeCase.get(listeCaseVide.get(random)).setValeur(1);
 			listeCase.get(listeCaseVide.get(random)).incrementerVoisin(1);
 			listeCaseVide.remove(random);
-			nbBombeRestante++;
+			setNbBombeRestante(getNbBombeRestante()+1);
 		}
+	}
+	
+	public void reinitialiserCase() {
+		
+		initialiser();
+		
+		ArrayList<Integer> listeCaseVide = new ArrayList<Integer>();
+		for(CaseModele caseMod : listeCase) {
+			caseMod.setNbBombeVoisin(0);
+			caseMod.setValeur(VarCommun.typeCase.EMPTY.value);
+			caseMod.setEtat(VarCommun.etatCase.COVER.value);
+			listeCaseVide.add(caseMod.getIndex());
+		}
+		repartirBombe(listeCaseVide);
 	}
 	
 	public void retournerBombes() {

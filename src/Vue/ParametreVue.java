@@ -14,38 +14,45 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
 import javax.swing.JSpinner;
+import javax.swing.JCheckBox;
 
-public class ParametreVue extends JDialog {
+import Modele.ModeleJeu;
+
+public class ParametreVue extends JDialog implements ItemListener, ActionListener {
 	private static final long serialVersionUID = 504012887671145390L;
 	
 	private JPanel contentPanel;
 	private JPanel panelPerso;
+	
+	private JButton okButton;
+	private JButton cancelButton;
+	
+	private JRadioButton rdbtnDebutant;
+	private JRadioButton rdbtnIntermediaire;
+	private JRadioButton rdbtnDifficile;
+	private JRadioButton rdbtnPersonnalise;
+	
 	private JSpinner spinnerLigne;
 	private JSpinner spinnerColonne;
 	private JSpinner spinnerBombe;
+	
+	private ModeleJeu modele;
+	private boolean accept;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			ParametreVue dialog = new ParametreVue();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
-	public ParametreVue() {
+	public ParametreVue(ModeleJeu p_modele) {
+		modele = p_modele;
+		
+		setModal(true);
+		setAccept(false);
 		setBounds(100, 100, 460, 342);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel = new JPanel();
@@ -68,20 +75,24 @@ public class ParametreVue extends JDialog {
 			
 			ButtonGroup groupe = new ButtonGroup();
 			
-			JRadioButton rbbtnDebutant = new JRadioButton("Débutant");
-			rbbtnDebutant.setSelected(true);
-			btnLayout.add(rbbtnDebutant);
-			groupe.add(rbbtnDebutant);
+			rdbtnDebutant = new JRadioButton("Débutant (9,9,10)");
+			rdbtnDebutant.setSelected(true);
+			rdbtnDebutant.addItemListener(this);
+			btnLayout.add(rdbtnDebutant);
+			groupe.add(rdbtnDebutant);
 			
-			JRadioButton rdbtnIntermediaire = new JRadioButton("Intermédiaire");
+			rdbtnIntermediaire = new JRadioButton("Intermédiaire (16,16,40)");
+			rdbtnIntermediaire.addItemListener(this);
 			btnLayout.add(rdbtnIntermediaire);
 			groupe.add(rdbtnIntermediaire);
 			
-			JRadioButton rdbtnDifficile = new JRadioButton("Difficile");
+			rdbtnDifficile = new JRadioButton("Difficile (16,30,99)");
+			rdbtnDifficile.addItemListener(this);
 			btnLayout.add(rdbtnDifficile);
 			groupe.add(rdbtnDifficile);
 			
-			JRadioButton rdbtnPersonnalise = new JRadioButton("Personnalisée");
+			rdbtnPersonnalise = new JRadioButton("Personnalisée");
+			rdbtnPersonnalise.addItemListener(this);
 			btnLayout.add(rdbtnPersonnalise);
 			groupe.add(rdbtnPersonnalise);
 			
@@ -116,10 +127,23 @@ public class ParametreVue extends JDialog {
 			spinnerBombe.setModel(modelBombe);
 			panelPerso.add(spinnerBombe);
 			
-			setEnablePerso(false);
+			setEnabledPerso(false);
 			
-			JPanel panelGrille = new JPanel();
-			tabbedPane.addTab("Grille", null, panelGrille, null);
+			JPanel panelOptions = new JPanel();
+			tabbedPane.addTab("Options", null, panelOptions, null);
+			panelOptions.setLayout(new GridLayout(5, 0, 0, 0));
+			
+			JCheckBox chckbxPlaySound = new JCheckBox("Jouer les sons");
+			panelOptions.add(chckbxPlaySound);
+			
+			JCheckBox chckbxSaveQuitGame = new JCheckBox("Sauvegarder les parties en quittant");
+			panelOptions.add(chckbxSaveQuitGame);
+			
+			JCheckBox chckbxUseQuestionMark = new JCheckBox("Utiliser la point d'interrogation");
+			panelOptions.add(chckbxUseQuestionMark);
+			
+			JCheckBox chckbxUseTime = new JCheckBox("Utiliser le temps");
+			panelOptions.add(chckbxUseTime);
 			
 			JPanel panelTheme = new JPanel();
 			tabbedPane.addTab("Thème", null, panelTheme, null);
@@ -197,24 +221,56 @@ public class ParametreVue extends JDialog {
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
+			
+			JLabel label = new JLabel("Attention votre partie sera réinitialisée");
+			buttonPane.add(label);
+			
+			okButton = new JButton("OK");
+			okButton.setActionCommand("OK");
+			okButton.addActionListener(this);
+			buttonPane.add(okButton);
+			getRootPane().setDefaultButton(okButton);
+			
+			cancelButton = new JButton("Cancel");
+			cancelButton.setActionCommand("Cancel");
+			cancelButton.addActionListener(this);
+			buttonPane.add(cancelButton);
 		}
 	}
 	
-	private void setEnablePerso(boolean coche) {
+	private void setEnabledPerso(boolean coche) {
 		panelPerso.setEnabled(coche);
 		spinnerLigne.setEnabled(coche);
 		spinnerColonne.setEnabled(coche);
 		spinnerBombe.setEnabled(coche);
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		if(e.getItemSelectable() == rdbtnPersonnalise)
+			setEnabledPerso(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == okButton) {
+			modele.setNbBombe((int) spinnerBombe.getValue());
+			modele.setNbLigne((int) spinnerLigne.getValue());
+			modele.setNbColonne((int) spinnerColonne.getValue());
+			this.setAccept(true);
+		}
+		else if(e.getSource() == cancelButton) {
+			this.setAccept(false);
+		}
+		this.setVisible(false);
+		
+	}
+
+	public boolean getAccept() {
+		return accept;
+	}
+
+	public void setAccept(boolean accept) {
+		this.accept = accept;
 	}
 }
