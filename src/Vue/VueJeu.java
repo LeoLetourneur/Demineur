@@ -40,6 +40,7 @@ public class VueJeu extends JFrame implements Observer {
 	
 	private Icon iconTete;
 	private Icon iconPerdu;
+	private Icon iconGagne;
 	
 	private ModeleJeu modele;
 	
@@ -54,8 +55,9 @@ public class VueJeu extends JFrame implements Observer {
     }
     
     private void loadIcons() {
-    	iconTete = new ImageIcon("sprite/"+ModeleJeu.themeJeu+"/tete.png");
-        iconPerdu = new ImageIcon("sprite/"+ModeleJeu.themeJeu+"/perdu.png");
+    	iconTete = new ImageIcon("sprite/"+modele.getThemeJeu()+"/tete.png");
+        iconPerdu = new ImageIcon("sprite/"+modele.getThemeJeu()+"/perdu.png");
+        iconGagne = new ImageIcon("sprite/"+modele.getThemeJeu()+"/gagne.png");
     }
 
 	public void buildFrame() {
@@ -64,6 +66,7 @@ public class VueJeu extends JFrame implements Observer {
         setSize(800, 592);
         setLocationRelativeTo(null);
         setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
     	Font font = new Font("Courier New", Font.BOLD, 30);
     	
@@ -152,7 +155,7 @@ public class VueJeu extends JFrame implements Observer {
         for(CaseModele caseM : modele.getListeCase())
         {
         	CaseVue caseVue = new CaseVue(caseM);
-        	CaseControleur caseControleur = new CaseControleur(caseM, caseVue, modele);
+        	CaseControleur caseControleur = new CaseControleur(caseM, caseVue);
             caseVue.setFont(font);
             caseVue.setForeground(Color.white);
             caseVue.addMouseListener(caseControleur);
@@ -164,20 +167,26 @@ public class VueJeu extends JFrame implements Observer {
 	public void update(Observable o, Object arg) {
 		if(arg != null && arg.equals("ChangeTheme")){
 			loadIcons();
-			if(modele.getEtat() != VarCommun.etatJeu.PERDU.value)
-				btnTete.setIcon(iconTete);
-			else
-				btnTete.setIcon(iconPerdu);
 		}
 		
-		if(modele.getEtat() != VarCommun.etatJeu.PERDU.value) {
+		if(modele.getEtat() == VarCommun.etatJeu.ENJEU.value) {
 			bombeRestante.setText(modele.getNbBombe()+"");
 			temps.setText(modele.getSecondes()+"");
 		}
-		else {
-			modele.getTimer().stop();
-			btnTete.setIcon(iconPerdu);
-			JOptionPane.showMessageDialog(null, "Vous avez perdu");
+		
+		if(!modele.isFini()) {
+			if(modele.getEtat() == VarCommun.etatJeu.PERDU.value) {
+				modele.setFini(true);
+				modele.getTimer().stop();
+				btnTete.setIcon(iconPerdu);
+				JOptionPane.showMessageDialog(null, "Vous avez perdu");
+			}
+			else if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value) {
+				modele.setFini(true);
+				modele.getTimer().stop();
+				btnTete.setIcon(iconGagne);
+				JOptionPane.showMessageDialog(null, "Vous avez gagné");
+			}
 		}
 	}
 }

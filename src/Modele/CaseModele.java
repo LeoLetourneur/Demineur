@@ -12,8 +12,10 @@ public class CaseModele extends Observable {
 	private int nbBombeVoisin;
 	private boolean changeTheme;
 	private ArrayList<CaseModele> caseVoisines;
+	
+	private ModeleJeu modeleJeu;
 
-	public CaseModele(int p_numero) {
+	public CaseModele(int p_numero, ModeleJeu p_modeleJeu) {
 		super();
 		setChangeTheme(false);
 		setIndex(p_numero);
@@ -21,6 +23,7 @@ public class CaseModele extends Observable {
 		setValeur(VarCommun.typeCase.EMPTY.value);
 		setEtat(VarCommun.etatCase.COVER.value);
 		setVoisins(new ArrayList<CaseModele>());
+		setModeleJeu(p_modeleJeu);
 	}
 	
 	public void sAjouterAuxVoisins(ArrayList<CaseModele> listeCase){
@@ -98,6 +101,8 @@ public class CaseModele extends Observable {
 	}
 
 	public void setEtat(int etat) {
+		if( etat == VarCommun.etatCase.DISCOVER.value)
+			modeleJeu.setNbCasesRetournees(modeleJeu.getNbCasesRetournees()+1);
 		this.etat = etat;
 		setChanged();
 		notifyObservers();
@@ -122,5 +127,13 @@ public class CaseModele extends Observable {
 
 	public void setChangeTheme(boolean changeTheme) {
 		this.changeTheme = changeTheme;
+	}
+
+	public ModeleJeu getModeleJeu() {
+		return modeleJeu;
+	}
+
+	public void setModeleJeu(ModeleJeu modeleJeu) {
+		this.modeleJeu = modeleJeu;
 	}
 }

@@ -15,7 +15,9 @@ public class ModeleJeu extends Observable {
 	private int secondes;
 	private Boolean premierTour;
 	private int etat;
-	public static VarCommun.themeJeu themeJeu;
+	private VarCommun.themeJeu themeJeu;
+	private int nbCasesRetournes;
+	private boolean fini;
 	
 	public ModeleJeu() {
 		
@@ -24,6 +26,8 @@ public class ModeleJeu extends Observable {
 	
 	public void initialiser() {
 		themeJeu = VarCommun.themeJeu.Mario;
+		nbCasesRetournes = 0;
+		setFini(false);
 		setSecondes(0);
 		setPremierTour(true);
 		setNbBombe(0);
@@ -38,7 +42,7 @@ public class ModeleJeu extends Observable {
 		ArrayList<Integer> listeCaseVide = new ArrayList<Integer>();
 		
 		for(int i=0; i<nbCase; i++) {
-			CaseModele caseModele = new CaseModele(i);
+			CaseModele caseModele = new CaseModele(i, this);
 			listeCase.add(caseModele);
 			caseModele.sAjouterAuxVoisins(listeCase);
 			listeCaseVide.add(i);
@@ -125,7 +129,7 @@ public class ModeleJeu extends Observable {
 	}
 
 	public void setThemeJeu(VarCommun.themeJeu themeJeu) {
-		ModeleJeu.themeJeu = themeJeu;
+		this.themeJeu = themeJeu;
 		for(CaseModele caseMode : getListeCase()) {
 			caseMode.setChangeTheme(true);
 			caseMode.setEtat(caseMode.getEtat());
@@ -133,5 +137,24 @@ public class ModeleJeu extends Observable {
 		setChanged();
 		notifyObservers("ChangeTheme");
 	}
+	
+	public int getNbCasesRetournees() {
+		return nbCasesRetournes;
+	}
 
+	public void setNbCasesRetournees(int p_nbCasesRetournes) {
+		this.nbCasesRetournes = p_nbCasesRetournes;
+		if(nbCasesRetournes == Math.pow(VarCommun.NB_CASE,2) - VarCommun.NB_BOMBE)
+			setEtat(VarCommun.etatJeu.GAGNE.value);
+		setChanged();
+		notifyObservers("ChangeTheme");
+	}
+
+	public boolean isFini() {
+		return fini;
+	}
+
+	public void setFini(boolean fini) {
+		this.fini = fini;
+	}
 }

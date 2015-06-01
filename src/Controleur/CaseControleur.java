@@ -6,24 +6,21 @@ import java.util.ArrayList;
 
 import Commun.VarCommun;
 import Modele.CaseModele;
-import Modele.ModeleJeu;
 import Vue.CaseVue;
 
 public class CaseControleur implements MouseListener {
 
 	private CaseModele modele;
 	private CaseVue vue;
-	private ModeleJeu modeleJeu;
 	
-	public CaseControleur(CaseModele p_modele, CaseVue p_vue, ModeleJeu p_modeleJeu) {
+	public CaseControleur(CaseModele p_modele, CaseVue p_vue) {
 		setModele(p_modele);
 		setVue(p_vue);
-		setModeleJeu(p_modeleJeu);
 	}
 
 	public void switchCaseBombe() {
 		System.out.println("Case bombe switchée");
-		modeleJeu.setPremierTour(false);
+		modele.getModeleJeu().setPremierTour(false);
 		
 		//Si il n'y à que des bombes à coté de la case, pas de switch
 		if(modele.getNbBombeVoisin() == modele.getVoisins().size())
@@ -52,11 +49,14 @@ public class CaseControleur implements MouseListener {
 	}
 	
 	public void mouseClicked(MouseEvent e) {
+		if(modele.getModeleJeu().isFini())
+			return;
+		
 		if(e.getButton() == MouseEvent.BUTTON1) {
 			if(modele.getEtat() == VarCommun.etatCase.COVER.value)
 			{
 				
-				if(modeleJeu.isPremierTour() 
+				if(modele.getModeleJeu().isPremierTour() 
 				&& modele.getValeur() == VarCommun.typeCase.BOMB.value) {
 					switchCaseBombe();
 				}
@@ -65,22 +65,22 @@ public class CaseControleur implements MouseListener {
 					modele.setEtat(VarCommun.etatCase.DISCOVER.value);
 					if(modele.getNbBombeVoisin() == 0)
 						modele.retournerVoisin();
-					if(modeleJeu.isPremierTour())
-						modeleJeu.setPremierTour(false);
+					if(modele.getModeleJeu().isPremierTour())
+						modele.getModeleJeu().setPremierTour(false);
 						
 				}
 				else
-					modeleJeu.setEtat(VarCommun.etatJeu.PERDU.value);
+					modele.getModeleJeu().setEtat(VarCommun.etatJeu.PERDU.value);
 			}
 		}
 		else if(e.getButton() == MouseEvent.BUTTON3) {
 			if(modele.getEtat() == VarCommun.etatCase.COVER.value) {
 				modele.setEtat(VarCommun.etatCase.FLAG.value);
-				modeleJeu.setNbBombe(modeleJeu.getNbBombe()-1);
+				modele.getModeleJeu().setNbBombe(modele.getModeleJeu().getNbBombe()-1);
 			}
 			else if(modele.getEtat() == VarCommun.etatCase.FLAG.value) {
 				modele.setEtat(VarCommun.etatCase.QUESTION.value);
-				modeleJeu.setNbBombe(modeleJeu.getNbBombe()+1);
+				modele.getModeleJeu().setNbBombe(modele.getModeleJeu().getNbBombe()+1);
 			}
 			else if(modele.getEtat() == VarCommun.etatCase.QUESTION.value)
 				modele.setEtat(VarCommun.etatCase.COVER.value);
@@ -110,13 +110,4 @@ public class CaseControleur implements MouseListener {
 	public void setVue(CaseVue vue) {
 		this.vue = vue;
 	}
-
-	public ModeleJeu getModeleJeu() {
-		return modeleJeu;
-	}
-
-	public void setModeleJeu(ModeleJeu modeleJeu) {
-		this.modeleJeu = modeleJeu;
-	}
-
 }

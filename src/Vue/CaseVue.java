@@ -1,5 +1,6 @@
 package Vue;
 
+import java.awt.Insets;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -10,7 +11,6 @@ import javax.swing.SwingConstants;
 
 import Commun.VarCommun;
 import Modele.CaseModele;
-import Modele.ModeleJeu;
 
 
 public class CaseVue extends JButton implements Observer {
@@ -34,14 +34,15 @@ public class CaseVue extends JButton implements Observer {
 		this.setIcon(iconCase);
         this.setIconTextGap( - iconCase.getIconWidth() );
         this.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.setMargin(new Insets(0,0,0,0));
 	}
 	
     private void loadIcon() {
-		iconCase = new ImageIcon("sprite/"+ModeleJeu.themeJeu+"/case.png");
-		iconVide = new ImageIcon("sprite/"+ModeleJeu.themeJeu+"/vide.png");
-		iconBombe = new ImageIcon("sprite/"+ModeleJeu.themeJeu+"/bombe.png");
-		iconDrapeau = new ImageIcon("sprite/"+ModeleJeu.themeJeu+"/drapeau.png");
-		iconQuestion = new ImageIcon("sprite/"+ModeleJeu.themeJeu+"/question.png");
+		iconCase = new ImageIcon("sprite/"+modele.getModeleJeu().getThemeJeu()+"/case.png");
+		iconVide = new ImageIcon("sprite/"+modele.getModeleJeu().getThemeJeu()+"/vide.png");
+		iconBombe = new ImageIcon("sprite/"+modele.getModeleJeu().getThemeJeu()+"/bombe.png");
+		iconDrapeau = new ImageIcon("sprite/"+modele.getModeleJeu().getThemeJeu()+"/drapeau.png");
+		iconQuestion = new ImageIcon("sprite/"+modele.getModeleJeu().getThemeJeu()+"/question.png");
 	}
 
 	public CaseModele getModele() {
@@ -69,7 +70,7 @@ public class CaseVue extends JButton implements Observer {
 						this.setText(modele.getNbBombeVoisin()+"");
 				}
 				else
-					this.setIcon(iconBombe);
+				this.setIcon(iconBombe);
 			    break;
 			case 2 :
 				this.setIcon(iconDrapeau);
