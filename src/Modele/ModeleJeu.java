@@ -12,16 +12,16 @@ public class ModeleJeu extends Observable {
 	private int nbColonne;
 	private int nbLigne;
 	private int nbBombe;
-	
-	private ArrayList<CaseModele> listeCase;
-	private int nbBombeRestante;
 	private Timer timer;
 	private int secondes;
-	private Boolean premierTour;
+	private int nbBombeRestante;
+	private int nbCasesRetournes;
 	private int etat;
 	private VarCommun.themeJeu themeJeu;
-	private int nbCasesRetournes;
+	private Boolean premierTour;
 	private boolean fini;
+	
+	private ArrayList<CaseModele> listeCase;
 	
 	public ModeleJeu() {
 		
