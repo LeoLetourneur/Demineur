@@ -105,15 +105,12 @@ public class VueJeu extends JFrame implements Observer {
     	
     	mntmPacman = new JMenuItem("Pacman");
     	mnTheme.add(mntmPacman);
-    	bombeRestante = new JLabel("80");
+    	bombeRestante = new JLabel(modele.getNbBombe()+"");
     	bombeRestante.setFont(font);
     	bombeRestante.setHorizontalAlignment(SwingConstants.CENTER);
     	temps = new JLabel("0");
     	temps.setFont(font);
     	temps.setHorizontalAlignment(SwingConstants.CENTER);
-    	
-        panelCases = new JPanel (new GridLayout(VarCommun.NB_CASE, VarCommun.NB_CASE));
-        panelCases.setBounds(192, 86, 28 * VarCommun.NB_CASE, 28 * VarCommun.NB_CASE);
         
         panelTexte = new JPanel (new GridLayout(1, 3));
         panelTexte.setBounds(6, 10, 788, 64);
@@ -121,7 +118,6 @@ public class VueJeu extends JFrame implements Observer {
         Component horizontalStrut_2 = Box.createHorizontalStrut(20);
         panelTexte.add(horizontalStrut_2);
         panelTexte.add(bombeRestante);
-        
         Component horizontalStrut = Box.createHorizontalStrut(20);
         panelTexte.add(horizontalStrut);
         
@@ -129,18 +125,19 @@ public class VueJeu extends JFrame implements Observer {
         btnTete.setIcon(iconTete);
         btnTete.setHorizontalAlignment(SwingConstants.CENTER);
         panelTexte.add(btnTete);
-        
         Component horizontalStrut_1 = Box.createHorizontalStrut(20);
         panelTexte.add(horizontalStrut_1);
         panelTexte.add(temps);
+        Component horizontalStrut_3 = Box.createHorizontalStrut(20);
+        panelTexte.add(horizontalStrut_3);
+        
+        panelCases = new JPanel (new GridLayout(VarCommun.NB_CASE, VarCommun.NB_CASE));
+        panelCases.setBounds(192, 86, 28 * VarCommun.NB_CASE, 28 * VarCommun.NB_CASE);
         
         container = new JPanel();
         container.setLayout(null);
-        container.add(panelCases);
         container.add(panelTexte);
-        
-        Component horizontalStrut_3 = Box.createHorizontalStrut(20);
-        panelTexte.add(horizontalStrut_3);
+        container.add(panelCases);
         setContentPane(container);
         
         chargerJeu();
@@ -149,6 +146,8 @@ public class VueJeu extends JFrame implements Observer {
 	public void chargerJeu()
 	{
 		bombeRestante.setText(modele.getNbBombe()+"");
+		temps.setText(modele.getSecondes()+"");
+		btnTete.setIcon(iconTete);
         Font font = new Font("Courier New", Font.BOLD, 14);
         
         panelCases.removeAll();
@@ -161,12 +160,19 @@ public class VueJeu extends JFrame implements Observer {
             caseVue.addMouseListener(caseControleur);
             panelCases.add(caseVue);
         }
+        repaint();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		if(arg != null && arg.equals("ChangeTheme")){
 			loadIcons();
+			if(modele.getEtat() == VarCommun.etatJeu.PERDU.value)
+				btnTete.setIcon(iconPerdu);
+			else if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value)
+				btnTete.setIcon(iconGagne);
+			else
+				btnTete.setIcon(iconTete);
 		}
 		
 		if(modele.getEtat() == VarCommun.etatJeu.ENJEU.value) {
@@ -185,7 +191,7 @@ public class VueJeu extends JFrame implements Observer {
 				modele.setFini(true);
 				modele.getTimer().stop();
 				btnTete.setIcon(iconGagne);
-				JOptionPane.showMessageDialog(null, "Vous avez gagné");
+				JOptionPane.showMessageDialog(null, "Vous avez gagnÃ©");
 			}
 		}
 	}

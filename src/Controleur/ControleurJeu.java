@@ -38,6 +38,7 @@ public class ControleurJeu implements ActionListener {
 	{
 		if(e.getSource() == vue.mntmNouvellePartie) {
 			System.out.println("Rejouer");
+			modele.getTimer().stop();
 			modele.construireCases();
 			vue.chargerJeu();
 		}
@@ -55,6 +56,8 @@ public class ControleurJeu implements ActionListener {
 		}
 		else if(e.getSource() == vue.mntmParametres) {
 			System.out.println("Parametre");
+			ParametreVue pv = new ParametreVue();
+			pv.setVisible(true);
 		}
 		else if(e.getSource() == modele.getTimer()) {
 			modele.setSecondes(modele.getSecondes()+1);

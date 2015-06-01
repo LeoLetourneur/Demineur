@@ -21,17 +21,17 @@ public class ModeleJeu extends Observable {
 	
 	public ModeleJeu() {
 		
+		themeJeu = VarCommun.themeJeu.Mario;
 		construireCases();
 	}
 	
 	public void initialiser() {
-		themeJeu = VarCommun.themeJeu.Mario;
+		setEtat(VarCommun.etatJeu.DEBUT.value);
 		setNbCasesRetournees(0);
 		setFini(false);
 		setSecondes(0);
 		setPremierTour(true);
 		setNbBombe(0);
-		setEtat(VarCommun.etatJeu.DEBUT.value);
 		setListeCase(new ArrayList<CaseModele>());
 	}
 
@@ -152,7 +152,7 @@ public class ModeleJeu extends Observable {
 		if(nbCasesRetournes == Math.pow(VarCommun.NB_CASE,2) - VarCommun.NB_BOMBE)
 			setEtat(VarCommun.etatJeu.GAGNE.value);
 		setChanged();
-		notifyObservers("ChangeTheme");
+		notifyObservers();
 	}
 
 	public boolean isFini() {
