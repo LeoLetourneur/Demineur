@@ -81,11 +81,11 @@ public class CaseControleur implements MouseListener {
 		else if(e.getButton() == MouseEvent.BUTTON3) {
 			if(modele.getEtat() == VarCommun.etatCase.COVER.value) {
 				modele.setEtat(VarCommun.etatCase.FLAG.value);
-				modele.getModeleJeu().setNbBombe(modele.getModeleJeu().getNbBombe()-1);
+				modele.getModeleJeu().setNbBombeRestante(modele.getModeleJeu().getNbBombeRestante()-1);
 			}
 			else if(modele.getEtat() == VarCommun.etatCase.FLAG.value) {
 				modele.setEtat(VarCommun.etatCase.QUESTION.value);
-				modele.getModeleJeu().setNbBombe(modele.getModeleJeu().getNbBombe()+1);
+				modele.getModeleJeu().setNbBombeRestante(modele.getModeleJeu().getNbBombeRestante()+1);
 			}
 			else if(modele.getEtat() == VarCommun.etatCase.QUESTION.value)
 				modele.setEtat(VarCommun.etatCase.COVER.value);

@@ -9,8 +9,12 @@ import Commun.VarCommun;
 
 public class ModeleJeu extends Observable {
 
-	private ArrayList<CaseModele> listeCase;
+	private int nbColonne;
+	private int nbLigne;
 	private int nbBombe;
+	
+	private ArrayList<CaseModele> listeCase;
+	private int nbBombeRestante;
 	private Timer timer;
 	private int secondes;
 	private Boolean premierTour;
@@ -22,16 +26,20 @@ public class ModeleJeu extends Observable {
 	public ModeleJeu() {
 		
 		themeJeu = VarCommun.themeJeu.Mario;
+		setNbColonne(10);
+		setNbLigne(10);
+		setNbBombe(10);
 		construireCases();
 	}
 	
 	public void initialiser() {
+		
 		setEtat(VarCommun.etatJeu.DEBUT.value);
 		setNbCasesRetournees(0);
 		setFini(false);
 		setSecondes(0);
 		setPremierTour(true);
-		setNbBombe(0);
+		setNbBombeRestante(0);
 		setListeCase(new ArrayList<CaseModele>());
 	}
 
@@ -39,7 +47,7 @@ public class ModeleJeu extends Observable {
 		
 		initialiser();
 		
-		int nbCase = (int) Math.pow(VarCommun.NB_CASE, 2);
+		int nbCase = nbLigne*nbColonne;
 		ArrayList<Integer> listeCaseVide = new ArrayList<Integer>();
 		
 		for(int i=0; i<nbCase; i++) {
@@ -51,14 +59,14 @@ public class ModeleJeu extends Observable {
 		
 		Random rnd = new Random();
 		int random;
-		while(nbBombe<VarCommun.NB_BOMBE) {
+		while(nbBombeRestante<nbBombe) {
 			random = rnd.nextInt(listeCaseVide.size());
 			if(listeCase.get(listeCaseVide.get(random)).getValeur() == 1)
 				System.out.println("ERROR : Déjà à 1");
 			listeCase.get(listeCaseVide.get(random)).setValeur(1);
 			listeCase.get(listeCaseVide.get(random)).incrementerVoisin(1);
 			listeCaseVide.remove(random);
-			nbBombe++;
+			nbBombeRestante++;
 		}
 	}
 	
@@ -77,12 +85,12 @@ public class ModeleJeu extends Observable {
 		this.listeCase = listeCase;
 	}
 	
-	public int getNbBombe() {
-		return nbBombe;
+	public int getNbBombeRestante() {
+		return nbBombeRestante;
 	}
 
-	public void setNbBombe(int nbBombe) {
-		this.nbBombe = nbBombe;
+	public void setNbBombeRestante(int nbBombe) {
+		this.nbBombeRestante = nbBombe;
 		setChanged();
 		notifyObservers();
 	}
@@ -149,7 +157,7 @@ public class ModeleJeu extends Observable {
 
 	public void setNbCasesRetournees(int p_nbCasesRetournes) {
 		this.nbCasesRetournes = p_nbCasesRetournes;
-		if(nbCasesRetournes == Math.pow(VarCommun.NB_CASE,2) - VarCommun.NB_BOMBE)
+		if(nbCasesRetournes == ( nbLigne * nbColonne ) - nbBombe)
 			setEtat(VarCommun.etatJeu.GAGNE.value);
 		setChanged();
 		notifyObservers();
@@ -161,5 +169,29 @@ public class ModeleJeu extends Observable {
 
 	public void setFini(boolean fini) {
 		this.fini = fini;
+	}
+	
+	public int getNbColonne() {
+		return nbColonne;
+	}
+
+	public void setNbColonne(int nbLigne) {
+		this.nbColonne = nbLigne;
+	}
+
+	public int getNbLigne() {
+		return nbLigne;
+	}
+
+	public void setNbLigne(int nbColonne) {
+		this.nbLigne = nbColonne;
+	}
+
+	public int getNbBombe() {
+		return nbBombe;
+	}
+
+	public void setNbBombe(int nbBombe) {
+		this.nbBombe = nbBombe;
 	}
 }

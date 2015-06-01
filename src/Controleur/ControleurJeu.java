@@ -45,7 +45,7 @@ public class ControleurJeu implements ActionListener {
 		else if(e.getSource() == vue.mntmDecouvrir) {
 			System.out.println("Découvrir");
 			modele.setFini(true);
-			for(int i=0;i<Math.pow(VarCommun.NB_CASE,2);i++)
+			for(int i=0;i<(modele.getNbColonne()*modele.getNbLigne());i++)
 			{
 				modele.getListeCase().get(i).setEtat(VarCommun.etatCase.DISCOVER.value);
 			}
