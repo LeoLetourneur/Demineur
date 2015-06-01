@@ -3,7 +3,7 @@ package Commun;
 public class VarCommun {
 
 	public final static int NB_CASE = 15;
-	public final static int NB_BOMBE = 1;
+	public final static int NB_BOMBE = 10;
 	
 	public static enum typeCase { 
 		EMPTY("empty",0), BOMB("bombe",1);

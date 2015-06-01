@@ -61,13 +61,10 @@ public class CaseModele extends Observable {
 	
 	public void retournerVoisin() {
 		for(CaseModele caseVoisine : caseVoisines) {
-			if(caseVoisine.getNbBombeVoisin() == 0
-			&& caseVoisine.getEtat() != VarCommun.etatCase.DISCOVER.value){
+			if(caseVoisine.getEtat() != VarCommun.etatCase.DISCOVER.value) {
 				caseVoisine.setEtat(VarCommun.etatCase.DISCOVER.value);
-				caseVoisine.retournerVoisin();
-			}
-			else {
-				caseVoisine.setEtat(VarCommun.etatCase.DISCOVER.value);
+				if(caseVoisine.getNbBombeVoisin() == 0)
+					caseVoisine.retournerVoisin();
 			}
 		}
 	}
@@ -101,7 +98,7 @@ public class CaseModele extends Observable {
 	}
 
 	public void setEtat(int etat) {
-		if( etat == VarCommun.etatCase.DISCOVER.value)
+		if( etat == VarCommun.etatCase.DISCOVER.value && valeur == VarCommun.typeCase.EMPTY.value )
 			modeleJeu.setNbCasesRetournees(modeleJeu.getNbCasesRetournees()+1);
 		this.etat = etat;
 		setChanged();

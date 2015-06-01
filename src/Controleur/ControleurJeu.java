@@ -31,7 +31,6 @@ public class ControleurJeu implements ActionListener {
 		vue.mntmPacman.addActionListener(this);
 		
 		modele.setTimer(new Timer(1000, this));
-		modele.getTimer().start();
 	}
 
 	@Override

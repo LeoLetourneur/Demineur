@@ -55,22 +55,20 @@ public class CaseControleur implements MouseListener {
 		if(e.getButton() == MouseEvent.BUTTON1) {
 			if(modele.getEtat() == VarCommun.etatCase.COVER.value)
 			{
-				
 				if(modele.getModeleJeu().isPremierTour() 
 				&& modele.getValeur() == VarCommun.typeCase.BOMB.value) {
 					switchCaseBombe();
 				}
 				
-				if(modele.getValeur() == VarCommun.typeCase.EMPTY.value) {
+				if(modele.getValeur() == VarCommun.typeCase.BOMB.value)
+					modele.getModeleJeu().setEtat(VarCommun.etatJeu.PERDU.value);
+				else {
 					modele.setEtat(VarCommun.etatCase.DISCOVER.value);
 					if(modele.getNbBombeVoisin() == 0)
 						modele.retournerVoisin();
 					if(modele.getModeleJeu().isPremierTour())
 						modele.getModeleJeu().setPremierTour(false);
-						
 				}
-				else
-					modele.getModeleJeu().setEtat(VarCommun.etatJeu.PERDU.value);
 			}
 		}
 		else if(e.getButton() == MouseEvent.BUTTON3) {

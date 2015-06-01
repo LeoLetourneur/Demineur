@@ -26,11 +26,12 @@ public class ModeleJeu extends Observable {
 	
 	public void initialiser() {
 		themeJeu = VarCommun.themeJeu.Mario;
-		nbCasesRetournes = 0;
+		setNbCasesRetournees(0);
 		setFini(false);
 		setSecondes(0);
 		setPremierTour(true);
 		setNbBombe(0);
+		setEtat(VarCommun.etatJeu.DEBUT.value);
 		setListeCase(new ArrayList<CaseModele>());
 	}
 
@@ -110,6 +111,10 @@ public class ModeleJeu extends Observable {
 
 	public void setPremierTour(Boolean premierTour) {
 		this.premierTour = premierTour;
+		if(premierTour == false) {
+			setEtat(VarCommun.etatJeu.ENJEU.value);
+			timer.start();
+		}
 	}
 
 	public int getEtat() {
