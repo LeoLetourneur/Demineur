@@ -7,7 +7,7 @@ import javax.swing.Timer;
 
 import Commun.VarCommun;
 
-public class ModeleJeu extends Observable {
+public class JeuModele extends Observable {
 
 	private int nbColonne;
 	private int nbLigne;
@@ -18,16 +18,35 @@ public class ModeleJeu extends Observable {
 	private int nbCasesRetournes;
 	private int etat;
 	private VarCommun.themeJeu themeJeu;
-	private Boolean premierTour;
+	private boolean premierTour;
 	private boolean fini;
+	private boolean allowQuestion;
+	private boolean allowFlag;
+	private boolean allowTime;
 	private ArrayList<CaseModele> listeCase;
 	
-	public ModeleJeu() {
+	
+	public JeuModele() {
 		
 		themeJeu = VarCommun.themeJeu.Mario;
+		setAllowFlag(true);
+		setAllowQuestion(true);
+		setAllowTime(true);
 		setNbColonne(9);
 		setNbLigne(9);
 		setNbBombe(10);
+		construireCases();
+	}
+	
+	public JeuModele(int nbLigne, int nbColonne, int nbBombe) {
+		
+		themeJeu = VarCommun.themeJeu.Mario;
+		setAllowFlag(true);
+		setAllowQuestion(true);
+		setAllowTime(true);
+		setNbColonne(nbColonne);
+		setNbLigne(nbLigne);
+		setNbBombe(nbBombe);
 		construireCases();
 	}
 	
@@ -133,7 +152,7 @@ public class ModeleJeu extends Observable {
 
 	public void setPremierTour(Boolean premierTour) {
 		this.premierTour = premierTour;
-		if(premierTour == false) {
+		if(premierTour == false && !(this instanceof JeuModeleDJ)) {
 			setEtat(VarCommun.etatJeu.ENJEU.value);
 			timer.start();
 		}
@@ -207,5 +226,29 @@ public class ModeleJeu extends Observable {
 
 	public void setNbBombe(int nbBombe) {
 		this.nbBombe = nbBombe;
+	}
+
+	public boolean isAllowQuestion() {
+		return allowQuestion;
+	}
+
+	public void setAllowQuestion(boolean allowQuestion) {
+		this.allowQuestion = allowQuestion;
+	}
+
+	public boolean isAllowFlag() {
+		return allowFlag;
+	}
+
+	public void setAllowFlag(boolean allowFlag) {
+		this.allowFlag = allowFlag;
+	}
+
+	public boolean isAllowTime() {
+		return allowTime;
+	}
+
+	public void setAllowTime(boolean allowTime) {
+		this.allowTime = allowTime;
 	}
 }

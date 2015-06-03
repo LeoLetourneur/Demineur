@@ -26,7 +26,7 @@ import javax.swing.JSpinner;
 import javax.swing.JCheckBox;
 
 import Commun.VarCommun;
-import Modele.ModeleJeu;
+import Modele.JeuModele;
 
 public class ParametreVue extends JDialog implements ItemListener, ActionListener {
 	private static final long serialVersionUID = 504012887671145390L;
@@ -46,15 +46,23 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 	private JSpinner spinnerColonne;
 	private JSpinner spinnerBombe;
 	
-	private ModeleJeu modele;
+	JCheckBox chckbxPlaySound;
+	JCheckBox chckbxSaveQuitGame;
+	JCheckBox chckbxUseQuestionMark;
+	JCheckBox chckbxUseTime;
+	
+	private JeuModele modele;
 	private boolean accept;
 
-	public ParametreVue(ModeleJeu p_modele) {
+	public ParametreVue(JeuModele p_modele) {
 		modele = p_modele;
 		
 		setModal(true);
 		setAccept(false);
-		setBounds(100, 100, 460, 342);
+		setTitle("Paramètres");
+		setLocationRelativeTo(null);
+        setResizable(false);
+		setSize(460, 342);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel = new JPanel();
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -134,16 +142,18 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 			tabbedPane.addTab("Options", null, panelOptions, null);
 			panelOptions.setLayout(new GridLayout(5, 0, 0, 0));
 			
-			JCheckBox chckbxPlaySound = new JCheckBox("Jouer les sons");
+			chckbxPlaySound = new JCheckBox("Jouer les sons");
 			panelOptions.add(chckbxPlaySound);
 			
-			JCheckBox chckbxSaveQuitGame = new JCheckBox("Sauvegarder les parties en quittant");
+			chckbxSaveQuitGame = new JCheckBox("Sauvegarder les parties en quittant");
 			panelOptions.add(chckbxSaveQuitGame);
 			
-			JCheckBox chckbxUseQuestionMark = new JCheckBox("Utiliser la point d'interrogation");
+			chckbxUseQuestionMark = new JCheckBox("Utiliser la point d'interrogation");
+			chckbxUseQuestionMark.setSelected(true);
 			panelOptions.add(chckbxUseQuestionMark);
 			
-			JCheckBox chckbxUseTime = new JCheckBox("Utiliser le temps");
+			chckbxUseTime = new JCheckBox("Utiliser le temps");
+			chckbxUseTime.setSelected(true);
 			panelOptions.add(chckbxUseTime);
 			
 			JPanel panelTheme = new JPanel();
@@ -275,6 +285,9 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 				modele.setNbColonne((int) spinnerColonne.getValue());
 				modele.setNbBombe((int) spinnerBombe.getValue());
 			}
+			
+			modele.setAllowQuestion(this.chckbxUseQuestionMark.isSelected());
+			modele.setAllowTime(this.chckbxUseTime.isSelected());
 			this.setAccept(true);
 		}
 		else if(e.getSource() == cancelButton) {

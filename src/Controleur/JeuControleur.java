@@ -6,17 +6,16 @@ import javax.swing.JMenuItem;
 import javax.swing.Timer;
 
 import Commun.VarCommun;
-import Modele.ModeleJeu;
+import Modele.JeuModele;
 import Vue.ParametreVue;
-import Vue.VueJeu;
+import Vue.JeuVue;
 
+public class JeuControleur implements ActionListener {
 
-public class ControleurJeu implements ActionListener {
-
-	ModeleJeu modele;
-    VueJeu vue;
+	JeuModele modele;
+    JeuVue vue;
     
-	public ControleurJeu(ModeleJeu p_model, VueJeu p_view) {
+	public JeuControleur(JeuModele p_model, JeuVue p_view) {
 		modele = p_model;
 		vue = p_view;
 		
@@ -53,13 +52,16 @@ public class ControleurJeu implements ActionListener {
 			ParametreVue pv = new ParametreVue(modele);
 			pv.setVisible(true);
 			if(pv.isAccept()) {
+				if(!modele.isAllowTime())
+					vue.getLabelDroit().setVisible(false);
 				modele.construireCases();
 				vue.chargerJeu();
+				vue.chargerCase();
 				vue.repaint();
 			}
 			pv.dispose();
 		}
-		else if(e.getSource() == modele.getTimer()) {
+		else if(e.getSource() instanceof Timer) {
 			modele.setSecondes(modele.getSecondes()+1);
 		}
 		else

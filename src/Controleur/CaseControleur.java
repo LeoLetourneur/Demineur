@@ -68,8 +68,9 @@ public class CaseControleur implements MouseListener {
 				switchCaseBombe();
 			}
 			
-			if(modele.getValeur() == VarCommun.typeCase.BOMB.value)
+			if(modele.getValeur() == VarCommun.typeCase.BOMB.value) {
 				modele.getModeleJeu().setEtat(VarCommun.etatJeu.PERDU.value);
+			}
 			else {
 				modele.setEtat(VarCommun.etatCase.DISCOVER.value);
 				if(modele.getNbBombeVoisin() == 0)
@@ -79,12 +80,18 @@ public class CaseControleur implements MouseListener {
 			}
 		}
 		else if(e.getButton() == MouseEvent.BUTTON3) {
+			if(!modele.getModeleJeu().isAllowFlag() && !modele.getModeleJeu().isAllowQuestion())
+				return;
+			
 			if(modele.getEtat() == VarCommun.etatCase.COVER.value) {
 				modele.setEtat(VarCommun.etatCase.FLAG.value);
 				modele.getModeleJeu().setNbBombeRestante(modele.getModeleJeu().getNbBombeRestante()-1);
 			}
 			else if(modele.getEtat() == VarCommun.etatCase.FLAG.value) {
-				modele.setEtat(VarCommun.etatCase.QUESTION.value);
+				if(modele.getModeleJeu().isAllowQuestion())
+					modele.setEtat(VarCommun.etatCase.QUESTION.value);
+				else
+					modele.setEtat(VarCommun.etatCase.COVER.value);
 				modele.getModeleJeu().setNbBombeRestante(modele.getModeleJeu().getNbBombeRestante()+1);
 			}
 			else if(modele.getEtat() == VarCommun.etatCase.QUESTION.value)

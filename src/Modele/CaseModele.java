@@ -13,9 +13,9 @@ public class CaseModele extends Observable {
 	private boolean changeTheme;
 	private ArrayList<CaseModele> caseVoisines;
 	
-	private ModeleJeu modeleJeu;
+	private JeuModele modeleJeu;
 
-	public CaseModele(int p_numero, ModeleJeu p_modeleJeu) {
+	public CaseModele(int p_numero, JeuModele p_modeleJeu) {
 		super();
 		setChangeTheme(false);
 		setIndex(p_numero);
@@ -135,11 +135,11 @@ public class CaseModele extends Observable {
 		this.changeTheme = changeTheme;
 	}
 
-	public ModeleJeu getModeleJeu() {
+	public JeuModele getModeleJeu() {
 		return modeleJeu;
 	}
 
-	public void setModeleJeu(ModeleJeu modeleJeu) {
+	public void setModeleJeu(JeuModele modeleJeu) {
 		this.modeleJeu = modeleJeu;
 	}
 }

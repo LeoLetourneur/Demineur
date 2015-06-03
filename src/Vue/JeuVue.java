@@ -10,20 +10,20 @@ import javax.swing.*;
 import Commun.VarCommun;
 import Controleur.CaseControleur;
 import Modele.CaseModele;
-import Modele.ModeleJeu;
+import Modele.JeuModele;
 
 import java.awt.Component;
 
-public class VueJeu extends JFrame implements Observer {
+public class JeuVue extends JFrame implements Observer {
 	private static final long serialVersionUID = 3267840040749382412L;
 	
-	private JPanel container;
-	private JPanel panelCases;
-	private JPanel panelTexte;
+	protected JPanel container;
+	protected JPanel panelCases;
+	protected JPanel panelTexte;
 	
-	private JLabel bombeRestante;
-	private JLabel temps;
-	private JLabel btnTete;
+	protected JLabel labelGauche;
+	protected JLabel labelDroit;
+	protected JLabel iconeMilieu;
 	
 	private JMenuBar menuBar;
 	private JMenu mnMenu;
@@ -38,14 +38,13 @@ public class VueJeu extends JFrame implements Observer {
 	public JMenuItem mntmGolf;
 	public JMenuItem mntmPacman;
 	
-	private Icon iconTete;
-	private Icon iconPerdu;
-	private Icon iconGagne;
+	protected Icon iconTete;
+	protected Icon iconPerdu;
+	protected Icon iconGagne;
 	
-	private ModeleJeu modele;
-	
-	
-    public VueJeu(ModeleJeu p_model) {
+	protected JeuModele modele;
+
+	public JeuVue(JeuModele p_model) {
         super();
         modele = p_model;
         modele.addObserver(this);
@@ -54,7 +53,7 @@ public class VueJeu extends JFrame implements Observer {
         buildFrame();
     }
     
-    private void loadIcons() {
+    protected void loadIcons() {
     	iconTete = new ImageIcon("sprite/"+modele.getThemeJeu()+"/tete.png");
         iconPerdu = new ImageIcon("sprite/"+modele.getThemeJeu()+"/perdu.png");
         iconGagne = new ImageIcon("sprite/"+modele.getThemeJeu()+"/gagne.png");
@@ -110,33 +109,34 @@ public class VueJeu extends JFrame implements Observer {
     	mntmPacman = new JMenuItem("Pacman");
     	mntmPacman.setActionCommand("Pacman");
     	mnTheme.add(mntmPacman);
-    	bombeRestante = new JLabel(modele.getNbBombeRestante()+"");
-    	bombeRestante.setFont(font);
-    	bombeRestante.setHorizontalAlignment(SwingConstants.CENTER);
-    	temps = new JLabel("0");
-    	temps.setFont(font);
-    	temps.setHorizontalAlignment(SwingConstants.CENTER);
+    	labelGauche = new JLabel(modele.getNbBombeRestante()+"");
+    	labelGauche.setFont(font);
+    	labelGauche.setHorizontalAlignment(SwingConstants.CENTER);
+    	labelDroit = new JLabel("0");
+    	labelDroit.setFont(font);
+    	labelDroit.setHorizontalAlignment(SwingConstants.CENTER);
         
         panelTexte = new JPanel (new GridLayout(1, 3));
         panelTexte.setBounds(6, 10, 888, 50);
         
         Component horizontalStrut_2 = Box.createHorizontalStrut(20);
         panelTexte.add(horizontalStrut_2);
-        panelTexte.add(bombeRestante);
+        panelTexte.add(labelGauche);
         Component horizontalStrut = Box.createHorizontalStrut(20);
         panelTexte.add(horizontalStrut);
         
-        btnTete = new JLabel();
-        btnTete.setIcon(iconTete);
-        btnTete.setHorizontalAlignment(SwingConstants.CENTER);
-        panelTexte.add(btnTete);
+        iconeMilieu = new JLabel();
+        iconeMilieu.setIcon(iconTete);
+        iconeMilieu.setHorizontalAlignment(SwingConstants.CENTER);
+        panelTexte.add(iconeMilieu);
         Component horizontalStrut_1 = Box.createHorizontalStrut(20);
         panelTexte.add(horizontalStrut_1);
-        panelTexte.add(temps);
+        panelTexte.add(labelDroit);
         Component horizontalStrut_3 = Box.createHorizontalStrut(20);
         panelTexte.add(horizontalStrut_3);
         
         panelCases = new JPanel (new GridLayout(modele.getNbLigne(), modele.getNbColonne()));
+        //panelCases = new JPanel (new GridLayout(10,10));
         
         container = new JPanel();
         container.setLayout(null);
@@ -145,17 +145,11 @@ public class VueJeu extends JFrame implements Observer {
         setContentPane(container);
         
         chargerJeu();
+        chargerCase();
     }
 	
-	public void chargerJeu()
-	{
-		container.remove(panelCases);
-		panelCases = new JPanel (new GridLayout(modele.getNbLigne(), modele.getNbColonne()));
-        panelCases.setBounds((this.getWidth()/2-14 * modele.getNbColonne()), (this.getHeight()/2-14 * modele.getNbLigne()), 28 * modele.getNbColonne(), 28 * modele.getNbLigne());
-        container.add(panelCases);
-        
-		btnTete.setIcon(iconTete);
-        Font font = new Font("Courier New", Font.BOLD, 14);
+	public void chargerCase() {
+		Font font = new Font("Courier New", Font.BOLD, 14);
         for(CaseModele caseM : modele.getListeCase())
         {
         	CaseVue caseVue = new CaseVue(caseM);
@@ -167,34 +161,59 @@ public class VueJeu extends JFrame implements Observer {
         }
 	}
 
+	public void chargerJeu()
+	{
+		container.remove(panelCases);
+		panelCases = new JPanel (new GridLayout(modele.getNbLigne(), modele.getNbColonne()));
+        panelCases.setBounds((this.getWidth()/2-14 * modele.getNbColonne()), (this.getHeight()/2-14 * modele.getNbLigne()), 28 * modele.getNbColonne(), 28 * modele.getNbLigne());
+        container.add(panelCases);
+		iconeMilieu.setIcon(iconTete);
+	}
+
 	@Override
 	public void update(Observable o, Object arg) {
 		if(arg != null && arg.equals("ChangeTheme")){
 			loadIcons();
 			if(modele.getEtat() == VarCommun.etatJeu.PERDU.value)
-				btnTete.setIcon(iconPerdu);
+				iconeMilieu.setIcon(iconPerdu);
 			else if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value)
-				btnTete.setIcon(iconGagne);
+				iconeMilieu.setIcon(iconGagne);
 			else
-				btnTete.setIcon(iconTete);
+				iconeMilieu.setIcon(iconTete);
 		}
 		
-		bombeRestante.setText(modele.getNbBombeRestante()+"");
-		temps.setText(modele.getSecondes()+"");
+		labelGauche.setText(modele.getNbBombeRestante()+"");
+		labelDroit.setText(modele.getSecondes()+"");
 		
 		if(!modele.isFini()) {
 			if(modele.getEtat() == VarCommun.etatJeu.PERDU.value) {
 				modele.setFini(true);
 				modele.getTimer().stop();
-				btnTete.setIcon(iconPerdu);
+				iconeMilieu.setIcon(iconPerdu);
 				JOptionPane.showMessageDialog(null, "Vous avez perdu");
 			}
 			else if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value) {
 				modele.setFini(true);
 				modele.getTimer().stop();
-				btnTete.setIcon(iconGagne);
+				iconeMilieu.setIcon(iconGagne);
 				JOptionPane.showMessageDialog(null, "Vous avez gagné");
 			}
 		}
+	}
+	
+	 public JeuModele getModele() {
+		return modele;
+	}
+
+	public void setModele(JeuModele modele) {
+		this.modele = modele;
+	}
+	
+	public JLabel getLabelDroit() {
+		return labelDroit;
+	}
+
+	public void setLabelDroit(JLabel labelDroit) {
+		this.labelDroit = labelDroit;
 	}
 }
