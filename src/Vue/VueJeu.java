@@ -63,7 +63,7 @@ public class VueJeu extends JFrame implements Observer {
 	public void buildFrame() {
         
         setTitle("Démineur");
-        setSize(800, 592);
+        setSize(900, 600);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,18 +92,23 @@ public class VueJeu extends JFrame implements Observer {
     	menuBar.add(mnTheme);
     	
     	mntmMario = new JMenuItem("Mario");
+    	mntmMario.setActionCommand("Mario");
     	mnTheme.add(mntmMario);
     	
     	mntmCaisse = new JMenuItem("Caisse");
+    	mntmCaisse.setActionCommand("Caisse");
     	mnTheme.add(mntmCaisse);
     	
     	mntmDisco = new JMenuItem("Disco");
+    	mntmDisco.setActionCommand("Disco");
     	mnTheme.add(mntmDisco);
     	
     	mntmGolf = new JMenuItem("Golf");
+    	mntmGolf.setActionCommand("Golf");
     	mnTheme.add(mntmGolf);
     	
     	mntmPacman = new JMenuItem("Pacman");
+    	mntmPacman.setActionCommand("Pacman");
     	mnTheme.add(mntmPacman);
     	bombeRestante = new JLabel(modele.getNbBombeRestante()+"");
     	bombeRestante.setFont(font);
@@ -113,7 +118,7 @@ public class VueJeu extends JFrame implements Observer {
     	temps.setHorizontalAlignment(SwingConstants.CENTER);
         
         panelTexte = new JPanel (new GridLayout(1, 3));
-        panelTexte.setBounds(6, 10, 788, 64);
+        panelTexte.setBounds(6, 10, 888, 50);
         
         Component horizontalStrut_2 = Box.createHorizontalStrut(20);
         panelTexte.add(horizontalStrut_2);

@@ -25,8 +25,8 @@ public class ModeleJeu extends Observable {
 	public ModeleJeu() {
 		
 		themeJeu = VarCommun.themeJeu.Mario;
-		setNbColonne(10);
-		setNbLigne(10);
+		setNbColonne(9);
+		setNbLigne(9);
 		setNbBombe(10);
 		construireCases();
 	}

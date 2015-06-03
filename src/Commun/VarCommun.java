@@ -3,35 +3,38 @@ package Commun;
 public class VarCommun {
 	
 	public static enum typeCase { 
-		EMPTY("empty",0), BOMB("bombe",1);
-		public final String name;
+		EMPTY(0), BOMB(1);
 		public final int value;
-		  
-		typeCase(String name, int valeur){
-		    this.name = name;
+		typeCase(int valeur){
 		    this.value = valeur;
 		}
 	}
 	
 	public static enum etatCase { 
-		COVER("cover",0), DISCOVER("discover",1), FLAG("flag",2), QUESTION("question",3);
-		public final String name;
+		COVER(0), DISCOVER(1), FLAG(2), QUESTION(3);
 		public final int value;
-		  
-		etatCase(String name, int valeur){
-		    this.name = name;
+		etatCase(int valeur){
 		    this.value = valeur;
 		}
 	}
 	
 	public static enum etatJeu { 
-		DEBUT("debut",0), ENJEU("enjeu",1), PERDU("perdu",2), GAGNE("gagne",3);
-		public final String name;
+		DEBUT(0), ENJEU(1), PERDU(2), GAGNE(3);
 		public final int value;
-		  
-		etatJeu(String name, int valeur){
-		    this.name = name;
+		etatJeu(int valeur){
 		    this.value = valeur;
+		}
+	}
+	
+	public static enum nombreLCB { 
+		DEBUTANT(9,9,10), INTERMEDIAIRE(16,16,40), DIFFICILE(16,30,99);
+		public final int nbLigne;
+		public final int nbColonne;
+		public final int nbBombe;
+		nombreLCB(int nbLigne, int nbColonne, int nbBombe){
+		    this.nbLigne = nbLigne;
+		    this.nbColonne = nbColonne;
+		    this.nbBombe = nbBombe;
 		}
 	}
 

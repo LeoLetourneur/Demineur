@@ -2,6 +2,7 @@ package Controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JMenuItem;
 import javax.swing.Timer;
 
 import Commun.VarCommun;
@@ -51,25 +52,18 @@ public class ControleurJeu implements ActionListener {
 		else if(e.getSource() == vue.mntmParametres) {
 			ParametreVue pv = new ParametreVue(modele);
 			pv.setVisible(true);
-			if(pv.getAccept()) {
+			if(pv.isAccept()) {
 				modele.construireCases();
 				vue.chargerJeu();
+				vue.repaint();
 			}
 			pv.dispose();
 		}
 		else if(e.getSource() == modele.getTimer()) {
 			modele.setSecondes(modele.getSecondes()+1);
 		}
-		else if(e.getSource() == vue.mntmMario) 
-			modele.setThemeJeu(VarCommun.themeJeu.Mario);
-		else if(e.getSource() == vue.mntmCaisse)
-			modele.setThemeJeu(VarCommun.themeJeu.Caisse);
-		else if(e.getSource() == vue.mntmDisco)
-			modele.setThemeJeu(VarCommun.themeJeu.Disco);
-		else if(e.getSource() == vue.mntmGolf)
-			modele.setThemeJeu(VarCommun.themeJeu.Golf);
-		else if(e.getSource() == vue.mntmPacman)
-			modele.setThemeJeu(VarCommun.themeJeu.Pacman);
+		else
+			modele.setThemeJeu(VarCommun.themeJeu.valueOf(((JMenuItem)e.getSource()).getActionCommand()));
 	}
 
 }

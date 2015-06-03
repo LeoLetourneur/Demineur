@@ -25,6 +25,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JSpinner;
 import javax.swing.JCheckBox;
 
+import Commun.VarCommun;
 import Modele.ModeleJeu;
 
 public class ParametreVue extends JDialog implements ItemListener, ActionListener {
@@ -254,9 +255,26 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == okButton) {
-			modele.setNbBombe((int) spinnerBombe.getValue());
-			modele.setNbLigne((int) spinnerLigne.getValue());
-			modele.setNbColonne((int) spinnerColonne.getValue());
+			if(rdbtnDebutant.isSelected()) {
+				modele.setNbLigne(VarCommun.nombreLCB.DEBUTANT.nbLigne);
+				modele.setNbColonne(VarCommun.nombreLCB.DEBUTANT.nbColonne);
+				modele.setNbBombe(VarCommun.nombreLCB.DEBUTANT.nbBombe);
+			}
+			else if(rdbtnIntermediaire.isSelected()) {
+				modele.setNbLigne(VarCommun.nombreLCB.INTERMEDIAIRE.nbLigne);
+				modele.setNbColonne(VarCommun.nombreLCB.INTERMEDIAIRE.nbColonne);
+				modele.setNbBombe(VarCommun.nombreLCB.INTERMEDIAIRE.nbBombe);
+			}
+			else if(rdbtnDifficile.isSelected()) {
+				modele.setNbLigne(VarCommun.nombreLCB.DIFFICILE.nbLigne);
+				modele.setNbColonne(VarCommun.nombreLCB.DIFFICILE.nbColonne);
+				modele.setNbBombe(VarCommun.nombreLCB.DIFFICILE.nbBombe);
+			}
+			else if(rdbtnPersonnalise.isSelected()) {
+				modele.setNbLigne((int) spinnerLigne.getValue());
+				modele.setNbColonne((int) spinnerColonne.getValue());
+				modele.setNbBombe((int) spinnerBombe.getValue());
+			}
 			this.setAccept(true);
 		}
 		else if(e.getSource() == cancelButton) {
@@ -266,7 +284,7 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 		
 	}
 
-	public boolean getAccept() {
+	public boolean isAccept() {
 		return accept;
 	}
 

@@ -59,29 +59,24 @@ public class CaseVue extends JButton implements Observer {
 			modele.setChangeTheme(false);
 		}
 		
-		switch(modele.getEtat()) {
-			case 0 :
-				this.setIcon(iconCase);
-				this.setText("");
-				break;
-			case 1 :
-				if(modele.getValeur() == VarCommun.typeCase.EMPTY.value) {
-					this.setIcon(iconVide);
-					if(modele.getNbBombeVoisin() != 0)
-						this.setText(modele.getNbBombeVoisin()+"");
-				}
-				else
-				this.setIcon(iconBombe);
-			    break;
-			case 2 :
-				this.setIcon(iconDrapeau);
-			    break;
-			case 3 :
-				this.setIcon(iconQuestion);
-			    break;
-		  default:
-		    	break;
+		if(modele.getEtat() == VarCommun.etatCase.COVER.value) {
+			this.setIcon(iconCase);
+			this.setText("");
 		}
-		
+		else if(modele.getEtat() == VarCommun.etatCase.DISCOVER.value) {
+			if(modele.getValeur() == VarCommun.typeCase.EMPTY.value) {
+				this.setIcon(iconVide);
+				if(modele.getNbBombeVoisin() != 0)
+					this.setText(modele.getNbBombeVoisin()+"");
+			}
+			else
+				this.setIcon(iconBombe);
+		}
+		else if(modele.getEtat() == VarCommun.etatCase.FLAG.value) {
+			this.setIcon(iconDrapeau);
+		}
+		else if(modele.getEtat() == VarCommun.etatCase.QUESTION.value) {
+			this.setIcon(iconQuestion);
+		}
 	}
 }
