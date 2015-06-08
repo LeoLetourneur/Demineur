@@ -83,4 +83,11 @@ public class JeuVueDJ extends JeuVue {
 			}
 		}
 	}
+	
+public void reinitialiser() {
+		super.reinitialiser();
+		labelGauche.setText("J1 : "+(((JeuModeleDJ)modele).getJoueur1().getScore()));
+		labelDroit.setText("J2 : "+(((JeuModeleDJ)modele).getJoueur2().getScore()));
+	}
+	
 }

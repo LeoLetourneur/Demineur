@@ -64,5 +64,22 @@ public class JeuModeleDJ extends JeuModele {
 		setChanged();
 		notifyObservers();
 	}
-
+	
+	public void reinitialiserCase() {
+		super.reinitialiserCase();
+		getJoueur1().setScore(0);
+		getJoueur2().setScore(0);
+		setJoueurCourant(getJoueur1());
+		
+	}
+	
+	public void setNbCasesRetournees(int p_nbCasesRetournes) {
+		this.nbCasesRetournes = p_nbCasesRetournes;
+		if(nbCasesRetournes == ( nbLigne * nbColonne ))
+			setEtat(VarCommun.etatJeu.GAGNE.value);
+		setChanged();
+		notifyObservers();
+		
+	}
+	
 }

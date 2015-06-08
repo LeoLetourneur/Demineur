@@ -199,6 +199,7 @@ public class JeuVue extends JFrame implements Observer {
 				JOptionPane.showMessageDialog(null, "Vous avez gagné");
 			}
 		}
+			
 	}
 	
 	 public JeuModele getModele() {
@@ -215,5 +216,10 @@ public class JeuVue extends JFrame implements Observer {
 
 	public void setLabelDroit(JLabel labelDroit) {
 		this.labelDroit = labelDroit;
+	}
+
+	public void reinitialiser() {
+		
+		iconeMilieu.setIcon(iconTete);
 	}
 }

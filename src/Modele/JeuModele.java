@@ -9,13 +9,13 @@ import Commun.VarCommun;
 
 public class JeuModele extends Observable {
 
-	private int nbColonne;
-	private int nbLigne;
-	private int nbBombe;
+	protected int nbColonne;
+	protected int nbLigne;
+	protected int nbBombe;
 	private Timer timer;
 	private int secondes;
 	private int nbBombeRestante;
-	private int nbCasesRetournes;
+	protected int nbCasesRetournes;
 	private int etat;
 	private VarCommun.themeJeu themeJeu;
 	private boolean premierTour;

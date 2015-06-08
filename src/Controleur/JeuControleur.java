@@ -39,6 +39,7 @@ public class JeuControleur implements ActionListener {
 		if(e.getSource() == vue.mntmNouvellePartie) {
 			modele.getTimer().stop();
 			modele.reinitialiserCase();
+			vue.reinitialiser();
 		}
 		else if(e.getSource() == vue.mntmDecouvrir) {
 			modele.setFini(true);
