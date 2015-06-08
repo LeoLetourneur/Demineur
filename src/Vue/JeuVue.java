@@ -65,7 +65,7 @@ public class JeuVue extends JFrame implements Observer {
         setSize(900, 600);
         setLocationRelativeTo(null);
         setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
     	Font font = new Font("Courier New", Font.BOLD, 30);
     	

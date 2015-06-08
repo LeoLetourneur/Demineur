@@ -47,7 +47,7 @@ public class JeuControleur implements ActionListener {
 				modele.getListeCase().get(i).setEtat(VarCommun.etatCase.DISCOVER.value);
 		}
 		else if(e.getSource() == vue.mntmQuitter) {
-			System.exit(0);
+			vue.dispose();
 		}
 		else if(e.getSource() == vue.mntmParametres) {
 			ParametreVue pv = new ParametreVue(modele);
