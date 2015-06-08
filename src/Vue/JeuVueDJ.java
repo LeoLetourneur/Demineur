@@ -25,6 +25,7 @@ public class JeuVueDJ extends JeuVue {
         super.buildFrame();
         
 		labelGauche.setText("J1 : "+((JeuModeleDJ)getModele()).getJoueur1().getScore());
+		labelGauche.setForeground(Color.red);
 		labelDroit.setText("J2 : "+((JeuModeleDJ)getModele()).getJoueur2().getScore());
     }
 	
@@ -55,6 +56,18 @@ public class JeuVueDJ extends JeuVue {
 		
 		labelGauche.setText("J1 : "+(((JeuModeleDJ)modele).getJoueur1().getScore()));
 		labelDroit.setText("J2 : "+(((JeuModeleDJ)modele).getJoueur2().getScore()));
+		
+		if(((JeuModeleDJ) modele).getJoueurCourant()==((JeuModeleDJ)modele).getJoueur1())
+			{
+				labelGauche.setForeground(Color.red);
+				labelDroit.setForeground(Color.black);
+			}
+		
+		else
+			{
+				labelDroit.setForeground(Color.red);
+				labelGauche.setForeground(Color.black);
+			}
 	
 		if(!modele.isFini()) {
 			if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value) {
