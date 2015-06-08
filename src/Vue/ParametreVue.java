@@ -1,8 +1,10 @@
 package Vue;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,6 +35,7 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 	
 	private JPanel contentPanel;
 	private JPanel panelPerso;
+	private JTabbedPane tabbedPane;
 	
 	private JButton okButton;
 	private JButton cancelButton;
@@ -69,7 +72,7 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 			tabbedPane.setBounds(6, 10, 448, 265);
 			contentPanel.add(tabbedPane);
 			
@@ -281,9 +284,15 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 				modele.setNbBombe(VarCommun.nombreLCB.DIFFICILE.nbBombe);
 			}
 			else if(rdbtnPersonnalise.isSelected()) {
-				modele.setNbLigne((int) spinnerLigne.getValue());
-				modele.setNbColonne((int) spinnerColonne.getValue());
-				modele.setNbBombe((int) spinnerBombe.getValue());
+				modele.setNbLigne((Integer) spinnerLigne.getValue());
+				modele.setNbColonne((Integer) spinnerColonne.getValue());
+				modele.setNbBombe((Integer) spinnerBombe.getValue());
+				
+				if((Integer) spinnerLigne.getValue()*(Integer) spinnerColonne.getValue() < (Integer) spinnerBombe.getValue()) {
+					spinnerBombe.setBorder(BorderFactory.createLineBorder(Color.red));
+					tabbedPane.setSelectedIndex(0);
+					return;
+				}
 			}
 			
 			modele.setAllowQuestion(this.chckbxUseQuestionMark.isSelected());

@@ -1,5 +1,6 @@
 package Vue;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
@@ -94,9 +96,14 @@ public class MenuVue extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		int lignes = (int) spinnerLigne.getValue();
-		int colonnes = (int) spinnerColonne.getValue();
-		int bombes = (int) spinnerBombe.getValue();
+		int lignes = (Integer) spinnerLigne.getValue();
+		int colonnes = (Integer) spinnerColonne.getValue();
+		int bombes = (Integer) spinnerBombe.getValue();
+		
+		if(lignes*colonnes < bombes) {
+			spinnerBombe.setBorder(BorderFactory.createLineBorder(Color.red));
+			return;
+		}
 		
 		if(e.getSource() == btn1Joueur) {
 		    JeuModele model = new JeuModele(lignes, colonnes, bombes);
