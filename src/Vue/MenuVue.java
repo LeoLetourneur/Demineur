@@ -61,7 +61,10 @@ public class MenuVue extends JFrame implements ActionListener {
 		
 		SpinnerModel modelLigne = new SpinnerNumberModel(15, 3, 30, 1);
 		SpinnerModel modelColonne = new SpinnerNumberModel(15, 3, 30, 1);
-		SpinnerModel modelBombe = new SpinnerNumberModel(80, 2, 800, 1);
+		SpinnerNumberModel modelBombe = new SpinnerNumberModel();
+		modelBombe.setValue(80);
+		modelBombe.setMinimum(2);
+		modelBombe.setStepSize(1);
 		
 		JLabel lblNombreDeLignes = new JLabel("Nombre de lignes");
 		contentPane.add(lblNombreDeLignes);
