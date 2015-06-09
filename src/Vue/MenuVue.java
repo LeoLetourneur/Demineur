@@ -27,6 +27,7 @@ import Modele.RecevoirRes;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.JCheckBox;
 
 public class MenuVue extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 4722648722327719604L;
@@ -82,34 +83,34 @@ public class MenuVue extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 		
 		JLabel lblNombreDeLignes = new JLabel("Nombre de lignes");
-		lblNombreDeLignes.setBounds(85, 35, 147, 30);
+		lblNombreDeLignes.setBounds(85, 257, 147, 30);
 		contentPane.add(lblNombreDeLignes);
 		
 		spinnerLigne = new JSpinner();
-		spinnerLigne.setBounds(298, 35, 147, 30);
+		spinnerLigne.setBounds(298, 257, 147, 30);
 		spinnerLigne.setModel(modelLigne);
 		contentPane.add(spinnerLigne);
 		
 		JLabel lblNombreDeColonnes = new JLabel("Nombre de colonnes");
-		lblNombreDeColonnes.setBounds(85, 77, 147, 30);
+		lblNombreDeColonnes.setBounds(85, 299, 147, 30);
 		contentPane.add(lblNombreDeColonnes);
 		
 		spinnerColonne = new JSpinner();
-		spinnerColonne.setBounds(298, 77, 147, 30);
+		spinnerColonne.setBounds(298, 299, 147, 30);
 		spinnerColonne.setModel(modelColonne);
 		contentPane.add(spinnerColonne);
 		
 		JLabel lblNombreDeBombes = new JLabel("Nombre de bombes");
-		lblNombreDeBombes.setBounds(85, 119, 147, 30);
+		lblNombreDeBombes.setBounds(85, 341, 147, 30);
 		contentPane.add(lblNombreDeBombes);
 		
 		spinnerBombe = new JSpinner();
-		spinnerBombe.setBounds(298, 119, 147, 30);
+		spinnerBombe.setBounds(298, 341, 147, 30);
 		spinnerBombe.setModel(modelBombe);
 		contentPane.add(spinnerBombe);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(85, 172, 360, 230);
+		tabbedPane.setBounds(85, 19, 360, 230);
 		contentPane.add(tabbedPane);
 		
 		JPanel panelUnJoueur = new JPanel();
@@ -117,9 +118,28 @@ public class MenuVue extends JFrame implements ActionListener {
 		panelUnJoueur.setLayout(null);
 		
 		btn1Joueur = new JButton("Jouer");
-		btn1Joueur.setBounds(110, 121, 112, 43);
+		btn1Joueur.setBounds(109, 135, 112, 43);
 		btn1Joueur.addActionListener(this);
 		panelUnJoueur.add(btn1Joueur);
+		
+		JCheckBox checkBox = new JCheckBox("Utiliser le temps");
+		checkBox.setSelected(true);
+		checkBox.setBounds(6, 43, 327, 35);
+		panelUnJoueur.add(checkBox);
+		
+		JCheckBox checkBox_1 = new JCheckBox("Utiliser le point d'interrogation");
+		checkBox_1.setSelected(true);
+		checkBox_1.setBounds(6, 6, 327, 35);
+		panelUnJoueur.add(checkBox_1);
+		
+		JCheckBox cbDefiTemps = new JCheckBox("Défi temps (secondes)");
+		cbDefiTemps.setBounds(6, 77, 178, 35);
+		panelUnJoueur.add(cbDefiTemps);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setEnabled(false);
+		spinner.setBounds(196, 81, 120, 28);
+		panelUnJoueur.add(spinner);
 		
 		panel = new JPanel();
 		tabbedPane.addTab("Deux joueurs", null, panel, null);

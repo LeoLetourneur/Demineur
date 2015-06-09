@@ -154,7 +154,7 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 			chckbxSaveQuitGame = new JCheckBox("Sauvegarder les parties en quittant");
 			panelOptions.add(chckbxSaveQuitGame);
 			
-			chckbxUseQuestionMark = new JCheckBox("Utiliser la point d'interrogation");
+			chckbxUseQuestionMark = new JCheckBox("Utiliser le point d'interrogation");
 			chckbxUseQuestionMark.setSelected(true);
 			panelOptions.add(chckbxUseQuestionMark);
 			
