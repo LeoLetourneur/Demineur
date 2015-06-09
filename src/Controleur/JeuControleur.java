@@ -20,6 +20,8 @@ public class JeuControleur implements ActionListener {
 		vue = p_view;
 		
 		vue.mntmNouvellePartie.addActionListener(this);
+		vue.mntmSauvegarder.addActionListener(this);
+		vue.mntmCharger.addActionListener(this);
 		vue.mntmDecouvrir.addActionListener(this);
 		vue.mntmParametres.addActionListener(this);
 		vue.mntmQuitter.addActionListener(this);
@@ -40,6 +42,13 @@ public class JeuControleur implements ActionListener {
 			modele.getTimer().stop();
 			modele.reinitialiserCase();
 			vue.reinitialiser();
+		}
+		else if(e.getSource()==vue.mntmSauvegarder){
+			modele.sauvegarde();
+		}
+		else if(e.getSource()==vue.mntmCharger){
+			modele.setTimer(new Timer(1000, this));
+			modele.charger();
 		}
 		else if(e.getSource() == vue.mntmDecouvrir) {
 			modele.setFini(true);
