@@ -59,22 +59,6 @@ public class JeuModele extends Observable implements Serializable {
 		setPremierTour(true);
 		setNbBombeRestante(0);
 	}
-	
-	public void initialiser(JeuModele modeleCharge){
-		initialiser();
-		setSecondes(modeleCharge.getSecondes());
-		setNbBombeRestante(modeleCharge.getNbBombeRestante());
-		setNbBombe(modeleCharge.getNbBombe());
-		setNbColonne(modeleCharge.getNbColonne());
-		setNbLigne(modeleCharge.getNbLigne());
-		setNbCasesRetournees(modeleCharge.getNbCasesRetournees());
-		System.out.println(getNbCasesRetournees());
-		listeCase=modeleCharge.getListeCase();
-		setAllowFlag(true);
-		setAllowQuestion(true);
-		setAllowTime(true);
-		setEtat(modeleCharge.getEtat());
-	}
 
 	public void construireCases() {
 		
