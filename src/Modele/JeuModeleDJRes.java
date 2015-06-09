@@ -3,15 +3,17 @@ package Modele;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 
 import javax.swing.JOptionPane;
 
-public abstract class JeuModeleDJRes extends JeuModeleDJ {
+public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
-	protected Socket flux;
-	protected ObjectInputStream entree;
-	protected ObjectOutputStream sortie;
+	transient protected Socket flux;
+	transient protected ObjectInputStream entree;
+	transient protected ObjectOutputStream sortie;
 	public static final int MON_PORT = 2015;
 	
 	public JeuModeleDJRes() {
@@ -27,8 +29,10 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ {
 	public void recevoir()
 	{
 		try {
-			int index = (int)entree.readObject();
-		} catch (ClassNotFoundException | IOException e) { e.printStackTrace(); }
+			int index = (Integer)entree.readObject();
+			getListeCase().get(index).setEtat(Commun.VarCommun.etatCase.DISCOVER.value);
+		} catch (ClassNotFoundException e) { e.printStackTrace();
+		} catch (IOException e) { e.printStackTrace(); }
 	}
 	
 	public void envoyer(int index)

@@ -1,11 +1,13 @@
 package Modele;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 
 import Commun.VarCommun;
 
-public class CaseModele extends Observable {
-
+public class CaseModele extends Observable implements Serializable {
+	private static final long serialVersionUID = -2292570373610324561L;
+	
 	private int index;
 	private int valeur;
 	private int etat;

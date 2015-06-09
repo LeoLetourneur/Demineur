@@ -1,7 +1,10 @@
 package Modele;
 
-public class Joueur {
+import java.io.Serializable;
 
+public class Joueur implements Serializable {
+	private static final long serialVersionUID = 7693511017597376573L;
+	
 	private String name;
 	private int numero;
 	private int score;

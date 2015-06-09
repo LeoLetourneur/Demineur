@@ -1,9 +1,12 @@
 package Modele;
 
+import java.io.Serializable;
+
 import Commun.VarCommun;
 
-public class JeuModeleDJ extends JeuModele {
-
+public class JeuModeleDJ extends JeuModele implements Serializable {
+	private static final long serialVersionUID = -5008464224374925137L;
+	
 	protected Joueur joueur1;
 	protected Joueur joueur2;
 	protected Joueur joueurCourant;
