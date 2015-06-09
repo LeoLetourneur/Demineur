@@ -4,9 +4,9 @@ import Commun.VarCommun;
 
 public class JeuModeleDJ extends JeuModele {
 
-	private Joueur joueur1;
-	private Joueur joueur2;
-	private Joueur joueurCourant;
+	protected Joueur joueur1;
+	protected Joueur joueur2;
+	protected Joueur joueurCourant;
 	
 	public JeuModeleDJ() {
 		super();
