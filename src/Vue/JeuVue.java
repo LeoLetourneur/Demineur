@@ -29,8 +29,6 @@ public class JeuVue extends JFrame implements Observer {
 	private JMenu mnMenu;
 	private JMenu mnTheme;
 	public JMenuItem mntmNouvellePartie;
-	public JMenuItem mntmSauvegarder;
-	public JMenuItem mntmCharger;
 	public JMenuItem mntmDecouvrir;
 	public JMenuItem mntmParametres;
 	public JMenuItem mntmQuitter;
@@ -45,8 +43,6 @@ public class JeuVue extends JFrame implements Observer {
 	protected Icon iconGagne;
 	
 	protected JeuModele modele;
-
-	
 
 	public JeuVue(JeuModele p_model) {
         super();
@@ -81,12 +77,6 @@ public class JeuVue extends JFrame implements Observer {
     	
     	mntmNouvellePartie = new JMenuItem("Nouvelle partie");
     	mnMenu.add(mntmNouvellePartie);
-    	
-    	mntmSauvegarder = new JMenuItem("Sauvegarder");
-    	mnMenu.add(mntmSauvegarder);
-    	
-    	mntmCharger = new JMenuItem("Charger");
-    	mnMenu.add(mntmCharger);
     	
     	mntmDecouvrir = new JMenuItem("Découvrir");
     	mnMenu.add(mntmDecouvrir);

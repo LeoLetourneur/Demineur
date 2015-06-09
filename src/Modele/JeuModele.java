@@ -1,11 +1,4 @@
 package Modele;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
@@ -14,29 +7,22 @@ import javax.swing.Timer;
 
 import Commun.VarCommun;
 
-public class JeuModele extends Observable implements Serializable {
+public class JeuModele extends Observable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5648159052410339780L;
-	/**
-	 * 
-	 */
 	protected int nbColonne;
 	protected int nbLigne;
 	protected int nbBombe;
-	transient private Timer timer;
+	private Timer timer;
 	private int secondes;
 	private int nbBombeRestante;
 	protected int nbCasesRetournes;
 	private int etat;
-	transient private VarCommun.themeJeu themeJeu;
+	private VarCommun.themeJeu themeJeu;
 	private boolean premierTour;
 	private boolean fini;
-	transient private boolean allowQuestion;
-	transient private boolean allowFlag;
-	transient private boolean allowTime;
+	private boolean allowQuestion;
+	private boolean allowFlag;
+	private boolean allowTime;
 	private ArrayList<CaseModele> listeCase;
 	
 	
@@ -72,19 +58,6 @@ public class JeuModele extends Observable implements Serializable {
 		setSecondes(0);
 		setPremierTour(true);
 		setNbBombeRestante(0);
-	}
-	
-	public void initialiser(JeuModele modeleCharge){
-		setEtat(VarCommun.etatJeu.DEBUT.value);
-		setNbCasesRetournees(modeleCharge.getNbCasesRetournees());
-		setFini(false);
-		setSecondes(modeleCharge.getSecondes());
-		setPremierTour(false);
-		setNbBombeRestante(modeleCharge.getNbBombeRestante());
-		setNbBombe(modeleCharge.getNbBombe());
-		setListeCase(modeleCharge.getListeCase());
-		setNbColonne(modeleCharge.getNbColonne());
-		setNbLigne(modeleCharge.getNbLigne());
 	}
 
 	public void construireCases() {
@@ -277,57 +250,5 @@ public class JeuModele extends Observable implements Serializable {
 
 	public void setAllowTime(boolean allowTime) {
 		this.allowTime = allowTime;
-	}
-
-	public void sauvegarde() {
-		System.out.println("test");
-		try {
-			FileOutputStream fileStreamPartie = new FileOutputStream("partie.serial");
-			ObjectOutputStream objetStreamPartie= new ObjectOutputStream(fileStreamPartie);
-			try{
-			objetStreamPartie.writeObject(this);
-			objetStreamPartie.flush();
-				}	finally {
-								//fermeture des flux
-								try {
-										objetStreamPartie.close();
-									} finally {
-										fileStreamPartie.close();
-									}
-							}
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("Sauvegardé");
-		
-	}
-
-	public void charger() {
-		JeuModele partieCharger=null;
-		try {
-			FileInputStream fileStreamPartie = new FileInputStream("partie.serial");
-			ObjectInputStream objetStreamPartie= new ObjectInputStream(fileStreamPartie);
-			try {	
-				partieCharger = (JeuModele) objetStreamPartie.readObject(); 
-			} finally {
-				try {
-					objetStreamPartie.close();
-				} finally {
-					objetStreamPartie.close();
-				}
-			}
-		} catch(IOException ioe) {
-			ioe.printStackTrace();
-		} catch(ClassNotFoundException cnfe) {
-			cnfe.printStackTrace();
-		}
-		
-		this.initialiser(partieCharger);
-		System.out.println("Chargé");
 	}
 }
