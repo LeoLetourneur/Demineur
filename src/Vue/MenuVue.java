@@ -19,6 +19,7 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 import Controleur.JeuControleur;
+import Modele.CaseModele;
 import Modele.JeuModele;
 import Modele.JeuModeleClient;
 import Modele.JeuModeleDJ;
@@ -36,6 +37,7 @@ public class MenuVue extends JFrame implements ActionListener {
 	private JPanel panel;
 	
 	private JButton btn1Joueur;
+	private JButton btnCharger;
 	private JButton btnLocal;
 	private JButton btnReseauServeur;
 	private JButton btnReseauClient;
@@ -118,7 +120,7 @@ public class MenuVue extends JFrame implements ActionListener {
 		panelUnJoueur.setLayout(null);
 		
 		btn1Joueur = new JButton("Jouer");
-		btn1Joueur.setBounds(109, 135, 112, 43);
+		btn1Joueur.setBounds(204, 135, 112, 43);
 		btn1Joueur.addActionListener(this);
 		panelUnJoueur.add(btn1Joueur);
 		
@@ -140,6 +142,11 @@ public class MenuVue extends JFrame implements ActionListener {
 		spinner.setEnabled(false);
 		spinner.setBounds(196, 81, 120, 28);
 		panelUnJoueur.add(spinner);
+		
+		btnCharger = new JButton("Charger");
+		btnCharger.setBounds(20, 135, 112, 43);
+		btnCharger.addActionListener(this);
+		panelUnJoueur.add(btnCharger);
 		
 		panel = new JPanel();
 		tabbedPane.addTab("Deux joueurs", null, panel, null);
@@ -224,8 +231,20 @@ public class MenuVue extends JFrame implements ActionListener {
 			spinnerBombe.setBorder(BorderFactory.createLineBorder(Color.red));
 			return;
 		}
-		
-		if(e.getSource() == btn1Joueur) {
+		if(e.getSource() == btnCharger) {
+		    JeuModele model = JeuModele.charger();
+		    model.setNbCasesRetournees(0);
+			JeuVue view = new JeuVue(model);
+			new JeuControleur(model, view);
+			for(CaseModele caseM : model.getListeCase())
+			{
+				caseM.setModeleJeu(model);
+				caseM.setEtat(caseM.getEtat());
+			}	
+			view.setVisible(true);
+			model.getTimer().start();
+		}
+		else if(e.getSource() == btn1Joueur) {
 		    JeuModele model = new JeuModele(lignes, colonnes, bombes);
 		    model.construireCases();
 			JeuVue view = new JeuVue(model);

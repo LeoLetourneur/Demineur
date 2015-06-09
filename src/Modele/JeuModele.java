@@ -1,4 +1,11 @@
 package Modele;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
@@ -7,8 +14,9 @@ import javax.swing.Timer;
 
 import Commun.VarCommun;
 
-public class JeuModele extends Observable {
-
+public class JeuModele extends Observable implements Serializable {
+	private static final long serialVersionUID = 4260028170365630301L;
+	
 	protected int nbColonne;
 	protected int nbLigne;
 	protected int nbBombe;
@@ -50,6 +58,22 @@ public class JeuModele extends Observable {
 		setSecondes(0);
 		setPremierTour(true);
 		setNbBombeRestante(0);
+	}
+	
+	public void initialiser(JeuModele modeleCharge){
+		initialiser();
+		setSecondes(modeleCharge.getSecondes());
+		setNbBombeRestante(modeleCharge.getNbBombeRestante());
+		setNbBombe(modeleCharge.getNbBombe());
+		setNbColonne(modeleCharge.getNbColonne());
+		setNbLigne(modeleCharge.getNbLigne());
+		setNbCasesRetournees(modeleCharge.getNbCasesRetournees());
+		System.out.println(getNbCasesRetournees());
+		listeCase=modeleCharge.getListeCase();
+		setAllowFlag(true);
+		setAllowQuestion(true);
+		setAllowTime(true);
+		setEtat(modeleCharge.getEtat());
 	}
 
 	public void construireCases() {
@@ -100,6 +124,52 @@ public class JeuModele extends Observable {
 			if(caseMod.getValeur() == VarCommun.typeCase.BOMB.value)
 				caseMod.setEtat(VarCommun.etatCase.DISCOVER.value);
 		}
+	}
+	
+	public void sauvegarde() {
+		
+		try {
+			FileOutputStream fileStreamPartie = new FileOutputStream("partie.serial");
+			ObjectOutputStream objetStreamPartie= new ObjectOutputStream(fileStreamPartie);
+			try{
+				objetStreamPartie.writeObject(this);
+				objetStreamPartie.flush();
+			} finally {
+				try {
+						objetStreamPartie.close();
+					} finally {
+						fileStreamPartie.close();
+					}
+			}
+			
+		} catch (FileNotFoundException e) { e.printStackTrace();
+		} catch (IOException e) { e.printStackTrace();
+		}
+		System.out.println("Sauvegardé");
+	}
+	
+	public static JeuModele charger() {
+		JeuModele partieCharger = null;
+		try {
+			FileInputStream fileStreamPartie = new FileInputStream("partie.serial");
+			ObjectInputStream objetStreamPartie= new ObjectInputStream(fileStreamPartie);
+			try {	
+				partieCharger = (JeuModele) objetStreamPartie.readObject(); 
+			} finally {
+				try {
+					objetStreamPartie.close();
+				} finally {
+					objetStreamPartie.close();
+				}
+			}
+		} catch(IOException ioe) {
+			ioe.printStackTrace();
+		} catch(ClassNotFoundException cnfe) {
+			cnfe.printStackTrace();
+		}
+		
+		System.out.println("Chargé");
+		return partieCharger;
 	}
 
 	public ArrayList<CaseModele> getListeCase() {

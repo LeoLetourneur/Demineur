@@ -29,6 +29,7 @@ public class JeuVue extends JFrame implements Observer {
 	private JMenu mnMenu;
 	private JMenu mnTheme;
 	public JMenuItem mntmNouvellePartie;
+	public JMenuItem mntmSauvegarder;
 	public JMenuItem mntmDecouvrir;
 	public JMenuItem mntmParametres;
 	public JMenuItem mntmQuitter;
@@ -77,6 +78,9 @@ public class JeuVue extends JFrame implements Observer {
     	
     	mntmNouvellePartie = new JMenuItem("Nouvelle partie");
     	mnMenu.add(mntmNouvellePartie);
+    	
+    	mntmSauvegarder = new JMenuItem("Sauvegarder");
+    	mnMenu.add(mntmSauvegarder);
     	
     	mntmDecouvrir = new JMenuItem("Découvrir");
     	mnMenu.add(mntmDecouvrir);
