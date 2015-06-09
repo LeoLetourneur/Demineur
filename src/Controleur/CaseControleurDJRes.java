@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 
 import Commun.VarCommun;
 import Modele.CaseModele;
+import Modele.JeuModeleDJ;
 import Modele.JeuModeleDJRes;
 import Vue.CaseVue;
 
@@ -16,6 +17,10 @@ public class CaseControleurDJRes extends CaseControleurDJ {
 	
 	public void mouseClicked(MouseEvent e) {
 		if(getModele().getModeleJeu().isFini())
+			return;
+		
+		if(((JeuModeleDJ)getModele().getModeleJeu()).getJoueurCourant() 
+				!= ((JeuModeleDJRes)getModele().getModeleJeu()).getMoi())
 			return;
 		
 		if(e.getButton() == MouseEvent.BUTTON1) {

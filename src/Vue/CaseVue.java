@@ -1,5 +1,7 @@
 package Vue;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Insets;
 import java.util.Observable;
 import java.util.Observer;
@@ -31,6 +33,8 @@ public class CaseVue extends JButton implements Observer {
 		
 		loadIcon();
 		
+		this.setFont(new Font("Courier New", Font.BOLD, 14));
+        this.setForeground(Color.white);
 		this.setIcon(iconCase);
         this.setIconTextGap( - iconCase.getIconWidth() );
         this.setHorizontalTextPosition(SwingConstants.CENTER);

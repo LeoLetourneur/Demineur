@@ -17,7 +17,6 @@ public class JeuModeleServeur extends JeuModeleDJRes implements Serializable {
 
 	public JeuModeleServeur(int nbLigne, int nbColonne, int nbBombe) {
 		super(nbLigne, nbColonne, nbBombe);
-		connexion();
 	}
 
 	@Override
@@ -26,13 +25,13 @@ public class JeuModeleServeur extends JeuModeleDJRes implements Serializable {
 		try {
 			socket = new ServerSocket(MON_PORT);
 			
-			flux = socket.accept();       
-			sortie = new ObjectOutputStream(flux.getOutputStream());
-			entree = new ObjectInputStream(flux.getInputStream());
-			sortie.writeObject(tab);
-			sortie.flush();
-			sortie.writeObject(getListeCase());
-			sortie.flush();
+			setFlux(socket.accept());       
+			setSortie(new ObjectOutputStream(getFlux().getOutputStream()));
+			setEntree(new ObjectInputStream(getFlux().getInputStream()));
+			getSortie().writeObject(tab);
+			getSortie().flush();
+			getSortie().writeObject(getListeCase());
+			getSortie().flush();
 		} catch (IOException e) { e.printStackTrace(); }
 
 	}

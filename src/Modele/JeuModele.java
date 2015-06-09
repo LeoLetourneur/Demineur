@@ -28,14 +28,7 @@ public class JeuModele extends Observable {
 	
 	public JeuModele() {
 		
-		themeJeu = VarCommun.themeJeu.Mario;
-		setAllowFlag(true);
-		setAllowQuestion(true);
-		setAllowTime(true);
-		setNbColonne(9);
-		setNbLigne(9);
-		setNbBombe(10);
-		construireCases();
+		this(9,9,10);
 	}
 	
 	public JeuModele(int nbLigne, int nbColonne, int nbBombe) {
@@ -47,7 +40,6 @@ public class JeuModele extends Observable {
 		setNbColonne(nbColonne);
 		setNbLigne(nbLigne);
 		setNbBombe(nbBombe);
-		construireCases();
 	}
 	
 	public void initialiser() {

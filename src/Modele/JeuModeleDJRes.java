@@ -8,31 +8,58 @@ import java.net.Socket;
 
 import javax.swing.JOptionPane;
 
+import Commun.VarCommun;
+
 public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	transient protected Socket flux;
-	transient protected ObjectInputStream entree;
-	transient protected ObjectOutputStream sortie;
+	transient private Socket flux;
+	transient private ObjectInputStream entree;
+	transient private ObjectOutputStream sortie;
 	public static final int MON_PORT = 2015;
+	
+	private Joueur moi;
 	
 	public JeuModeleDJRes() {
 		super();
+		if(this instanceof JeuModeleServeur)
+			moi = getJoueur1();
+		else
+			moi = getJoueur2();
 	}
 	
 	public JeuModeleDJRes(int nbLigne, int nbColonne, int nbBombe) {
 		super(nbLigne, nbColonne, nbBombe);
+		if(this instanceof JeuModeleServeur)
+			moi = getJoueur1();
+		else
+			moi = getJoueur2();
 	}
 	
 	public abstract void connexion();
 	
-	public void recevoir()
+	public boolean recevoir()
 	{
 		try {
 			int index = (Integer)entree.readObject();
-			getListeCase().get(index).setEtat(Commun.VarCommun.etatCase.DISCOVER.value);
+			CaseModele caseM = getListeCase().get(index);
+			caseM.setEtat(Commun.VarCommun.etatCase.DISCOVER.value);
+			if(caseM.getValeur() == VarCommun.typeCase.BOMB.value) {
+				incrementerScore();
+
+			} else {
+				if(caseM.getNbBombeVoisin() == 0)
+					caseM.retournerVoisin();
+				
+				if(getJoueurCourant() ==  getJoueur1())
+					setJoueurCourant(getJoueur2());
+				else
+					setJoueurCourant(getJoueur1());
+			}
+			return true;
 		} catch (ClassNotFoundException e) { e.printStackTrace();
-		} catch (IOException e) { e.printStackTrace(); }
+		} catch (IOException e) { System.out.println("Vous avez été déconnecté"); }
+		return false;
 	}
 	
 	public void envoyer(int index)
@@ -54,5 +81,37 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 			flux.close(); 
 		} catch (IOException e) { e.printStackTrace(); }
 		   
+	}
+	
+	public Socket getFlux() {
+		return flux;
+	}
+
+	public void setFlux(Socket flux) {
+		this.flux = flux;
+	}
+
+	public ObjectInputStream getEntree() {
+		return entree;
+	}
+
+	public void setEntree(ObjectInputStream entree) {
+		this.entree = entree;
+	}
+
+	public ObjectOutputStream getSortie() {
+		return sortie;
+	}
+
+	public void setSortie(ObjectOutputStream sortie) {
+		this.sortie = sortie;
+	}
+
+	public Joueur getMoi() {
+		return moi;
+	}
+
+	public void setMoi(Joueur moi) {
+		this.moi = moi;
 	}
 }

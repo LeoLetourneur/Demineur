@@ -1,7 +1,6 @@
 package Vue;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.util.Observable;
 
 import javax.swing.*;
@@ -17,12 +16,10 @@ public class JeuVueDJ extends JeuVue {
 	public JeuVueDJ(JeuModeleDJ model) {
         super(model);
         
-        buildFrame();
+        changeLabel();
     }
 
-	public void buildFrame() {
-        
-        super.buildFrame();
+	public void changeLabel() {
         
 		labelGauche.setText("J1 : "+((JeuModeleDJ)getModele()).getJoueur1().getScore());
 		labelGauche.setForeground(Color.red);
@@ -30,13 +27,10 @@ public class JeuVueDJ extends JeuVue {
     }
 	
 	public void chargerCase() {
-		Font font = new Font("Courier New", Font.BOLD, 14);
         for(CaseModele caseM : modele.getListeCase())
         {
         	CaseVue caseVue = new CaseVue(caseM);
         	CaseControleurDJ caseControleur = new CaseControleurDJ(caseM, caseVue);
-            caseVue.setFont(font);
-            caseVue.setForeground(Color.white);
             caseVue.addMouseListener(caseControleur);
             panelCases.add(caseVue);
         }

@@ -22,6 +22,7 @@ import Modele.JeuModele;
 import Modele.JeuModeleClient;
 import Modele.JeuModeleDJ;
 import Modele.JeuModeleServeur;
+import Modele.RecevoirRes;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
@@ -205,28 +206,40 @@ public class MenuVue extends JFrame implements ActionListener {
 		
 		if(e.getSource() == btn1Joueur) {
 		    JeuModele model = new JeuModele(lignes, colonnes, bombes);
+		    model.construireCases();
 			JeuVue view = new JeuVue(model);
 			new JeuControleur(model, view);
 			view.setVisible(true);
 		}
 		else if(e.getSource() == btnLocal) {
 		    JeuModeleDJ model = new JeuModeleDJ(lignes, colonnes, bombes);
+		    model.construireCases();
 			JeuVueDJ view = new JeuVueDJ(model);
 			new JeuControleur(model, view);
 			view.setVisible(true);
 		}
 		else if(e.getSource() == btnReseauServeur) {
 		    JeuModeleServeur model = new JeuModeleServeur(lignes, colonnes, bombes);
-			JeuVueDJ view = new JeuVueDJ(model);
+		    model.construireCases();
+		    model.connexion();
+		    
+			JeuVueDJRes view = new JeuVueDJRes(model);
 			new JeuControleur(model, view);
 			view.setVisible(true);
+			
+			RecevoirRes rs = new RecevoirRes(model);
+			rs.start();
 		}
 		else if(e.getSource() == btnReseauClient) {
 		    JeuModeleClient model = new JeuModeleClient();
 		    model.connexion();
-			JeuVueDJ view = new JeuVueDJ(model);
+		    
+		    JeuVueDJRes view = new JeuVueDJRes(model);
 			new JeuControleur(model, view);
 			view.setVisible(true);
+			
+			RecevoirRes rs = new RecevoirRes(model);
+			rs.start();
 		}
 	}
 }

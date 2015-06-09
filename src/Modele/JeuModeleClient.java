@@ -9,7 +9,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class JeuModeleClient extends JeuModeleDJRes implements Serializable {
-
 	private static final long serialVersionUID = 6353635343291120470L;
 	
 	private String ipServeur;
@@ -26,36 +25,32 @@ public class JeuModeleClient extends JeuModeleDJRes implements Serializable {
 	public void connexion() {
 		ipServeur = "127.0.0.1";
 		try {
-			this.flux = new Socket(InetAddress.getByName(this.ipServeur), MON_PORT);
-			this.sortie = new ObjectOutputStream(this.flux.getOutputStream());
-			this.entree = new ObjectInputStream(this.flux.getInputStream());
-			this.sortie.flush();
+			setFlux(new Socket(InetAddress.getByName(this.ipServeur), MON_PORT));
+			setSortie(new ObjectOutputStream(getFlux().getOutputStream()));
+			setEntree(new ObjectInputStream(getFlux().getInputStream()));
 			
 			recevoirPlateau();
-			setListeCase(recevoirCases());
+			recevoirCases();
 		} catch (IOException e) { e.printStackTrace(); }
 	}
 
 	private void recevoirPlateau() {
 		try {
-			int[] tab = (int[])entree.readObject();
+			int[] tab = (int[])getEntree().readObject();
 			this.nbLigne = tab[0];
 			this.nbColonne = tab[1];
 			this.nbBombe = tab[2];
-			System.out.println("Nb ok");
 		} catch (IOException e) { e.printStackTrace(); 
 		} catch (ClassNotFoundException e) { e.printStackTrace(); }
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	private ArrayList<CaseModele> recevoirCases() {
+	private void recevoirCases() {
 		try {
-			Object al = entree.readObject();
-			System.out.println("Cases ok");
-			return (ArrayList<CaseModele>)al;
+			Object al = getEntree().readObject();
+			setListeCase((ArrayList<CaseModele>)al);
 		} catch (ClassNotFoundException e) { e.printStackTrace();
 		} catch (IOException e) { e.printStackTrace(); }
-		return null;
 	}
 }

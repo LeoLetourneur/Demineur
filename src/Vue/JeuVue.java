@@ -1,5 +1,5 @@
 package Vue;
-import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.Observable;
@@ -149,13 +149,10 @@ public class JeuVue extends JFrame implements Observer {
     }
 	
 	public void chargerCase() {
-		Font font = new Font("Courier New", Font.BOLD, 14);
         for(CaseModele caseM : modele.getListeCase())
         {
         	CaseVue caseVue = new CaseVue(caseM);
         	CaseControleur caseControleur = new CaseControleur(caseM, caseVue);
-            caseVue.setFont(font);
-            caseVue.setForeground(Color.white);
             caseVue.addMouseListener(caseControleur);
             panelCases.add(caseVue);
         }

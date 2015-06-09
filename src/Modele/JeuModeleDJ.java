@@ -12,14 +12,7 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 	protected Joueur joueurCourant;
 	
 	public JeuModeleDJ() {
-		super();
-		joueur1 = new Joueur("Joueur1", 1);
-		joueur2 = new Joueur("Joueur2", 2);
-		
-		setAllowFlag(false);
-		setAllowQuestion(false);
-		setPremierTour(false);
-		setJoueurCourant(joueur1);
+		this(9, 9, 10);
 	}
 	
 	public JeuModeleDJ(int nbLigne, int nbColonne, int nbBombe) {
