@@ -16,8 +16,7 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 	transient private Socket flux;
 	transient private ObjectInputStream entree;
 	transient private ObjectOutputStream sortie;
-	public static final int MON_PORT = 2015;
-	
+	private int portServeur;
 	private Joueur moi;
 	
 	public JeuModeleDJRes() {
@@ -105,6 +104,14 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 
 	public void setSortie(ObjectOutputStream sortie) {
 		this.sortie = sortie;
+	}
+	
+	public int getPortServeur() {
+		return portServeur;
+	}
+
+	public void setPortServeur(int portServeur) {
+		this.portServeur = portServeur;
 	}
 
 	public Joueur getMoi() {

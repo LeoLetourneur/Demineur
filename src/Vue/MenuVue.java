@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -153,7 +154,7 @@ public class MenuVue extends JFrame implements ActionListener {
 		lblPort.setBounds(6, 30, 38, 16);
 		panelReseauServeur.add(lblPort);
 		
-		txtPortServeur = new JTextField();
+		txtPortServeur = new JTextField("2015");
 		txtPortServeur.setBounds(56, 24, 113, 28);
 		panelReseauServeur.add(txtPortServeur);
 		txtPortServeur.setColumns(10);
@@ -167,7 +168,7 @@ public class MenuVue extends JFrame implements ActionListener {
 		tabbedPane_1.addTab("Client", null, panelReseauClient, null);
 		panelReseauClient.setLayout(null);
 		
-		txtAdresseClient = new JTextField();
+		txtAdresseClient = new JTextField("127.0.0.1");
 		txtAdresseClient.setColumns(10);
 		txtAdresseClient.setBounds(66, 6, 113, 28);
 		panelReseauClient.add(txtAdresseClient);
@@ -181,7 +182,7 @@ public class MenuVue extends JFrame implements ActionListener {
 		btnReseauClient.addActionListener(this);
 		panelReseauClient.add(btnReseauClient);
 		
-		txtPortClient = new JTextField();
+		txtPortClient = new JTextField("2015");
 		txtPortClient.setColumns(10);
 		txtPortClient.setBounds(66, 32, 113, 28);
 		panelReseauClient.add(txtPortClient);
@@ -220,6 +221,10 @@ public class MenuVue extends JFrame implements ActionListener {
 		}
 		else if(e.getSource() == btnReseauServeur) {
 		    JeuModeleServeur model = new JeuModeleServeur(lignes, colonnes, bombes);
+		    
+		    if(!testInputServeur())
+		    	return;
+		    model.setPortServeur(Integer.parseInt(txtPortServeur.getText()));
 		    model.construireCases();
 		    model.connexion();
 		    
@@ -232,6 +237,11 @@ public class MenuVue extends JFrame implements ActionListener {
 		}
 		else if(e.getSource() == btnReseauClient) {
 		    JeuModeleClient model = new JeuModeleClient();
+		    
+		    if(!testInputClient())
+		    	return;
+		    model.setPortServeur(Integer.parseInt(txtPortClient.getText()));
+		    model.setIpServeur(txtAdresseClient.getText());
 		    model.connexion();
 		    
 		    JeuVueDJRes view = new JeuVueDJRes(model);
@@ -241,5 +251,38 @@ public class MenuVue extends JFrame implements ActionListener {
 			RecevoirRes rs = new RecevoirRes(model);
 			rs.start();
 		}
+	}
+
+	private boolean testInputServeur() {
+		if(txtPortServeur.getText() == "") {
+	    	JOptionPane.showMessageDialog(null, "Le port est invalide");
+	    	return false;
+	    }
+	    try{
+	        Integer.parseInt(txtPortServeur.getText());
+	    }catch(NumberFormatException e1){
+	    	JOptionPane.showMessageDialog(null, "Le port est invalide");
+	    	return false;
+	    }
+		return true;
+	}
+	
+	private boolean testInputClient() {
+		if(txtAdresseClient.getText() == "" || !txtAdresseClient.getText().matches(
+				"(([0-1]?[0-9]{1,2}\\.)|(2[0-4][0-9]\\.)|(25[0-5]\\.)){3}(([0-1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))")) {
+	    	JOptionPane.showMessageDialog(null, "L'adresse ip est invalide");
+	    	return false;
+	    }
+		if(txtPortClient.getText() == "") {
+	    	JOptionPane.showMessageDialog(null, "Le port est invalide");
+	    	return false;
+	    }
+	    try{
+	        Integer.parseInt(txtPortClient.getText());
+	    }catch(NumberFormatException e1){
+	    	JOptionPane.showMessageDialog(null, "Le port est invalide");
+	    	return false;
+	    }
+		return true;
 	}
 }

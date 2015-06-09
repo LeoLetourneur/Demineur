@@ -25,7 +25,7 @@ public class JeuModeleClient extends JeuModeleDJRes implements Serializable {
 	public void connexion() {
 		ipServeur = "127.0.0.1";
 		try {
-			setFlux(new Socket(InetAddress.getByName(this.ipServeur), MON_PORT));
+			setFlux(new Socket(InetAddress.getByName(getIpServeur()), getPortServeur()));
 			setSortie(new ObjectOutputStream(getFlux().getOutputStream()));
 			setEntree(new ObjectInputStream(getFlux().getInputStream()));
 			
@@ -52,5 +52,13 @@ public class JeuModeleClient extends JeuModeleDJRes implements Serializable {
 			setListeCase((ArrayList<CaseModele>)al);
 		} catch (ClassNotFoundException e) { e.printStackTrace();
 		} catch (IOException e) { e.printStackTrace(); }
+	}
+	
+	public String getIpServeur() {
+		return ipServeur;
+	}
+
+	public void setIpServeur(String ipServeur) {
+		this.ipServeur = ipServeur;
 	}
 }

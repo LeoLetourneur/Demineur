@@ -23,7 +23,7 @@ public class JeuModeleServeur extends JeuModeleDJRes implements Serializable {
 	public void connexion() {
 		int[] tab = {nbLigne, nbColonne, nbBombe};
 		try {
-			socket = new ServerSocket(MON_PORT);
+			socket = new ServerSocket(getPortServeur());
 			
 			setFlux(socket.accept());       
 			setSortie(new ObjectOutputStream(getFlux().getOutputStream()));
