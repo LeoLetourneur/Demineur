@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -195,7 +197,11 @@ public class MenuVue extends JFrame implements ActionListener {
 		tabbedPane_1.addTab("Client", null, panelReseauClient, null);
 		panelReseauClient.setLayout(null);
 		
-		txtAdresseClient = new JTextField("127.0.0.1");
+		String monAdresse = "127.0.0.1";
+		try { monAdresse = InetAddress.getLocalHost().getHostAddress();
+		} catch (UnknownHostException e) { e.printStackTrace(); }
+		
+		txtAdresseClient = new JTextField(monAdresse);
 		txtAdresseClient.setColumns(10);
 		txtAdresseClient.setBounds(66, 6, 113, 28);
 		panelReseauClient.add(txtAdresseClient);

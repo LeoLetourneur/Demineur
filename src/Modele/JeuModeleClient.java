@@ -23,7 +23,6 @@ public class JeuModeleClient extends JeuModeleDJRes implements Serializable {
 
 	@Override
 	public void connexion() {
-		ipServeur = "127.0.0.1";
 		try {
 			setFlux(new Socket(InetAddress.getByName(getIpServeur()), getPortServeur()));
 			setSortie(new ObjectOutputStream(getFlux().getOutputStream()));
