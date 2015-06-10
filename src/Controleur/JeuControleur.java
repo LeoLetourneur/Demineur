@@ -46,7 +46,7 @@ public class JeuControleur implements ActionListener {
 			modele.sauvegarde();
 		}
 		else if(e.getSource() == vue.mntmDecouvrir) {
-			modele.setFini(true);
+			modele.setEtat(VarCommun.etatJeu.PERDU.value);
 			for(int i=0;i<(modele.getNbColonne()*modele.getNbLigne());i++)
 				modele.getListeCase().get(i).setEtat(VarCommun.etatCase.DISCOVER.value);
 		}
@@ -54,20 +54,23 @@ public class JeuControleur implements ActionListener {
 			vue.dispose();
 		}
 		else if(e.getSource() == vue.mntmParametres) {
+			modele.getTimer().stop();
 			ParametreVue pv = new ParametreVue(modele);
 			pv.setVisible(true);
 			if(pv.isAccept()) {
-				if(!modele.isAllowTime())
-					vue.getLabelDroit().setVisible(false);
 				modele.construireCases();
 				vue.chargerJeu();
 				vue.chargerCase();
 				vue.repaint();
-			}
+			} else
+				modele.getTimer().start();
 			pv.dispose();
 		}
 		else if(e.getSource() instanceof Timer) {
-			modele.setSecondes(modele.getSecondes()+1);
+			if(modele.isDefiTemps())
+				modele.setSecondes(modele.getSecondes()-1);
+			else
+				modele.setSecondes(modele.getSecondes()+1);
 		}
 		else
 			modele.setThemeJeu(VarCommun.themeJeu.valueOf(((JMenuItem)e.getSource()).getActionCommand()));

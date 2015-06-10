@@ -29,8 +29,8 @@ public class JeuModele extends Observable implements Serializable {
 	private boolean premierTour;
 	private boolean fini;
 	private boolean allowQuestion;
-	private boolean allowFlag;
 	private boolean allowTime;
+	private boolean defiTemps;
 	private ArrayList<CaseModele> listeCase;
 	
 	
@@ -42,7 +42,7 @@ public class JeuModele extends Observable implements Serializable {
 	public JeuModele(int nbLigne, int nbColonne, int nbBombe) {
 		
 		themeJeu = VarCommun.themeJeu.Mario;
-		setAllowFlag(true);
+		setDefiTemps(false);
 		setAllowQuestion(true);
 		setAllowTime(true);
 		setNbColonne(nbColonne);
@@ -180,6 +180,8 @@ public class JeuModele extends Observable implements Serializable {
 
 	public void setSecondes(int secondes) {
 		this.secondes = secondes;
+		if(secondes < 0)
+			setEtat(VarCommun.etatJeu.PERDU.value);
 		setChanged();
 		notifyObservers();
 	}
@@ -282,19 +284,19 @@ public class JeuModele extends Observable implements Serializable {
 		this.allowQuestion = allowQuestion;
 	}
 
-	public boolean isAllowFlag() {
-		return allowFlag;
-	}
-
-	public void setAllowFlag(boolean allowFlag) {
-		this.allowFlag = allowFlag;
-	}
-
 	public boolean isAllowTime() {
 		return allowTime;
 	}
 
 	public void setAllowTime(boolean allowTime) {
 		this.allowTime = allowTime;
+	}
+
+	public boolean isDefiTemps() {
+		return defiTemps;
+	}
+
+	public void setDefiTemps(boolean defiTemps) {
+		this.defiTemps = defiTemps;
 	}
 }

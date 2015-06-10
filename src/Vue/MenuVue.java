@@ -47,10 +47,15 @@ public class MenuVue extends JFrame implements ActionListener {
 	private JSpinner spinnerLigne;
 	private JSpinner spinnerColonne;
 	private JSpinner spinnerBombe;
+	private JSpinner spinnerTemps;
 	
 	private JTextField txtPortServeur;
 	private JTextField txtAdresseClient;
 	private JTextField txtPortClient;
+	
+	private JCheckBox cbDefiTemps;
+	private JCheckBox cbUseInterrogation;
+	private JCheckBox cbUseTemps;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -126,24 +131,29 @@ public class MenuVue extends JFrame implements ActionListener {
 		btn1Joueur.addActionListener(this);
 		panelUnJoueur.add(btn1Joueur);
 		
-		JCheckBox checkBox = new JCheckBox("Utiliser le temps");
-		checkBox.setSelected(true);
-		checkBox.setBounds(6, 43, 327, 35);
-		panelUnJoueur.add(checkBox);
+		cbUseTemps = new JCheckBox("Utiliser le temps");
+		cbUseTemps.setSelected(true);
+		cbUseTemps.addActionListener(this);
+		cbUseTemps.setBounds(6, 43, 327, 35);
+		panelUnJoueur.add(cbUseTemps);
 		
-		JCheckBox checkBox_1 = new JCheckBox("Utiliser le point d'interrogation");
-		checkBox_1.setSelected(true);
-		checkBox_1.setBounds(6, 6, 327, 35);
-		panelUnJoueur.add(checkBox_1);
+		cbUseInterrogation = new JCheckBox("Utiliser le point d'interrogation");
+		cbUseInterrogation.setSelected(true);
+		cbUseInterrogation.setBounds(6, 6, 327, 35);
+		panelUnJoueur.add(cbUseInterrogation);
 		
-		JCheckBox cbDefiTemps = new JCheckBox("Défi temps (secondes)");
+		cbDefiTemps = new JCheckBox("Défi temps (secondes)");
 		cbDefiTemps.setBounds(6, 77, 178, 35);
+		cbDefiTemps.addActionListener(this);
 		panelUnJoueur.add(cbDefiTemps);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setEnabled(false);
-		spinner.setBounds(196, 81, 120, 28);
-		panelUnJoueur.add(spinner);
+		SpinnerNumberModel modelTemps = new SpinnerNumberModel(120, 10, 9999999, 1);
+		
+		spinnerTemps = new JSpinner();
+		spinnerTemps.setBounds(196, 81, 120, 28);
+		spinnerTemps.setModel(modelTemps);
+		spinnerTemps.setEnabled(false);
+		panelUnJoueur.add(spinnerTemps);
 		
 		btnCharger = new JButton("Charger");
 		btnCharger.setBounds(20, 135, 112, 43);
@@ -229,6 +239,16 @@ public class MenuVue extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+		if(e.getSource() == cbUseTemps) {
+			if(cbDefiTemps.isSelected())
+				cbUseTemps.setSelected(true);
+		}
+		if(e.getSource() == cbDefiTemps) {
+			spinnerTemps.setEnabled(cbDefiTemps.isSelected());
+			if(cbDefiTemps.isSelected())
+				cbUseTemps.setSelected(true);
+		}
+
 		int lignes = (Integer) spinnerLigne.getValue();
 		int colonnes = (Integer) spinnerColonne.getValue();
 		int bombes = (Integer) spinnerBombe.getValue();
@@ -237,6 +257,7 @@ public class MenuVue extends JFrame implements ActionListener {
 			spinnerBombe.setBorder(BorderFactory.createLineBorder(Color.red));
 			return;
 		}
+		
 		if(e.getSource() == btnCharger) {
 		    JeuModele model = JeuModele.charger();
 		    model.setNbCasesRetournees(0);
@@ -253,6 +274,12 @@ public class MenuVue extends JFrame implements ActionListener {
 		else if(e.getSource() == btn1Joueur) {
 		    JeuModele model = new JeuModele(lignes, colonnes, bombes);
 		    model.construireCases();
+		    if(cbDefiTemps.isSelected()) {
+		    	model.setSecondes((Integer) spinnerTemps.getValue());
+		    	model.setDefiTemps(true);
+		    }
+		    model.setAllowQuestion(cbUseInterrogation.isSelected());
+		    model.setAllowTime(cbUseTemps.isSelected());
 			JeuVue view = new JeuVue(model);
 			new JeuControleur(model, view);
 			view.setVisible(true);

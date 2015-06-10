@@ -21,7 +21,6 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 		joueur1 = new Joueur("Joueur1", 1);
 		joueur2 = new Joueur("Joueur2", 2);
 		
-		setAllowFlag(false);
 		setAllowQuestion(false);
 		setPremierTour(false);
 		setJoueurCourant(joueur1);

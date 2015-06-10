@@ -80,8 +80,6 @@ public class CaseControleur implements MouseListener {
 			}
 		}
 		else if(e.getButton() == MouseEvent.BUTTON3) {
-			if(!modele.getModeleJeu().isAllowFlag() && !modele.getModeleJeu().isAllowQuestion())
-				return;
 			
 			if(modele.getEtat() == VarCommun.etatCase.COVER.value) {
 				modele.setEtat(VarCommun.etatCase.FLAG.value);

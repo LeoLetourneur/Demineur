@@ -116,7 +116,7 @@ public class JeuVue extends JFrame implements Observer {
     	labelGauche = new JLabel(modele.getNbBombeRestante()+"");
     	labelGauche.setFont(font);
     	labelGauche.setHorizontalAlignment(SwingConstants.CENTER);
-    	labelDroit = new JLabel("0");
+    	labelDroit = new JLabel(modele.getSecondes()+"");
     	labelDroit.setFont(font);
     	labelDroit.setHorizontalAlignment(SwingConstants.CENTER);
         
@@ -164,6 +164,8 @@ public class JeuVue extends JFrame implements Observer {
 
 	public void chargerJeu()
 	{
+		getLabelDroit().setVisible(modele.isAllowTime());
+		
 		container.remove(panelCases);
 		panelCases = new JPanel (new GridLayout(modele.getNbLigne(), modele.getNbColonne()));
         panelCases.setBounds((this.getWidth()/2-14 * modele.getNbColonne()), (this.getHeight()/2-14 * modele.getNbLigne()), 28 * modele.getNbColonne(), 28 * modele.getNbLigne());
