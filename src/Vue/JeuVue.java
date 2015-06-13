@@ -170,7 +170,18 @@ public class JeuVue extends JFrame implements Observer {
 		panelCases = new JPanel (new GridLayout(modele.getNbLigne(), modele.getNbColonne()));
         panelCases.setBounds((this.getWidth()/2-14 * modele.getNbColonne()), (this.getHeight()/2-14 * modele.getNbLigne()), 28 * modele.getNbColonne(), 28 * modele.getNbLigne());
         container.add(panelCases);
-		iconeMilieu.setIcon(iconTete);
+        switch(modele.getEtat())
+        {
+        	case 0 : iconeMilieu.setIcon(iconTete);
+        			break;
+        	case 1: iconeMilieu.setIcon(iconTete);
+        			break;
+        	case 2: iconeMilieu.setIcon(iconPerdu);
+        			break;
+        	case 3 : iconeMilieu.setIcon(iconGagne);
+        			break;
+        }
+		
 	}
 
 	@Override
