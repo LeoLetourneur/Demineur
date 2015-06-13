@@ -278,7 +278,17 @@ public class MenuVue extends JFrame implements ActionListener {
 				model.getTimer().start();
 		}
 		else if(e.getSource() == btnCharger2JLocal) {
-		    //TODO C'est ici que tout se joue Cyril !
+			 	JeuModeleDJ model = JeuModeleDJ.charger();
+				JeuVueDJ view = new JeuVueDJ(model);
+				new JeuControleur(model, view);
+				for(CaseModele caseM : model.getListeCase())
+				{
+					caseM.setModeleJeu(model);
+					caseM.setEtat(caseM.getEtat());
+				}	
+				view.setVisible(true);
+				if(!model.isFini())
+					model.getTimer().start();
 		}
 		else if(e.getSource() == btn1Joueur) {
 		    JeuModele model = new JeuModele(lignes, colonnes, bombes);

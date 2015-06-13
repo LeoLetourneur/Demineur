@@ -66,6 +66,8 @@ public class JeuVueDJ extends JeuVue {
 		if(!modele.isFini()) {
 			if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value) {
 				modele.setFini(true);
+				if(modele.isSauvegarde())
+					modele.sauvegarde();
 				iconeMilieu.setIcon(iconGagne);
 				
 				if(((JeuModeleDJ)modele).getJoueur1().getScore() > ((JeuModeleDJ)modele).getJoueur2().getScore())
