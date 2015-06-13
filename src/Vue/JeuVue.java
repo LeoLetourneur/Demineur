@@ -204,7 +204,7 @@ public class JeuVue extends JFrame implements Observer {
 				modele.setFini(true);
 				modele.getTimer().stop();
 				iconeMilieu.setIcon(iconPerdu);
-				if(modele.isCharge())
+				if(modele.isSauvegarde())
 					modele.sauvegarde();
 				JOptionPane.showMessageDialog(null, "Vous avez perdu");
 			}
@@ -212,7 +212,7 @@ public class JeuVue extends JFrame implements Observer {
 				modele.setFini(true);
 				modele.getTimer().stop();
 				iconeMilieu.setIcon(iconGagne);
-				if(modele.isCharge())
+				if(modele.isSauvegarde())
 					modele.sauvegarde();
 				JOptionPane.showMessageDialog(null, "Vous avez gagné");
 			}

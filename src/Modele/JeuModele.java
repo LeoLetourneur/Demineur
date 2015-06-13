@@ -32,7 +32,7 @@ public class JeuModele extends Observable implements Serializable {
 	private boolean allowTime;
 	private boolean defiTemps;
 	private ArrayList<CaseModele> listeCase;
-	private boolean charge;
+	private boolean sauvegarde;
 	
 	
 	public JeuModele() {
@@ -43,7 +43,7 @@ public class JeuModele extends Observable implements Serializable {
 	public JeuModele(int nbLigne, int nbColonne, int nbBombe) {
 		
 		themeJeu = VarCommun.themeJeu.Mario;
-		setCharge(false);
+		setSauvegarde(false);
 		setDefiTemps(false);
 		setAllowQuestion(true);
 		setAllowTime(true);
@@ -131,6 +131,7 @@ public class JeuModele extends Observable implements Serializable {
 		} catch (FileNotFoundException e) { e.printStackTrace();
 		} catch (IOException e) { e.printStackTrace();
 		}
+		this.setSauvegarde(true);
 		System.out.println("Sauvegardé");
 	}
 	
@@ -153,7 +154,7 @@ public class JeuModele extends Observable implements Serializable {
 		} catch(ClassNotFoundException cnfe) {
 			cnfe.printStackTrace();
 		}
-		partieCharger.setCharge(true);
+		partieCharger.setSauvegarde(true);
 		System.out.println("Chargé");
 		return partieCharger;
 	}
@@ -302,11 +303,11 @@ public class JeuModele extends Observable implements Serializable {
 		this.defiTemps = defiTemps;
 	}
 
-	public boolean isCharge() {
-		return charge;
+	public boolean isSauvegarde() {
+		return sauvegarde;
 	}
 
-	public void setCharge(boolean charge) {
-		this.charge = charge;
+	public void setSauvegarde(boolean sauvegarde) {
+		this.sauvegarde = sauvegarde;
 	}
 }
