@@ -6,7 +6,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class JeuModeleClient extends JeuModeleDJRes implements Serializable {
 	private static final long serialVersionUID = 6353635343291120470L;
@@ -27,29 +26,6 @@ public class JeuModeleClient extends JeuModeleDJRes implements Serializable {
 			setFlux(new Socket(InetAddress.getByName(getIpServeur()), getPortServeur()));
 			setSortie(new ObjectOutputStream(getFlux().getOutputStream()));
 			setEntree(new ObjectInputStream(getFlux().getInputStream()));
-			
-			recevoirPlateau();
-			recevoirCases();
-		} catch (IOException e) { e.printStackTrace(); }
-	}
-
-	private void recevoirPlateau() {
-		try {
-			int[] tab = (int[])getEntree().readObject();
-			this.nbLigne = tab[0];
-			this.nbColonne = tab[1];
-			this.nbBombe = tab[2];
-		} catch (IOException e) { e.printStackTrace(); 
-		} catch (ClassNotFoundException e) { e.printStackTrace(); }
-		
-	}
-	
-	@SuppressWarnings("unchecked")
-	private void recevoirCases() {
-		try {
-			Object al = getEntree().readObject();
-			setListeCase((ArrayList<CaseModele>)al);
-		} catch (ClassNotFoundException e) { e.printStackTrace();
 		} catch (IOException e) { e.printStackTrace(); }
 	}
 	

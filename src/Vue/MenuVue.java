@@ -319,6 +319,8 @@ public class MenuVue extends JFrame implements ActionListener {
 		    model.setPortServeur(Integer.parseInt(txtPortServeur.getText()));
 		    model.construireCases();
 		    model.connexion();
+		    model.envoiDimensionsGrille();
+		    model.envoiEnsembleCases();
 		    
 			JeuVueDJRes view = new JeuVueDJRes(model);
 			new JeuControleurDJRes(model, view);
@@ -335,6 +337,8 @@ public class MenuVue extends JFrame implements ActionListener {
 		    model.setPortServeur(Integer.parseInt(txtPortClient.getText()));
 		    model.setIpServeur(txtAdresseClient.getText());
 		    model.connexion();
+		    model.recevoirPlateau();
+			model.recevoirNouvellesCases();
 		    
 		    JeuVueDJRes view = new JeuVueDJRes(model);
 			new JeuControleurDJRes(model, view);

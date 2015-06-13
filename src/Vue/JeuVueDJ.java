@@ -40,12 +40,7 @@ public class JeuVueDJ extends JeuVue {
 	public void update(Observable o, Object arg) {
 		if(arg != null && arg.equals("ChangeTheme")){
 			loadIcons();
-			if(modele.getEtat() == VarCommun.etatJeu.PERDU.value)
-				iconeMilieu.setIcon(iconPerdu);
-			else if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value)
-				iconeMilieu.setIcon(iconGagne);
-			else
-				iconeMilieu.setIcon(iconTete);
+			chargerIconeMilieu();
 		}
 		
 		labelGauche.setText("J1 : "+(((JeuModeleDJ)modele).getJoueur1().getScore()));
@@ -56,7 +51,6 @@ public class JeuVueDJ extends JeuVue {
 			labelGauche.setForeground(Color.red);
 			labelDroit.setForeground(Color.black);
 		}
-		
 		else
 		{
 			labelDroit.setForeground(Color.red);

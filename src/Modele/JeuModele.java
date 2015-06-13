@@ -65,7 +65,7 @@ public class JeuModele extends Observable implements Serializable {
 	public void construireCases() {
 		
 		initialiser();
-		setListeCase(new ArrayList<CaseModele>());
+		listeCase = new ArrayList<CaseModele>();
 		int nbCase = nbLigne*nbColonne;
 		ArrayList<Integer> listeCaseVide = new ArrayList<Integer>();
 		for(int i=0; i<nbCase; i++) {
@@ -165,6 +165,8 @@ public class JeuModele extends Observable implements Serializable {
 
 	public void setListeCase(ArrayList<CaseModele> listeCase) {
 		this.listeCase = listeCase;
+		setChanged();
+		notifyObservers();
 	}
 	
 	public int getNbBombeRestante() {

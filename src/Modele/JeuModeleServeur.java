@@ -21,19 +21,13 @@ public class JeuModeleServeur extends JeuModeleDJRes implements Serializable {
 
 	@Override
 	public void connexion() {
-		int[] tab = {nbLigne, nbColonne, nbBombe};
 		try {
 			socket = new ServerSocket(getPortServeur());
 			
 			setFlux(socket.accept());       
 			setSortie(new ObjectOutputStream(getFlux().getOutputStream()));
 			setEntree(new ObjectInputStream(getFlux().getInputStream()));
-			getSortie().writeObject(tab);
-			getSortie().flush();
-			getSortie().writeObject(getListeCase());
-			getSortie().flush();
+			
 		} catch (IOException e) { e.printStackTrace(); }
-
 	}
-
 }

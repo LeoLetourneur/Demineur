@@ -31,6 +31,13 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 		setPremierTour(false);
 		setJoueurCourant(joueur1);
 	}
+	
+	public void initialiser() {
+		super.initialiser();
+		setPremierTour(false);
+		getJoueur1().setScore(0);
+		getJoueur2().setScore(0);
+	}
 
 	public Joueur getJoueur1() {
 		return joueur1;
@@ -71,7 +78,6 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 		getJoueur1().setScore(0);
 		getJoueur2().setScore(0);
 		setJoueurCourant(getJoueur1());
-		
 	}
 	
 	public void setNbCasesRetournees(int p_nbCasesRetournes) {
@@ -80,11 +86,9 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 			setEtat(VarCommun.etatJeu.GAGNE.value);
 		setChanged();
 		notifyObservers();
-		
 	}
 	
-public void sauvegarde() {
-		
+	public void sauvegarde() {	
 		try {
 			FileOutputStream fileStreamPartie = new FileOutputStream("partieDJ.serial");
 			ObjectOutputStream objetStreamPartie= new ObjectOutputStream(fileStreamPartie);
@@ -129,5 +133,4 @@ public void sauvegarde() {
 		System.out.println("Chargé");
 		return partieCharger;
 	}
-	
 }

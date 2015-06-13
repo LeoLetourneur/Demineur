@@ -1,5 +1,7 @@
 package Vue;
 
+import java.util.Observable;
+
 import Controleur.CaseControleurDJRes;
 import Modele.CaseModele;
 import Modele.JeuModeleDJ;
@@ -10,6 +12,7 @@ public class JeuVueDJRes extends JeuVueDJ {
 	public JeuVueDJRes(JeuModeleDJ model) {
 		super(model);
 		mntmSauvegarder.setEnabled(false);
+		mntmParametres.setEnabled(false);
     }
 	
 	public void chargerCasesVueControleur() {
@@ -21,5 +24,10 @@ public class JeuVueDJRes extends JeuVueDJ {
             caseVue.addMouseListener(caseControleur);
             panelCases.add(caseVue);
         }
+	}
+	
+	public void update(Observable o, Object arg) {
+		if(modele.isFini())
+			chargerIconeMilieu();
 	}
 }
