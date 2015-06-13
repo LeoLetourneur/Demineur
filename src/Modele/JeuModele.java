@@ -32,6 +32,7 @@ public class JeuModele extends Observable implements Serializable {
 	private boolean allowTime;
 	private boolean defiTemps;
 	private ArrayList<CaseModele> listeCase;
+	private boolean charge;
 	
 	
 	public JeuModele() {
@@ -42,6 +43,7 @@ public class JeuModele extends Observable implements Serializable {
 	public JeuModele(int nbLigne, int nbColonne, int nbBombe) {
 		
 		themeJeu = VarCommun.themeJeu.Mario;
+		setCharge(false);
 		setDefiTemps(false);
 		setAllowQuestion(true);
 		setAllowTime(true);
@@ -151,7 +153,7 @@ public class JeuModele extends Observable implements Serializable {
 		} catch(ClassNotFoundException cnfe) {
 			cnfe.printStackTrace();
 		}
-		
+		partieCharger.setCharge(true);
 		System.out.println("Chargé");
 		return partieCharger;
 	}
@@ -298,5 +300,13 @@ public class JeuModele extends Observable implements Serializable {
 
 	public void setDefiTemps(boolean defiTemps) {
 		this.defiTemps = defiTemps;
+	}
+
+	public boolean isCharge() {
+		return charge;
+	}
+
+	public void setCharge(boolean charge) {
+		this.charge = charge;
 	}
 }

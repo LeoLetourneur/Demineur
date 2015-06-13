@@ -193,12 +193,16 @@ public class JeuVue extends JFrame implements Observer {
 				modele.setFini(true);
 				modele.getTimer().stop();
 				iconeMilieu.setIcon(iconPerdu);
+				if(modele.isCharge())
+					modele.sauvegarde();
 				JOptionPane.showMessageDialog(null, "Vous avez perdu");
 			}
 			else if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value) {
 				modele.setFini(true);
 				modele.getTimer().stop();
 				iconeMilieu.setIcon(iconGagne);
+				if(modele.isCharge())
+					modele.sauvegarde();
 				JOptionPane.showMessageDialog(null, "Vous avez gagné");
 			}
 		}

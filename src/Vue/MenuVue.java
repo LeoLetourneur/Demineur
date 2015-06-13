@@ -86,7 +86,7 @@ public class MenuVue extends JFrame implements ActionListener {
 		SpinnerModel modelLigne = new SpinnerNumberModel(15, 3, 30, 1);
 		SpinnerModel modelColonne = new SpinnerNumberModel(15, 3, 30, 1);
 		SpinnerNumberModel modelBombe = new SpinnerNumberModel();
-		modelBombe.setValue(80);
+		modelBombe.setValue(10);
 		modelBombe.setMinimum(2);
 		modelBombe.setStepSize(1);
 		contentPane.setLayout(null);
@@ -260,7 +260,6 @@ public class MenuVue extends JFrame implements ActionListener {
 		
 		if(e.getSource() == btnCharger) {
 		    JeuModele model = JeuModele.charger();
-		    model.setNbCasesRetournees(0);
 			JeuVue view = new JeuVue(model);
 			new JeuControleur(model, view);
 			for(CaseModele caseM : model.getListeCase())
@@ -269,7 +268,8 @@ public class MenuVue extends JFrame implements ActionListener {
 				caseM.setEtat(caseM.getEtat());
 			}	
 			view.setVisible(true);
-			model.getTimer().start();
+			if(!model.isFini())
+				model.getTimer().start();
 		}
 		else if(e.getSource() == btn1Joueur) {
 		    JeuModele model = new JeuModele(lignes, colonnes, bombes);

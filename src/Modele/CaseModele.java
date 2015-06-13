@@ -107,11 +107,15 @@ public class CaseModele extends Observable implements Serializable {
 	}
 
 	public void setEtat(int etat) {
-		this.etat = etat;
-		
-		if( etat == VarCommun.etatCase.DISCOVER.value && valeur == VarCommun.typeCase.EMPTY.value )
-			modeleJeu.setNbCasesRetournees(modeleJeu.getNbCasesRetournees()+1);
-		
+			
+		if(etat!=this.etat && etat == VarCommun.etatCase.DISCOVER.value && valeur == VarCommun.typeCase.EMPTY.value )
+			{
+				this.etat = etat;
+				setChanged();
+				notifyObservers();
+				modeleJeu.setNbCasesRetournees(modeleJeu.getNbCasesRetournees()+1);
+			}
+		this.etat=etat;
 		setChanged();
 		notifyObservers();
 	}
