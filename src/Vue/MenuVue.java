@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +15,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -32,12 +35,14 @@ import Modele.RecevoirRes;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
+import javax.swing.JSlider;
 
-public class MenuVue extends JFrame implements ActionListener {
+public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	private static final long serialVersionUID = 4722648722327719604L;
 	
 	private JPanel contentPane;
-	private JPanel panel;
+	private JPanel panelNiveau;
+	private JTabbedPane tpReseauClient;
 	
 	private JButton btn1Joueur;
 	private JButton btnCharger;
@@ -50,6 +55,7 @@ public class MenuVue extends JFrame implements ActionListener {
 	private JSpinner spinnerColonne;
 	private JSpinner spinnerBombe;
 	private JSpinner spinnerTemps;
+	private JSlider slider;
 	
 	private JTextField txtPortServeur;
 	private JTextField txtAdresseClient;
@@ -82,50 +88,23 @@ public class MenuVue extends JFrame implements ActionListener {
 		
         setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(530, 430);
+		setSize(644, 391);
 		setLocationRelativeTo(null);
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		SpinnerModel modelLigne = new SpinnerNumberModel(15, 3, 30, 1);
-		SpinnerModel modelColonne = new SpinnerNumberModel(15, 3, 30, 1);
+		SpinnerModel modelLigne = new SpinnerNumberModel(9, 3, 30, 1);
+		SpinnerModel modelColonne = new SpinnerNumberModel(9, 3, 30, 1);
 		SpinnerNumberModel modelBombe = new SpinnerNumberModel();
 		modelBombe.setValue(10);
 		modelBombe.setMinimum(2);
 		modelBombe.setStepSize(1);
 		contentPane.setLayout(null);
 		
-		JLabel lblNombreDeLignes = new JLabel("Nombre de lignes");
-		lblNombreDeLignes.setBounds(85, 257, 147, 30);
-		contentPane.add(lblNombreDeLignes);
-		
-		spinnerLigne = new JSpinner();
-		spinnerLigne.setBounds(298, 257, 147, 30);
-		spinnerLigne.setModel(modelLigne);
-		contentPane.add(spinnerLigne);
-		
-		JLabel lblNombreDeColonnes = new JLabel("Nombre de colonnes");
-		lblNombreDeColonnes.setBounds(85, 299, 147, 30);
-		contentPane.add(lblNombreDeColonnes);
-		
-		spinnerColonne = new JSpinner();
-		spinnerColonne.setBounds(298, 299, 147, 30);
-		spinnerColonne.setModel(modelColonne);
-		contentPane.add(spinnerColonne);
-		
-		JLabel lblNombreDeBombes = new JLabel("Nombre de bombes");
-		lblNombreDeBombes.setBounds(85, 341, 147, 30);
-		contentPane.add(lblNombreDeBombes);
-		
-		spinnerBombe = new JSpinner();
-		spinnerBombe.setBounds(298, 341, 147, 30);
-		spinnerBombe.setModel(modelBombe);
-		contentPane.add(spinnerBombe);
-		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(85, 19, 360, 230);
+		tabbedPane.setBounds(43, 118, 360, 230);
 		contentPane.add(tabbedPane);
 		
 		JPanel panelUnJoueur = new JPanel();
@@ -174,13 +153,13 @@ public class MenuVue extends JFrame implements ActionListener {
 		cbSaveGameBefore.setBounds(6, 102, 327, 23);
 		panelUnJoueur.add(cbSaveGameBefore);
 		
-		panel = new JPanel();
-		tabbedPane.addTab("Deux joueurs", null, panel, null);
-		panel.setLayout(null);
+		JPanel panelDJ = new JPanel();
+		tabbedPane.addTab("Deux joueurs", null, panelDJ, null);
+		panelDJ.setLayout(null);
 		
 		JTabbedPane tabbedPane_2 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_2.setBounds(6, 6, 327, 172);
-		panel.add(tabbedPane_2);
+		panelDJ.add(tabbedPane_2);
 		
 		JPanel panelLocal = new JPanel();
 		tabbedPane_2.addTab("Local", null, panelLocal, null);
@@ -208,12 +187,19 @@ public class MenuVue extends JFrame implements ActionListener {
 		tabbedPane_2.addTab("Réseau", null, panelReseau, null);
 		panelReseau.setLayout(null);
 		
-		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane_1.setBounds(6, 6, 294, 114);
-		panelReseau.add(tabbedPane_1);
+		panelNiveau = new JPanel();
+		panelNiveau.setBorder(null);
+		panelNiveau.setBounds(436, 118, 159, 230);
+		contentPane.add(panelNiveau);
+		panelNiveau.setLayout(null);
+		
+		tpReseauClient = new JTabbedPane(JTabbedPane.TOP);
+		tpReseauClient.addChangeListener(this);
+		tpReseauClient.setBounds(6, 6, 294, 114);
+		panelReseau.add(tpReseauClient);
 		
 		JPanel panelReseauServeur = new JPanel();
-		tabbedPane_1.addTab("Serveur", null, panelReseauServeur, null);
+		tpReseauClient.addTab("Serveur", null, panelReseauServeur, null);
 		panelReseauServeur.setLayout(null);
 		
 		JLabel lblPort = new JLabel("Port");
@@ -231,7 +217,7 @@ public class MenuVue extends JFrame implements ActionListener {
 		panelReseauServeur.add(btnReseauServeur);
 		
 		JPanel panelReseauClient = new JPanel();
-		tabbedPane_1.addTab("Client", null, panelReseauClient, null);
+		tpReseauClient.addTab("Client", null, panelReseauClient, null);
 		panelReseauClient.setLayout(null);
 		
 		String monAdresse = "127.0.0.1";
@@ -261,6 +247,48 @@ public class MenuVue extends JFrame implements ActionListener {
 		label_1.setBounds(6, 38, 38, 16);
 		panelReseauClient.add(label_1);
 		
+		JLabel panelTitre = new JLabel(new ImageIcon("sprite/titre.png"));
+		panelTitre.setBounds(6, 19, 632, 87);
+		contentPane.add(panelTitre);
+		
+		JLabel lblNiveau = new JLabel("Niveau");
+		lblNiveau.setBounds(6, 6, 61, 16);
+		panelNiveau.add(lblNiveau);
+		
+		slider = new JSlider();
+		slider.setValue(1);
+		slider.setMinimum(1);
+		slider.setMaximum(3);
+		slider.addChangeListener(this);
+		slider.setBounds(6, 29, 147, 29);
+		panelNiveau.add(slider);
+		
+		JLabel lblNombreDeLignes = new JLabel("Nombre de lignes");
+		lblNombreDeLignes.setBounds(6, 57, 147, 30);
+		panelNiveau.add(lblNombreDeLignes);
+		
+		spinnerLigne = new JSpinner();
+		spinnerLigne.setBounds(6, 84, 147, 30);
+		panelNiveau.add(spinnerLigne);
+		spinnerLigne.setModel(modelLigne);
+		
+		JLabel lblNombreDeColonnes = new JLabel("Nombre de colonnes");
+		lblNombreDeColonnes.setBounds(6, 112, 147, 30);
+		panelNiveau.add(lblNombreDeColonnes);
+		
+		spinnerColonne = new JSpinner();
+		spinnerColonne.setBounds(6, 138, 147, 30);
+		panelNiveau.add(spinnerColonne);
+		spinnerColonne.setModel(modelColonne);
+		
+		JLabel lblNombreDeBombes = new JLabel("Nombre de bombes");
+		lblNombreDeBombes.setBounds(6, 165, 147, 30);
+		panelNiveau.add(lblNombreDeBombes);
+		
+		spinnerBombe = new JSpinner();
+		spinnerBombe.setBounds(6, 191, 147, 30);
+		panelNiveau.add(spinnerBombe);
+		spinnerBombe.setModel(modelBombe);
 	}
 
 	@Override
@@ -370,6 +398,30 @@ public class MenuVue extends JFrame implements ActionListener {
 			
 			RecevoirRes rs = new RecevoirRes(model);
 			rs.start();
+		}
+	}
+	
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		if(e.getSource() == tpReseauClient) {
+			panelNiveau.setVisible(((JTabbedPane)tpReseauClient).getSelectedIndex() == 0);
+			return;
+		}
+		
+		if(((JSlider)e.getSource()).getValue() == 1) {
+			spinnerLigne.setValue(9);
+			spinnerColonne.setValue(9);
+			spinnerBombe.setValue(10);
+		}
+		else if(((JSlider)e.getSource()).getValue() == 2) {
+			spinnerLigne.setValue(16);
+			spinnerColonne.setValue(16);
+			spinnerBombe.setValue(40);
+		}
+		else if(((JSlider)e.getSource()).getValue() == 3) {
+			spinnerLigne.setValue(16);
+			spinnerColonne.setValue(30);
+			spinnerBombe.setValue(99);
 		}
 	}
 

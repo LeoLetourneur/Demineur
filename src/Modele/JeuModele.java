@@ -37,6 +37,9 @@ public class JeuModele extends Observable implements Serializable {
 	private boolean allowSounds;
 	private ArrayList<CaseModele> listeCase;
 	
+	transient private Son sonBombe;
+	transient private Son sonVide;
+	transient private Son sonWin;
 	
 	public JeuModele() {
 		
@@ -55,6 +58,9 @@ public class JeuModele extends Observable implements Serializable {
 		setNbColonne(nbColonne);
 		setNbLigne(nbLigne);
 		setNbBombe(nbBombe);
+		setSonBombe(new Son("sons/bombe.wav"));
+		setSonVide(new Son("sons/vide.wav"));
+		setSonWin(new Son("sons/win.wav"));
 	}
 	
 	public void initialiser() {
@@ -329,5 +335,29 @@ public class JeuModele extends Observable implements Serializable {
 
 	public void setAllowSounds(boolean allowSounds) {
 		this.allowSounds = allowSounds;
+	}
+
+	public Son getSonBombe() {
+		return sonBombe;
+	}
+
+	public void setSonBombe(Son sonBombe) {
+		this.sonBombe = sonBombe;
+	}
+
+	public Son getSonVide() {
+		return sonVide;
+	}
+
+	public void setSonVide(Son sonVide) {
+		this.sonVide = sonVide;
+	}
+
+	public Son getSonWin() {
+		return sonWin;
+	}
+
+	public void setSonWin(Son sonWin) {
+		this.sonWin = sonWin;
 	}
 }

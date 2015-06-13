@@ -120,7 +120,7 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 			SpinnerModel modelLigne = new SpinnerNumberModel(15, 3, 30, 1);
 			SpinnerModel modelColonne = new SpinnerNumberModel(15, 3, 30, 1);
 			SpinnerNumberModel modelBombe = new SpinnerNumberModel();
-			modelBombe.setValue(80);
+			modelBombe.setValue(55);
 			modelBombe.setMinimum(2);
 			modelBombe.setStepSize(1);
 			
@@ -266,8 +266,8 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		if(e.getItemSelectable() == rdbtnPersonnalise)
-			setEnabledPerso(true);
+		if(e.getSource() == this.rdbtnPersonnalise)
+			setEnabledPerso(((JRadioButton)e.getItemSelectable()).isSelected());
 	}
 
 	@Override

@@ -212,6 +212,7 @@ public class JeuVue extends JFrame implements Observer {
 				iconeMilieu.setIcon(iconGagne);
 				if(modele.isSauvegarde())
 					modele.sauvegarde();
+				modele.getSonWin().jouer();
 				JOptionPane.showMessageDialog(null, "Vous avez gagné");
 			}
 		}

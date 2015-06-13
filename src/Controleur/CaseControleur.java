@@ -69,10 +69,12 @@ public class CaseControleur implements MouseListener {
 			}
 			
 			if(modele.getValeur() == VarCommun.typeCase.BOMB.value) {
+				modele.getModeleJeu().getSonBombe().jouer();
 				modele.getModeleJeu().setEtat(VarCommun.etatJeu.PERDU.value);
 			}
 			else {
 				modele.setEtat(VarCommun.etatCase.DISCOVER.value);
+				modele.getModeleJeu().getSonVide().jouer();
 				if(modele.getNbBombeVoisin() == 0)
 					modele.retournerVoisin();
 				if(modele.getModeleJeu().isPremierTour())
