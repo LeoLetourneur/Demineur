@@ -43,6 +43,7 @@ public class MenuVue extends JFrame implements ActionListener {
 	private JButton btnLocal;
 	private JButton btnReseauServeur;
 	private JButton btnReseauClient;
+	private JButton btnCharger2JLocal;
 	
 	private JSpinner spinnerLigne;
 	private JSpinner spinnerColonne;
@@ -173,9 +174,14 @@ public class MenuVue extends JFrame implements ActionListener {
 		panelLocal.setLayout(null);
 		
 		btnLocal = new JButton("Jouer");
-		btnLocal.setBounds(104, 77, 112, 43);
+		btnLocal.setBounds(188, 77, 112, 43);
 		btnLocal.addActionListener(this);
 		panelLocal.add(btnLocal);
+		
+		btnCharger2JLocal = new JButton("Charger");
+		btnCharger2JLocal.setBounds(6, 77, 112, 43);
+		btnCharger2JLocal.addActionListener(this);
+		panelLocal.add(btnCharger2JLocal);
 		
 		JPanel panelReseau = new JPanel();
 		tabbedPane_2.addTab("Réseau", null, panelReseau, null);
@@ -270,6 +276,9 @@ public class MenuVue extends JFrame implements ActionListener {
 			view.setVisible(true);
 			if(!model.isFini())
 				model.getTimer().start();
+		}
+		else if(e.getSource() == btnCharger2JLocal) {
+		    //TODO C'est ici que tout se joue Cyril !
 		}
 		else if(e.getSource() == btn1Joueur) {
 		    JeuModele model = new JeuModele(lignes, colonnes, bombes);
