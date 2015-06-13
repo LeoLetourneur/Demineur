@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import Commun.VarCommun;
@@ -31,8 +32,10 @@ public class JeuModele extends Observable implements Serializable {
 	private boolean allowQuestion;
 	private boolean allowTime;
 	private boolean defiTemps;
-	private ArrayList<CaseModele> listeCase;
+	private boolean saveBeforeQuit;
 	private boolean sauvegarde;
+	private boolean allowSounds;
+	private ArrayList<CaseModele> listeCase;
 	
 	
 	public JeuModele() {
@@ -44,6 +47,8 @@ public class JeuModele extends Observable implements Serializable {
 		
 		themeJeu = VarCommun.themeJeu.Mario;
 		setSauvegarde(false);
+		setSaveBeforeQuit(false);
+		setAllowSounds(false);
 		setDefiTemps(false);
 		setAllowQuestion(true);
 		setAllowTime(true);
@@ -82,8 +87,6 @@ public class JeuModele extends Observable implements Serializable {
 		int random;
 		while(nbBombeRestante<nbBombe) {
 			random = rnd.nextInt(listeCaseVide.size());
-			if(listeCase.get(listeCaseVide.get(random)).getValeur() == 1)
-				System.out.println("ERROR : Déjà à 1");
 			listeCase.get(listeCaseVide.get(random)).setValeur(1);
 			listeCase.get(listeCaseVide.get(random)).incrementerVoisin(1);
 			listeCaseVide.remove(random);
@@ -132,7 +135,7 @@ public class JeuModele extends Observable implements Serializable {
 		} catch (IOException e) { e.printStackTrace();
 		}
 		this.setSauvegarde(true);
-		System.out.println("Sauvegardé");
+		JOptionPane.showMessageDialog(null, "Partie sauvegardée !");
 	}
 	
 	public static JeuModele charger() {
@@ -155,7 +158,6 @@ public class JeuModele extends Observable implements Serializable {
 			cnfe.printStackTrace();
 		}
 		partieCharger.setSauvegarde(true);
-		System.out.println("Chargé");
 		return partieCharger;
 	}
 
@@ -311,5 +313,21 @@ public class JeuModele extends Observable implements Serializable {
 
 	public void setSauvegarde(boolean sauvegarde) {
 		this.sauvegarde = sauvegarde;
+	}
+
+	public boolean isSaveBeforeQuit() {
+		return saveBeforeQuit;
+	}
+
+	public void setSaveBeforeQuit(boolean saveBeforeQuit) {
+		this.saveBeforeQuit = saveBeforeQuit;
+	}
+
+	public boolean isAllowSounds() {
+		return allowSounds;
+	}
+
+	public void setAllowSounds(boolean allowSounds) {
+		this.allowSounds = allowSounds;
 	}
 }

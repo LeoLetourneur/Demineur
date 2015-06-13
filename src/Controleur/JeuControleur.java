@@ -7,6 +7,7 @@ import javax.swing.Timer;
 
 import Commun.VarCommun;
 import Modele.JeuModele;
+import Modele.JeuModeleDJRes;
 import Vue.ParametreVue;
 import Vue.JeuVue;
 
@@ -51,6 +52,8 @@ public class JeuControleur implements ActionListener {
 				modele.getListeCase().get(i).setEtat(VarCommun.etatCase.DISCOVER.value);
 		}
 		else if(e.getSource() == vue.mntmQuitter) {
+			if(modele.isSaveBeforeQuit() && !(modele instanceof JeuModeleDJRes))
+				modele.sauvegarde();
 			vue.dispose();
 		}
 		else if(e.getSource() == vue.mntmParametres) {

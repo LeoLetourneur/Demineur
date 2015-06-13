@@ -20,7 +20,7 @@ public class JeuVueDJ extends JeuVue {
     }
 
 	public void changeLabel() {
-        
+		
 		labelGauche.setText("J1 : "+((JeuModeleDJ)getModele()).getJoueur1().getScore());
 		labelDroit.setText("J2 : "+((JeuModeleDJ)getModele()).getJoueur2().getScore());
 		

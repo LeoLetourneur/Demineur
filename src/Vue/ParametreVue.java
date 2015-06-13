@@ -149,17 +149,19 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 			panelOptions.setLayout(new GridLayout(5, 0, 0, 0));
 			
 			chckbxPlaySound = new JCheckBox("Jouer les sons");
+			chckbxPlaySound.setSelected(modele.isAllowSounds());
 			panelOptions.add(chckbxPlaySound);
 			
 			chckbxSaveQuitGame = new JCheckBox("Sauvegarder les parties en quittant");
+			chckbxSaveQuitGame.setSelected(modele.isSaveBeforeQuit());
 			panelOptions.add(chckbxSaveQuitGame);
 			
 			chckbxUseQuestionMark = new JCheckBox("Utiliser le point d'interrogation");
-			chckbxUseQuestionMark.setSelected(true);
+			chckbxUseQuestionMark.setSelected(modele.isAllowQuestion());
 			panelOptions.add(chckbxUseQuestionMark);
 			
 			chckbxUseTime = new JCheckBox("Utiliser le temps");
-			chckbxUseTime.setSelected(true);
+			chckbxUseTime.setSelected(modele.isAllowTime());
 			panelOptions.add(chckbxUseTime);
 			
 			JPanel panelTheme = new JPanel();
@@ -300,6 +302,8 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 			
 			modele.setAllowQuestion(this.chckbxUseQuestionMark.isSelected());
 			modele.setAllowTime(this.chckbxUseTime.isSelected());
+			modele.setAllowSounds(this.chckbxPlaySound.isSelected());
+			modele.setSaveBeforeQuit(this.chckbxSaveQuitGame.isSelected());
 			this.setAccept(true);
 		}
 		else if(e.getSource() == cancelButton) {

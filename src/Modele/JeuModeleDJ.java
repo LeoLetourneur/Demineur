@@ -8,6 +8,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import javax.swing.JOptionPane;
+
 import Commun.VarCommun;
 
 public class JeuModeleDJ extends JeuModele implements Serializable {
@@ -107,7 +109,7 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 		} catch (IOException e) { e.printStackTrace();
 		}
 		this.setSauvegarde(true);
-		System.out.println("Sauvegardé");
+		JOptionPane.showMessageDialog(null, "Partie sauvegardée !");
 	}
 	
 	public static JeuModeleDJ charger() {
@@ -130,7 +132,6 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 			cnfe.printStackTrace();
 		}
 		partieCharger.setSauvegarde(true);
-		System.out.println("Chargé");
 		return partieCharger;
 	}
 }

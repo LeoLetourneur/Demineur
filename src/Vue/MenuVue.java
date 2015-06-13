@@ -58,6 +58,10 @@ public class MenuVue extends JFrame implements ActionListener {
 	private JCheckBox cbDefiTemps;
 	private JCheckBox cbUseInterrogation;
 	private JCheckBox cbUseTemps;
+	private JCheckBox cbUseSounds;
+	private JCheckBox cbSaveGameBefore;
+	private JCheckBox cbUseSoundsDJ;
+	private JCheckBox cbSaveBeforeDJ;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -136,23 +140,23 @@ public class MenuVue extends JFrame implements ActionListener {
 		cbUseTemps = new JCheckBox("Utiliser le temps");
 		cbUseTemps.setSelected(true);
 		cbUseTemps.addActionListener(this);
-		cbUseTemps.setBounds(6, 43, 327, 35);
+		cbUseTemps.setBounds(6, 30, 327, 23);
 		panelUnJoueur.add(cbUseTemps);
 		
 		cbUseInterrogation = new JCheckBox("Utiliser le point d'interrogation");
 		cbUseInterrogation.setSelected(true);
-		cbUseInterrogation.setBounds(6, 6, 327, 35);
+		cbUseInterrogation.setBounds(6, 6, 327, 23);
 		panelUnJoueur.add(cbUseInterrogation);
 		
 		cbDefiTemps = new JCheckBox("Défi temps (secondes)");
-		cbDefiTemps.setBounds(6, 77, 178, 35);
+		cbDefiTemps.setBounds(6, 54, 178, 23);
 		cbDefiTemps.addActionListener(this);
 		panelUnJoueur.add(cbDefiTemps);
 		
 		SpinnerNumberModel modelTemps = new SpinnerNumberModel(120, 10, 9999999, 1);
 		
 		spinnerTemps = new JSpinner();
-		spinnerTemps.setBounds(196, 81, 120, 28);
+		spinnerTemps.setBounds(196, 52, 120, 28);
 		spinnerTemps.setModel(modelTemps);
 		spinnerTemps.setEnabled(false);
 		panelUnJoueur.add(spinnerTemps);
@@ -161,6 +165,14 @@ public class MenuVue extends JFrame implements ActionListener {
 		btnCharger.setBounds(20, 135, 112, 43);
 		btnCharger.addActionListener(this);
 		panelUnJoueur.add(btnCharger);
+		
+		cbUseSounds = new JCheckBox("Utiliser les sons");
+		cbUseSounds.setBounds(6, 78, 327, 23);
+		panelUnJoueur.add(cbUseSounds);
+		
+		cbSaveGameBefore = new JCheckBox("Sauvegarder avant de quitter");
+		cbSaveGameBefore.setBounds(6, 102, 327, 23);
+		panelUnJoueur.add(cbSaveGameBefore);
 		
 		panel = new JPanel();
 		tabbedPane.addTab("Deux joueurs", null, panel, null);
@@ -183,6 +195,14 @@ public class MenuVue extends JFrame implements ActionListener {
 		btnCharger2JLocal.setBounds(6, 77, 112, 43);
 		btnCharger2JLocal.addActionListener(this);
 		panelLocal.add(btnCharger2JLocal);
+		
+		cbUseSoundsDJ = new JCheckBox("Utiliser les sons");
+		cbUseSoundsDJ.setBounds(6, 0, 294, 35);
+		panelLocal.add(cbUseSoundsDJ);
+		
+		cbSaveBeforeDJ = new JCheckBox("Sauvegarder avant de quitter");
+		cbSaveBeforeDJ.setBounds(6, 30, 294, 35);
+		panelLocal.add(cbSaveBeforeDJ);
 		
 		JPanel panelReseau = new JPanel();
 		tabbedPane_2.addTab("Réseau", null, panelReseau, null);
@@ -300,6 +320,8 @@ public class MenuVue extends JFrame implements ActionListener {
 		    }
 		    model.setAllowQuestion(cbUseInterrogation.isSelected());
 		    model.setAllowTime(cbUseTemps.isSelected());
+		    model.setAllowSounds(cbUseSounds.isSelected());
+		    model.setSaveBeforeQuit(cbSaveGameBefore.isSelected());
 			JeuVue view = new JeuVue(model);
 			new JeuControleur(model, view);
 			view.setVisible(true);
@@ -307,6 +329,8 @@ public class MenuVue extends JFrame implements ActionListener {
 		else if(e.getSource() == btnLocal) {
 		    JeuModeleDJ model = new JeuModeleDJ(lignes, colonnes, bombes);
 		    model.construireCases();
+		    model.setAllowSounds(cbUseSoundsDJ.isSelected());
+		    model.setSaveBeforeQuit(cbSaveBeforeDJ.isSelected());
 			JeuVueDJ view = new JeuVueDJ(model);
 			new JeuControleur(model, view);
 			view.setVisible(true);
