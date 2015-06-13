@@ -21,6 +21,7 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 import Controleur.JeuControleur;
+import Controleur.JeuControleurDJRes;
 import Modele.CaseModele;
 import Modele.JeuModele;
 import Modele.JeuModeleClient;
@@ -320,7 +321,7 @@ public class MenuVue extends JFrame implements ActionListener {
 		    model.connexion();
 		    
 			JeuVueDJRes view = new JeuVueDJRes(model);
-			new JeuControleur(model, view);
+			new JeuControleurDJRes(model, view);
 			view.setVisible(true);
 			
 			RecevoirRes rs = new RecevoirRes(model);
@@ -336,7 +337,7 @@ public class MenuVue extends JFrame implements ActionListener {
 		    model.connexion();
 		    
 		    JeuVueDJRes view = new JeuVueDJRes(model);
-			new JeuControleur(model, view);
+			new JeuControleurDJRes(model, view);
 			view.setVisible(true);
 			
 			RecevoirRes rs = new RecevoirRes(model);

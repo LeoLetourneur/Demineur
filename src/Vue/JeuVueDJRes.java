@@ -9,6 +9,7 @@ public class JeuVueDJRes extends JeuVueDJ {
 
 	public JeuVueDJRes(JeuModeleDJ model) {
 		super(model);
+		mntmSauvegarder.setEnabled(false);
     }
 	
 	public void chargerCasesVueControleur() {
