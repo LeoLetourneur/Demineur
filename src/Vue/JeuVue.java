@@ -140,7 +140,6 @@ public class JeuVue extends JFrame implements Observer {
         panelTexte.add(horizontalStrut_3);
         
         panelCases = new JPanel (new GridLayout(modele.getNbLigne(), modele.getNbColonne()));
-        //panelCases = new JPanel (new GridLayout(10,10));
         
         container = new JPanel();
         container.setLayout(null);
@@ -149,10 +148,10 @@ public class JeuVue extends JFrame implements Observer {
         setContentPane(container);
         
         chargerJeu();
-        chargerCase();
+        chargerCasesVueControleur();
     }
 	
-	public void chargerCase() {
+	public void chargerCasesVueControleur() {
         for(CaseModele caseM : modele.getListeCase())
         {
         	CaseVue caseVue = new CaseVue(caseM);
@@ -171,7 +170,11 @@ public class JeuVue extends JFrame implements Observer {
         panelCases.setBounds((this.getWidth()/2-14 * modele.getNbColonne()), (this.getHeight()/2-14 * modele.getNbLigne()), 28 * modele.getNbColonne(), 28 * modele.getNbLigne());
         container.add(panelCases);
         
-        if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value)
+        chargerIconeMilieu();
+	}
+	
+	public void chargerIconeMilieu() {
+		if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value)
         	iconeMilieu.setIcon(iconGagne);
         else if(modele.getEtat() == VarCommun.etatJeu.PERDU.value)
         	iconeMilieu.setIcon(iconPerdu);
@@ -183,12 +186,7 @@ public class JeuVue extends JFrame implements Observer {
 	public void update(Observable o, Object arg) {
 		if(arg != null && arg.equals("ChangeTheme")){
 			loadIcons();
-			if(modele.getEtat() == VarCommun.etatJeu.PERDU.value)
-				iconeMilieu.setIcon(iconPerdu);
-			else if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value)
-				iconeMilieu.setIcon(iconGagne);
-			else
-				iconeMilieu.setIcon(iconTete);
+			chargerIconeMilieu();
 		}
 		
 		labelGauche.setText(modele.getNbBombeRestante()+"");

@@ -60,7 +60,7 @@ public class JeuControleur implements ActionListener {
 			if(pv.isAccept()) {
 				modele.construireCases();
 				vue.chargerJeu();
-				vue.chargerCase();
+				vue.chargerCasesVueControleur();
 				vue.repaint();
 			} else
 				modele.getTimer().start();

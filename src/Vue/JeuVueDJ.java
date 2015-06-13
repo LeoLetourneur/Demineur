@@ -26,7 +26,7 @@ public class JeuVueDJ extends JeuVue {
 		labelDroit.setText("J2 : "+((JeuModeleDJ)getModele()).getJoueur2().getScore());
     }
 	
-	public void chargerCase() {
+	public void chargerCasesVueControleur() {
         for(CaseModele caseM : modele.getListeCase())
         {
         	CaseVue caseVue = new CaseVue(caseM);

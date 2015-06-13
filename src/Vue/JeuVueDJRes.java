@@ -11,7 +11,7 @@ public class JeuVueDJRes extends JeuVueDJ {
 		super(model);
     }
 	
-	public void chargerCase() {
+	public void chargerCasesVueControleur() {
         for(CaseModele caseM : modele.getListeCase())
         {
         	caseM.setModeleJeu(modele); //FIX BUG
