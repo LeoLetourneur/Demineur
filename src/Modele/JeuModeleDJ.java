@@ -1,5 +1,11 @@
 package Modele;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import Commun.VarCommun;
@@ -75,6 +81,53 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 		setChanged();
 		notifyObservers();
 		
+	}
+	
+public void sauvegarde() {
+		
+		try {
+			FileOutputStream fileStreamPartie = new FileOutputStream("partieDJ.serial");
+			ObjectOutputStream objetStreamPartie= new ObjectOutputStream(fileStreamPartie);
+			try{
+				objetStreamPartie.writeObject(this);
+				objetStreamPartie.flush();
+			} finally {
+				try {
+						objetStreamPartie.close();
+					} finally {
+						fileStreamPartie.close();
+					}
+			}
+			
+		} catch (FileNotFoundException e) { e.printStackTrace();
+		} catch (IOException e) { e.printStackTrace();
+		}
+		this.setSauvegarde(true);
+		System.out.println("Sauvegardé");
+	}
+	
+	public static JeuModeleDJ charger() {
+		JeuModeleDJ partieCharger = null;
+		try {
+			FileInputStream fileStreamPartie = new FileInputStream("partieDJ.serial");
+			ObjectInputStream objetStreamPartie= new ObjectInputStream(fileStreamPartie);
+			try {	
+				partieCharger = (JeuModeleDJ) objetStreamPartie.readObject(); 
+			} finally {
+				try {
+					objetStreamPartie.close();
+				} finally {
+					objetStreamPartie.close();
+				}
+			}
+		} catch(IOException ioe) {
+			ioe.printStackTrace();
+		} catch(ClassNotFoundException cnfe) {
+			cnfe.printStackTrace();
+		}
+		partieCharger.setSauvegarde(true);
+		System.out.println("Chargé");
+		return partieCharger;
 	}
 	
 }
