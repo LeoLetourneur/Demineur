@@ -84,8 +84,8 @@ public class Partie {
 					if (parser.getLocalName().equals("Bombes"))
 						partieCourante
 								.setBombes(Integer.parseInt(objetCourant));
-					if (parser.getLocalName().equals("Secondes"))
-						partieCourante.setTemps(Integer.parseInt(objetCourant));
+					if (parser.getLocalName().equals("Temps"))
+							partieCourante.setTemps(Integer.parseInt(objetCourant));
 					if (parser.getLocalName().equals("Partie"))
 						listePartie.add(partieCourante);
 					break;
@@ -141,7 +141,12 @@ public class Partie {
 			writer.writeCharacters(Integer.toString(model.getSecondes()));
 			writer.writeEndElement();
 			writer.writeEndElement();
-			for (int i = 0; i < listePartie.size(); i++) {
+			int taille;
+			if(listePartie.size()==50)
+				taille=49;
+			else
+				taille=listePartie.size();
+			for (int i = 0; i < taille; i++) {
 				writer.writeStartElement("Partie");
 				writer.writeStartElement("Date");
 				writer.writeCharacters(listePartie.get(i).getDate().toString());
