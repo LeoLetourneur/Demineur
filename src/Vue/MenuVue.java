@@ -50,7 +50,9 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	
 	private JPanel contentPane;
 	private JPanel panelNiveau;
-	private JTabbedPane tpReseauClient;
+	private JTabbedPane tabbedPaneReseauClient;
+	private JTabbedPane tabbedPaneResLocal;
+	private JTabbedPane tabbedPane1Ou2;
 	
 	private JButton btn1Joueur;
 	private JButton btnCharger;
@@ -112,6 +114,12 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
+		panelNiveau = new JPanel();
+		panelNiveau.setBorder(null);
+		panelNiveau.setBounds(436, 118, 159, 230);
+		contentPane.add(panelNiveau);
+		panelNiveau.setLayout(null);
+		
 		SpinnerModel modelLigne = new SpinnerNumberModel(9, 3, 30, 1);
 		SpinnerModel modelColonne = new SpinnerNumberModel(9, 3, 30, 1);
 		SpinnerNumberModel modelBombe = new SpinnerNumberModel();
@@ -120,12 +128,13 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		modelBombe.setStepSize(1);
 		contentPane.setLayout(null);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(43, 118, 360, 230);
-		contentPane.add(tabbedPane);
+		tabbedPane1Ou2 = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane1Ou2.setBounds(43, 118, 360, 230);
+		tabbedPane1Ou2.addChangeListener(this);
+		contentPane.add(tabbedPane1Ou2);
 		
 		JPanel panelUnJoueur = new JPanel();
-		tabbedPane.addTab("Un joueur", null, panelUnJoueur, null);
+		tabbedPane1Ou2.addTab("Un joueur", null, panelUnJoueur, null);
 		panelUnJoueur.setLayout(null);
 		
 		btn1Joueur = new JButton("Jouer");
@@ -171,15 +180,15 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		panelUnJoueur.add(cbSaveGameBefore);
 		
 		JPanel panelDJ = new JPanel();
-		tabbedPane.addTab("Deux joueurs", null, panelDJ, null);
+		tabbedPane1Ou2.addTab("Deux joueurs", null, panelDJ, null);
 		panelDJ.setLayout(null);
 		
-		JTabbedPane tabbedPane_2 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane_2.setBounds(6, 6, 327, 172);
-		panelDJ.add(tabbedPane_2);
+		tabbedPaneResLocal = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPaneResLocal.setBounds(6, 6, 327, 172);
+		panelDJ.add(tabbedPaneResLocal);
 		
 		JPanel panelLocal = new JPanel();
-		tabbedPane_2.addTab("Local", null, panelLocal, null);
+		tabbedPaneResLocal.addTab("Local", null, panelLocal, null);
 		panelLocal.setLayout(null);
 		
 		btnLocal = new JButton("Jouer");
@@ -201,22 +210,17 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		panelLocal.add(cbSaveBeforeDJ);
 		
 		JPanel panelReseau = new JPanel();
-		tabbedPane_2.addTab("Réseau", null, panelReseau, null);
+		tabbedPaneResLocal.addTab("Réseau", null, panelReseau, null);
+		tabbedPaneResLocal.addChangeListener(this);
 		panelReseau.setLayout(null);
 		
-		panelNiveau = new JPanel();
-		panelNiveau.setBorder(null);
-		panelNiveau.setBounds(436, 118, 159, 230);
-		contentPane.add(panelNiveau);
-		panelNiveau.setLayout(null);
-		
-		tpReseauClient = new JTabbedPane(JTabbedPane.TOP);
-		tpReseauClient.addChangeListener(this);
-		tpReseauClient.setBounds(6, 6, 294, 114);
-		panelReseau.add(tpReseauClient);
+		tabbedPaneReseauClient = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPaneReseauClient.addChangeListener(this);
+		tabbedPaneReseauClient.setBounds(6, 6, 294, 114);
+		panelReseau.add(tabbedPaneReseauClient);
 		
 		JPanel panelReseauServeur = new JPanel();
-		tpReseauClient.addTab("Serveur", null, panelReseauServeur, null);
+		tabbedPaneReseauClient.addTab("Serveur", null, panelReseauServeur, null);
 		panelReseauServeur.setLayout(null);
 		
 		JLabel lblPort = new JLabel("Port");
@@ -234,12 +238,12 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		panelReseauServeur.add(btnReseauServeur);
 		
 		JPanel panelReseauClient = new JPanel();
-		tpReseauClient.addTab("Client", null, panelReseauClient, null);
+		tabbedPaneReseauClient.addTab("Client", null, panelReseauClient, null);
 		panelReseauClient.setLayout(null);
 		
 		String monAdresse = "127.0.0.1";
 		try { monAdresse = InetAddress.getLocalHost().getHostAddress();
-		} catch (UnknownHostException e) { e.printStackTrace(); }
+		} catch (UnknownHostException e) { System.out.println("Host non trouvé"); }
 		
 		txtAdresseClient = new JTextField(monAdresse);
 		txtAdresseClient.setColumns(10);
@@ -419,8 +423,24 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		if(e.getSource() == tpReseauClient) {
-			panelNiveau.setVisible(((JTabbedPane)tpReseauClient).getSelectedIndex() == 0);
+		
+		//Cache les paramêtres si on clique sur l'onglet client
+		if(e.getSource() == tabbedPaneReseauClient) {
+			panelNiveau.setVisible(((JTabbedPane)tabbedPaneReseauClient).getSelectedIndex() == 0);
+			return;
+		}
+		if(e.getSource() == tabbedPaneResLocal) {
+			if(((JTabbedPane)tabbedPaneResLocal).getSelectedIndex() == 0)
+				panelNiveau.setVisible(true);
+			else
+				panelNiveau.setVisible(((JTabbedPane)tabbedPaneReseauClient).getSelectedIndex() == 0);
+			return;
+		}
+		if(e.getSource() == tabbedPane1Ou2) {
+			if(((JTabbedPane)tabbedPane1Ou2).getSelectedIndex() == 0)
+				panelNiveau.setVisible(true);
+			else if(((JTabbedPane)tabbedPaneResLocal).getSelectedIndex() == 1)
+				panelNiveau.setVisible(((JTabbedPane)tabbedPaneReseauClient).getSelectedIndex() == 0);
 			return;
 		}
 		
