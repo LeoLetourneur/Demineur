@@ -14,6 +14,12 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
+/**
+ * Classe d'affichage des scores
+ * 
+ * @author LETOURNEUR Léo
+ * @since 4.0
+ */
 public class ScoreVue extends JDialog {
 	private static final long serialVersionUID = 8874069533716005260L;
 	private JTable table1J;
