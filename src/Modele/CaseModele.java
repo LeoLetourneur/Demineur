@@ -1,10 +1,17 @@
 package Modele;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 
 import Commun.VarCommun;
 
+/**
+ * Classe Modèle de la case.
+ * 
+ * @author LETOURNEUR Léo
+ * @since 1.0
+ */
 public class CaseModele extends Observable implements Serializable {
 	private static final long serialVersionUID = -2292570373610324561L;
 	
@@ -14,9 +21,12 @@ public class CaseModele extends Observable implements Serializable {
 	private int nbBombeVoisin;
 	private boolean changeTheme;
 	private ArrayList<CaseModele> caseVoisines;
-	
 	private JeuModele modeleJeu;
 
+	/** 
+	* Constructeur
+	*
+	*/
 	public CaseModele(int p_numero, JeuModele p_modeleJeu) {
 		super();
 		setChangeTheme(false);
@@ -28,6 +38,11 @@ public class CaseModele extends Observable implements Serializable {
 		setModeleJeu(p_modeleJeu);
 	}
 	
+	/** 
+	* Méthode qui permet de se faire connaitre de ses voisins,
+	* et ainsi contruire les ArrayList de voisin de chaque case.
+	*
+	*/
 	public void sAjouterAuxVoisins(ArrayList<CaseModele> listeCase){
 		if(index>=modeleJeu.getNbColonne()){
 			caseVoisines.add(listeCase.get(index-modeleJeu.getNbColonne()));
@@ -52,6 +67,10 @@ public class CaseModele extends Observable implements Serializable {
 		}
 	}
 	
+	/** 
+	* Dire à son voisin que la case est une bombe
+	*
+	*/
 	public void incrementerVoisin(int valeur)
 	{
 		for(CaseModele caseVoisine : caseVoisines) {
@@ -60,6 +79,10 @@ public class CaseModele extends Observable implements Serializable {
 		}
 	}
 	
+	/** 
+	* Demander à son voisin de se retourner
+	*
+	*/
 	public void retournerVoisin() {
 		for(CaseModele caseVoisine : caseVoisines) {
 			if(caseVoisine.getEtat() != VarCommun.etatCase.DISCOVER.value) {
@@ -114,6 +137,7 @@ public class CaseModele extends Observable implements Serializable {
 		setChanged();
 		notifyObservers();
 		
+		//Incrementer la variable avec laquelle on connait le nombre de cases vides déjà retournées.
 		if(etat!=etatPrecedant && etat == VarCommun.etatCase.DISCOVER.value && valeur == VarCommun.typeCase.EMPTY.value )
 			modeleJeu.setNbCasesRetournees(modeleJeu.getNbCasesRetournees()+1);
 	}

@@ -11,10 +11,21 @@ import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/**
+ * Classe de gestion des sons.
+ * 
+ * @author COUTURIER Cyril
+ * @since 4.0
+ */
 public class Son implements LineListener {
+	
     private Clip audio;
     private AudioInputStream audioInput;
  
+    /** 
+	* Constructeur
+	*
+	*/
     public Son(String path) {
 		try {
 			audioInput = AudioSystem.getAudioInputStream(new File(path));
@@ -26,6 +37,11 @@ public class Son implements LineListener {
 		} catch (LineUnavailableException e) { e.printStackTrace(); }
         
     }
+    
+    /** 
+	* Méthode pour jouer le son
+	*
+	*/
     public void jouer() {
     	new Thread(new Runnable() {
     		public void run() {
@@ -33,6 +49,11 @@ public class Son implements LineListener {
     		}
     	}).start();
     }
+    
+    /** 
+	* Reset du son lorsqu'il est terminé
+	*
+	*/
 	@Override
 	public void update(LineEvent lineEvent) {
 		if (lineEvent.getType() == LineEvent.Type.STOP){

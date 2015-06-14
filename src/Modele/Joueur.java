@@ -2,6 +2,12 @@ package Modele;
 
 import java.io.Serializable;
 
+/**
+ * Classe représentant un joueur
+ * 
+ * @author LETOURNEUR Léo
+ * @since 3.0
+ */
 public class Joueur implements Serializable {
 	private static final long serialVersionUID = 7693511017597376573L;
 	
@@ -9,6 +15,10 @@ public class Joueur implements Serializable {
 	private int numero;
 	private int score;
 	
+	/** 
+	* Constructeur
+	*
+	*/
 	public Joueur(String p_name, int p_numero) {
 		setName(p_name);
 		setNumero(p_numero);

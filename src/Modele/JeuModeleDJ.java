@@ -12,6 +12,12 @@ import javax.swing.JOptionPane;
 
 import Commun.VarCommun;
 
+/**
+ * Classe Modèle du jeu pour deux joueurs
+ * 
+ * @author COUTURIER Cyril
+ * @since 3.0
+ */
 public class JeuModeleDJ extends JeuModele implements Serializable {
 	private static final long serialVersionUID = -5008464224374925137L;
 	
@@ -19,10 +25,18 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 	protected Joueur joueur2;
 	protected Joueur joueurCourant;
 	
+	/** 
+	* Constructeur vide
+	*
+	*/
 	public JeuModeleDJ() {
 		this(9, 9, 10);
 	}
 	
+	/** 
+	* Constructeur
+	*
+	*/
 	public JeuModeleDJ(int nbLigne, int nbColonne, int nbBombe) {
 		
 		super(nbLigne, nbColonne, nbBombe);
@@ -40,6 +54,82 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 		getJoueur2().setScore(0);
 	}
 
+	public void incrementerScore() {
+		getJoueurCourant().incrementerScore();
+		if(getNbBombe() == getJoueur1().getScore()+getJoueur2().getScore())
+			setEtat(VarCommun.etatJeu.GAGNE.value);
+		setChanged();
+		notifyObservers();
+	}
+	
+	public void reinitialiserCase() {
+		super.reinitialiserCase();
+		getJoueur1().setScore(0);
+		getJoueur2().setScore(0);
+		setJoueurCourant(getJoueur1());
+	}
+	
+	public void setNbCasesRetournees(int p_nbCasesRetournes) {
+		this.nbCasesRetournes = p_nbCasesRetournes;
+		if(nbCasesRetournes == ( nbLigne * nbColonne ))
+			setEtat(VarCommun.etatJeu.GAGNE.value);
+		setChanged();
+		notifyObservers();
+	}
+	
+	/** 
+	* Sauvegarde de la partie deux joueurs dans un fichier binaire.
+	*
+	*/
+	public void sauvegarde() {	
+		try {
+			FileOutputStream fileStreamPartie = new FileOutputStream("partieDJ.serial");
+			ObjectOutputStream objetStreamPartie= new ObjectOutputStream(fileStreamPartie);
+			try{
+				objetStreamPartie.writeObject(this);
+				objetStreamPartie.flush();
+			} finally {
+				try {
+						objetStreamPartie.close();
+					} finally {
+						fileStreamPartie.close();
+					}
+			}
+			
+		} catch (FileNotFoundException e) { e.printStackTrace();
+		} catch (IOException e) { e.printStackTrace();
+		}
+		this.setSauvegarde(true);
+		JOptionPane.showMessageDialog(null, "Partie sauvegardée !");
+	}
+	
+	/** 
+	* Chargement de la partie deux joueurs dans un fichier binaire.
+	*
+	*/
+	public static JeuModeleDJ charger() {
+		JeuModeleDJ partieCharger = null;
+		try {
+			FileInputStream fileStreamPartie = new FileInputStream("partieDJ.serial");
+			ObjectInputStream objetStreamPartie= new ObjectInputStream(fileStreamPartie);
+			try {	
+				partieCharger = (JeuModeleDJ) objetStreamPartie.readObject(); 
+			} finally {
+				try {
+					objetStreamPartie.close();
+				} finally {
+					objetStreamPartie.close();
+				}
+			}
+		} catch(IOException ioe) {
+			ioe.printStackTrace();
+		} catch(ClassNotFoundException cnfe) {
+			cnfe.printStackTrace();
+		}
+		partieCharger.setSauvegarde(true);
+		return partieCharger;
+	}
+	
 	public Joueur getJoueur1() {
 		return joueur1;
 	}
@@ -64,73 +154,5 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 		this.joueurCourant = joueurCourant;
 		setChanged();
 		notifyObservers();
-	}
-	
-	public void incrementerScore() {
-		getJoueurCourant().incrementerScore();
-		if(getNbBombe() == getJoueur1().getScore()+getJoueur2().getScore())
-			setEtat(VarCommun.etatJeu.GAGNE.value);
-		setChanged();
-		notifyObservers();
-	}
-	
-	public void reinitialiserCase() {
-		super.reinitialiserCase();
-		getJoueur1().setScore(0);
-		getJoueur2().setScore(0);
-		setJoueurCourant(getJoueur1());
-	}
-	
-	public void setNbCasesRetournees(int p_nbCasesRetournes) {
-		this.nbCasesRetournes = p_nbCasesRetournes;
-		if(nbCasesRetournes == ( nbLigne * nbColonne ))
-			setEtat(VarCommun.etatJeu.GAGNE.value);
-		setChanged();
-		notifyObservers();
-	}
-	
-	public void sauvegarde() {	
-		try {
-			FileOutputStream fileStreamPartie = new FileOutputStream("partieDJ.serial");
-			ObjectOutputStream objetStreamPartie= new ObjectOutputStream(fileStreamPartie);
-			try{
-				objetStreamPartie.writeObject(this);
-				objetStreamPartie.flush();
-			} finally {
-				try {
-						objetStreamPartie.close();
-					} finally {
-						fileStreamPartie.close();
-					}
-			}
-			
-		} catch (FileNotFoundException e) { e.printStackTrace();
-		} catch (IOException e) { e.printStackTrace();
-		}
-		this.setSauvegarde(true);
-		JOptionPane.showMessageDialog(null, "Partie sauvegardée !");
-	}
-	
-	public static JeuModeleDJ charger() {
-		JeuModeleDJ partieCharger = null;
-		try {
-			FileInputStream fileStreamPartie = new FileInputStream("partieDJ.serial");
-			ObjectInputStream objetStreamPartie= new ObjectInputStream(fileStreamPartie);
-			try {	
-				partieCharger = (JeuModeleDJ) objetStreamPartie.readObject(); 
-			} finally {
-				try {
-					objetStreamPartie.close();
-				} finally {
-					objetStreamPartie.close();
-				}
-			}
-		} catch(IOException ioe) {
-			ioe.printStackTrace();
-		} catch(ClassNotFoundException cnfe) {
-			cnfe.printStackTrace();
-		}
-		partieCharger.setSauvegarde(true);
-		return partieCharger;
 	}
 }

@@ -1,4 +1,5 @@
 package Modele;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -15,6 +16,12 @@ import javax.swing.Timer;
 
 import Commun.VarCommun;
 
+/**
+ * Classe Modèle du jeu.
+ * 
+ * @author COUTURIER Cyril
+ * @since 1.0
+ */
 public class JeuModele extends Observable implements Serializable {
 	private static final long serialVersionUID = 4260028170365630301L;
 	
@@ -41,11 +48,19 @@ public class JeuModele extends Observable implements Serializable {
 	transient private Son sonVide;
 	transient private Son sonWin;
 	
+	/** 
+	* Constructeur vide
+	*
+	*/
 	public JeuModele() {
 		
 		this(9,9,10);
 	}
 	
+	/** 
+	* Constructeur
+	* Initialisation des variables qui ne changent pas entre deux parties.
+	*/
 	public JeuModele(int nbLigne, int nbColonne, int nbBombe) {
 		
 		themeJeu = VarCommun.themeJeu.Mario;
@@ -60,6 +75,10 @@ public class JeuModele extends Observable implements Serializable {
 		setNbBombe(nbBombe);
 	}
 	
+	/** 
+	* Initialisation des variables qui changent entre chaque partie.
+	*
+	*/
 	public void initialiser() {
 		
 		setEtat(VarCommun.etatJeu.DEBUT.value);
@@ -74,6 +93,10 @@ public class JeuModele extends Observable implements Serializable {
 		setSonWin(new Son("sons/win.wav"));
 	}
 
+	/** 
+	* Construction de toutes les cases modèles.
+	*
+	*/
 	public void construireCases() {
 		
 		initialiser();
@@ -89,6 +112,10 @@ public class JeuModele extends Observable implements Serializable {
 		repartirBombe(listeCaseVide);
 	}
 	
+	/** 
+	* Répartir les bombes dans toutes les cases modèles au hasard.
+	*
+	*/
 	public void repartirBombe(ArrayList<Integer> listeCaseVide) {
 		Random rnd = new Random();
 		int random;
@@ -101,6 +128,10 @@ public class JeuModele extends Observable implements Serializable {
 		}
 	}
 	
+	/** 
+	* Changer la valeur des cases pour relancer une nouvelle partie.
+	*
+	*/
 	public void reinitialiserCase() {
 		
 		initialiser();
@@ -115,6 +146,10 @@ public class JeuModele extends Observable implements Serializable {
 		repartirBombe(listeCaseVide);
 	}
 	
+	/** 
+	* Retourner toutes les bombes lors d'une défaite.
+	*
+	*/
 	public void retournerBombes() {
 		for(CaseModele caseMod : listeCase) {
 			if(caseMod.getValeur() == VarCommun.typeCase.BOMB.value)
@@ -122,6 +157,10 @@ public class JeuModele extends Observable implements Serializable {
 		}
 	}
 	
+	/** 
+	* Sauvegarde de la partie dans un fichier binaire.
+	*
+	*/
 	public void sauvegarde() {
 		
 		try {
@@ -145,6 +184,10 @@ public class JeuModele extends Observable implements Serializable {
 		JOptionPane.showMessageDialog(null, "Partie sauvegardée !");
 	}
 	
+	/** 
+	* Chargement d'une partie dans un fichier binaire.
+	*
+	*/
 	public static JeuModele charger() {
 		JeuModele partieCharger = null;
 		try {

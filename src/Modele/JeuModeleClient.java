@@ -7,15 +7,29 @@ import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.Socket;
 
+/**
+ * Classe Modèle du serveur
+ * 
+ * @author LETOURNEUR Léo
+ * @since 4.0
+ */
 public class JeuModeleClient extends JeuModeleDJRes implements Serializable {
 	private static final long serialVersionUID = 6353635343291120470L;
 	
 	private String ipServeur;
 	
+	/** 
+	* Constructeur vide
+	*
+	*/
 	public JeuModeleClient() {
 		super();
 	}
 
+	/** 
+	* Constructeur
+	*
+	*/
 	public JeuModeleClient(int nbLigne, int nbColonne, int nbBombe) {
 		super(nbLigne, nbColonne, nbBombe);
 	}

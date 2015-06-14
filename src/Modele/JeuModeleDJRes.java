@@ -11,6 +11,12 @@ import javax.swing.JOptionPane;
 
 import Commun.VarCommun;
 
+/**
+ * Classe Modèle du jeu pour deux joueurs en réseau
+ * 
+ * @author COUTURIER Cyril
+ * @since 4.0
+ */
 public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -20,24 +26,45 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 	private int portServeur;
 	private Joueur moi;
 	
+	/** 
+	* Constructeur vide
+	*
+	*/
 	public JeuModeleDJRes() {
 		super();
-		if(this instanceof JeuModeleServeur)
-			moi = getJoueur1();
-		else
-			moi = getJoueur2();
+		definirJoueurs();
 	}
 	
+	/** 
+	* Constructeur vide
+	*
+	*/
 	public JeuModeleDJRes(int nbLigne, int nbColonne, int nbBombe) {
 		super(nbLigne, nbColonne, nbBombe);
+		definirJoueurs();
+	}
+	
+	/** 
+	* Définir quel joueur est celui qui utilise ce modèle.
+	*
+	*/
+	public void definirJoueurs() {
 		if(this instanceof JeuModeleServeur)
 			moi = getJoueur1();
 		else
 			moi = getJoueur2();
 	}
 	
+	/** 
+	* Connexion à travers TCP
+	*
+	*/
 	public abstract void connexion();
 	
+	/** 
+	* Gestion de la réception des messages
+	*
+	*/
 	public boolean recevoir()
 	{
 		try {
@@ -69,6 +96,10 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 		return false;
 	}
 	
+	/** 
+	* Traiter un message de l'application
+	*
+	*/
 	private void traiterString(String objet) {
 		if(objet.equals(VarCommun.MSG_NOUVELLE_PARTIE)) {
 			JOptionPane.showMessageDialog(null, "Votre adversaire a relancé une partie");
@@ -90,6 +121,10 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 		}
 	}
 	
+	/** 
+	* Envoyer une case sur laquelle on vient de cliquer.
+	*
+	*/
 	public void envoyerCase(int index)
 	{
 		try
@@ -101,6 +136,10 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 		{JOptionPane.showMessageDialog(null, "Vous avez été déconnecté");}
 	}
 	
+	/** 
+	* Avertir l'autre joueur d'une nouvelle partie.
+	*
+	*/
 	public void envoyerNouvellePartie()
 	{
 		try
@@ -112,6 +151,10 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 		{JOptionPane.showMessageDialog(null, "Vous avez été déconnecté");}
 	}
 	
+	/** 
+	* Avertir l'autre joueur que l'on a découvert les cases.
+	*
+	*/
 	public void envoyerDecouvrir()
 	{
 		try
@@ -123,6 +166,10 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 		{JOptionPane.showMessageDialog(null, "Vous avez été déconnecté");}
 	}
 	
+	/** 
+	* Avertir l'autre joueur que je me suis déconnecté.
+	*
+	*/
 	public void envoyerQuitter()
 	{
 		try
@@ -137,6 +184,10 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 		{JOptionPane.showMessageDialog(null, "Vous avez été déconnecté");}
 	}
 	
+	/** 
+	* Envoyer les dimensions de la grille et le nombre de bombe.
+	*
+	*/
 	public void envoiDimensionsGrille() {
 		int[] tab = { getNbLigne(), getNbColonne(), getNbBombe() };
 		try {
@@ -145,6 +196,10 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 		} catch (IOException e) { e.printStackTrace(); }
 	}
 	
+	/** 
+	* Envoyer l'ensemble des cases et de leurs valeurs.
+	*
+	*/
 	public void envoiEnsembleCases() {
 		try {
 			sortie.writeObject(((JeuModeleDJRes)this).getListeCase());
@@ -153,6 +208,10 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 		} catch (IOException e) { e.printStackTrace(); }
 	}
 	
+	/** 
+	* Reception des dimensions de la grille et du nombre de bombe.
+	*
+	*/
 	public void recevoirPlateau() {
 		try {
 			int[] tab = (int[])getEntree().readObject();
@@ -170,6 +229,10 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 		} catch (ClassNotFoundException e) { e.printStackTrace(); }
 	}
 	
+	/** 
+	* Recevoir une nouvelle liste de case lors d'une nouvelle partie.
+	*
+	*/
 	@SuppressWarnings("unchecked")
 	public void recevoirNouvellesCases() {
 		try {
@@ -184,6 +247,10 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 		} catch (IOException e) { e.printStackTrace(); }
 	}
 
+	/** 
+	* Deconnexion à travers TCP
+	*
+	*/
 	public void deconnexion()
 	{
 		try {

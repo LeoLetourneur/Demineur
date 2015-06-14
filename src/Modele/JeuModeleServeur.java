@@ -6,15 +6,29 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.ServerSocket;
 
+/**
+ * Classe Modèle du serveur
+ * 
+ * @author LETOURNEUR Léo
+ * @since 4.0
+ */
 public class JeuModeleServeur extends JeuModeleDJRes implements Serializable {
 	private static final long serialVersionUID = -6946234147530306744L;
 	
 	transient private ServerSocket socket;
 	
+	/** 
+	* Constructeur vide
+	*
+	*/
 	public JeuModeleServeur() {
 		super();
 	}
 
+	/** 
+	* Constructeur
+	*
+	*/
 	public JeuModeleServeur(int nbLigne, int nbColonne, int nbBombe) {
 		super(nbLigne, nbColonne, nbBombe);
 	}
