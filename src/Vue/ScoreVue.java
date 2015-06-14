@@ -37,7 +37,6 @@ public class ScoreVue extends JDialog {
 		tableModel.addRow(col);
 		ArrayList<Partie> liste = Partie.lectureXML("scoreXML.xml");
 		for(Partie score : liste) {
-			System.out.println(score.getTemps()+"");
 			Object[] objs = {score.getLignes(), score.getColonnes(), score.getBombes(), score.getTemps()};
 			tableModel.addRow(objs);
 		}
@@ -46,8 +45,9 @@ public class ScoreVue extends JDialog {
 		table1J.setBounds(6, 6, 405, 209);
 		panelUnJ.add(table1J);
 		
-		tableModel = new DefaultTableModel(col, 0);
-		tableModel.addRow(col);
+		String col2[] = {"Score joueur 1","Score joueur 2", "Bombes"};
+		tableModel = new DefaultTableModel(col2, 0);
+		tableModel.addRow(col2);
 		
 		JPanel panel2J = new JPanel();
 		tabbedPane.addTab("Deux joueurs", null, panel2J, null);
