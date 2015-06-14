@@ -149,6 +149,7 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 		try {
 			sortie.writeObject(((JeuModeleDJRes)this).getListeCase());
 			sortie.flush();
+			sortie.reset();
 		} catch (IOException e) { e.printStackTrace(); }
 	}
 	

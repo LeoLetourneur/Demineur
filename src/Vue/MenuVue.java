@@ -37,6 +37,14 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JSlider;
 
+/**
+ * Classe de lancement du jeu.
+ * Classe représentant la vue et le controleur du Menu.
+ * 
+ * @author LETOURNEUR Léo
+ * @version 2.0
+ * @
+ */
 public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	private static final long serialVersionUID = 4722648722327719604L;
 	
@@ -69,6 +77,11 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	private JCheckBox cbUseSoundsDJ;
 	private JCheckBox cbSaveBeforeDJ;
 
+	/** Lancement du jeu.
+    * 
+    * @param args
+    *            Paramêtres de la fonction main.
+    */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -83,6 +96,10 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		});
 	}
 
+	/** 
+	* Constructeur du menu
+	*
+	*/
 	public MenuVue() {
 		setTitle("Menu");
 		
@@ -294,6 +311,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+		//Vérification des checkbox useTemps et DefiTemps qui sont liés
 		if(e.getSource() == cbUseTemps) {
 			if(cbDefiTemps.isSelected())
 				cbUseTemps.setSelected(true);
@@ -304,10 +322,10 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 				cbUseTemps.setSelected(true);
 		}
 
+		//Vérification du nombre de bombes
 		int lignes = (Integer) spinnerLigne.getValue();
 		int colonnes = (Integer) spinnerColonne.getValue();
 		int bombes = (Integer) spinnerBombe.getValue();
-		
 		if(lignes*colonnes < bombes) {
 			spinnerBombe.setBorder(BorderFactory.createLineBorder(Color.red));
 			return;
@@ -336,8 +354,6 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 					caseM.setEtat(caseM.getEtat());
 				}	
 				view.setVisible(true);
-				if(!model.isFini())
-					model.getTimer().start();
 		}
 		else if(e.getSource() == btn1Joueur) {
 		    JeuModele model = new JeuModele(lignes, colonnes, bombes);
@@ -408,6 +424,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 			return;
 		}
 		
+		//Changement du niveau de la partie
 		if(((JSlider)e.getSource()).getValue() == 1) {
 			spinnerLigne.setValue(9);
 			spinnerColonne.setValue(9);

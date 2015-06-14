@@ -58,9 +58,6 @@ public class JeuModele extends Observable implements Serializable {
 		setNbColonne(nbColonne);
 		setNbLigne(nbLigne);
 		setNbBombe(nbBombe);
-		setSonBombe(new Son("sons/bombe.wav"));
-		setSonVide(new Son("sons/vide.wav"));
-		setSonWin(new Son("sons/win.wav"));
 	}
 	
 	public void initialiser() {
@@ -71,6 +68,10 @@ public class JeuModele extends Observable implements Serializable {
 		setSecondes(0);
 		setPremierTour(true);
 		setNbBombeRestante(0);
+		
+		setSonBombe(new Son("sons/bombe.wav"));
+		setSonVide(new Son("sons/vide.wav"));
+		setSonWin(new Son("sons/win.wav"));
 	}
 
 	public void construireCases() {
@@ -213,9 +214,12 @@ public class JeuModele extends Observable implements Serializable {
 
 	public void setPremierTour(Boolean premierTour) {
 		this.premierTour = premierTour;
-		if(premierTour == false && !(this instanceof JeuModeleDJ)) {
+		if(premierTour == false) {
 			setEtat(VarCommun.etatJeu.ENJEU.value);
-			timer.start();
+			if(isAllowTime())
+				timer.start();
+			if(isAllowSounds())
+				getSonVide().jouer();
 		}
 	}
 

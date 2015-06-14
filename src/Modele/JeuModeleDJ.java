@@ -30,13 +30,12 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 		joueur2 = new Joueur("Joueur2", 2);
 		
 		setAllowQuestion(false);
-		setPremierTour(false);
+		setAllowTime(false);
 		setJoueurCourant(joueur1);
 	}
 	
 	public void initialiser() {
 		super.initialiser();
-		setPremierTour(false);
 		getJoueur1().setScore(0);
 		getJoueur2().setScore(0);
 	}

@@ -22,8 +22,13 @@ public class CaseControleurDJ extends CaseControleur {
 			if(getModele().getEtat() != VarCommun.etatCase.COVER.value)
 				return;
 			
+			if(getModele().getModeleJeu().isPremierTour())
+				getModele().getModeleJeu().setPremierTour(false);
+			
 			getModele().setEtat(VarCommun.etatCase.DISCOVER.value);
 			if(getModele().getValeur() == VarCommun.typeCase.BOMB.value) {
+				if(getModele().getModeleJeu().isAllowSounds())
+					getModele().getModeleJeu().getSonBombe().jouer();
 				((JeuModeleDJ)getModele().getModeleJeu()).incrementerScore();
 			}
 			else {

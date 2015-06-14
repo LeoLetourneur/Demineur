@@ -67,7 +67,8 @@ public class JeuVueDJ extends JeuVue {
 				if(modele.isSauvegarde())
 					modele.sauvegarde();
 				iconeMilieu.setIcon(iconGagne);
-				
+				if(modele.isAllowSounds())
+					modele.getSonWin().jouer();
 				if(((JeuModeleDJ)modele).getJoueur1().getScore() > ((JeuModeleDJ)modele).getJoueur2().getScore())
 					JOptionPane.showMessageDialog(null, "Le joueur 1 gagne");
 				else if(((JeuModeleDJ)modele).getJoueur1().getScore() < ((JeuModeleDJ)modele).getJoueur2().getScore())
