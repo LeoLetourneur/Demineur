@@ -10,6 +10,7 @@ import javax.swing.*;
 import Commun.VarCommun;
 import Controleur.CaseControleur;
 import Modele.CaseModele;
+import Modele.EcritureXMLJeu;
 import Modele.JeuModele;
 
 import java.awt.Component;
@@ -207,6 +208,7 @@ public class JeuVue extends JFrame implements Observer {
 				iconeMilieu.setIcon(iconGagne);
 				if(modele.isSauvegarde())
 					modele.sauvegarde();
+				EcritureXMLJeu.ecritureXML(modele,"scoreXML.xml");
 				JOptionPane.showMessageDialog(null, "Vous avez gagné");
 			}
 		}
