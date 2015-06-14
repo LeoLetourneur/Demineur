@@ -1,6 +1,7 @@
 package Vue;
 
 import java.awt.Color;
+import java.util.Date;
 import java.util.Observable;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ import Commun.VarCommun;
 import Controleur.CaseControleurDJ;
 import Modele.CaseModele;
 import Modele.JeuModeleDJ;
+import Modele.PartieDJ;
 
 /**
  * Classe Vue du jeu pour deux joueurs.
@@ -92,6 +94,8 @@ public class JeuVueDJ extends JeuVue {
 					JOptionPane.showMessageDialog(null, "Le joueur 2 gagne");
 				else
 					JOptionPane.showMessageDialog(null, "Egalité");
+				PartieDJ partie = new PartieDJ(((JeuModeleDJ)modele).getJoueur1().getScore(),((JeuModeleDJ)modele).getJoueur2().getScore(),modele.getNbBombe(),new Date().toString());
+				PartieDJ.ecritureXML(partie, "fichier/scoreXMLDJ.xml");
 			}
 		}
 	}

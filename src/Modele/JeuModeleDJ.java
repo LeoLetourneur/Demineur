@@ -83,7 +83,7 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 	*/
 	public void sauvegarde() {	
 		try {
-			FileOutputStream fileStreamPartie = new FileOutputStream("partieDJ.serial");
+			FileOutputStream fileStreamPartie = new FileOutputStream("fichier/partieDJ.serial");
 			ObjectOutputStream objetStreamPartie= new ObjectOutputStream(fileStreamPartie);
 			try{
 				objetStreamPartie.writeObject(this);
@@ -110,7 +110,7 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 	public static JeuModeleDJ charger() {
 		JeuModeleDJ partieCharger = null;
 		try {
-			FileInputStream fileStreamPartie = new FileInputStream("partieDJ.serial");
+			FileInputStream fileStreamPartie = new FileInputStream("fichier/partieDJ.serial");
 			ObjectInputStream objetStreamPartie= new ObjectInputStream(fileStreamPartie);
 			try {	
 				partieCharger = (JeuModeleDJ) objetStreamPartie.readObject(); 

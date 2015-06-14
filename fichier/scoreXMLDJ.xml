@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_45" class="java.beans.XMLDecoder">
+ <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="Modele.PartieDJ">
+    <void property="bombes">
+     <int>5</int>
+    </void>
+    <void property="date">
+     <string>Sun Jun 14 23:53:45 CEST 2015</string>
+    </void>
+    <void property="scoreJ2">
+     <int>5</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="Modele.PartieDJ">
+    <void property="bombes">
+     <int>10</int>
+    </void>
+    <void property="date">
+     <string>Sun Jun 14 23:48:49 CEST 2015</string>
+    </void>
+    <void property="scoreJ1">
+     <int>4</int>
+    </void>
+    <void property="scoreJ2">
+     <int>6</int>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>

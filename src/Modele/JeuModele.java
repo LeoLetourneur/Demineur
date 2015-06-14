@@ -169,7 +169,7 @@ public class JeuModele extends Observable implements Serializable {
 	public void sauvegarde() {
 		
 		try {
-			FileOutputStream fileStreamPartie = new FileOutputStream("partie.serial");
+			FileOutputStream fileStreamPartie = new FileOutputStream("fichier/partie.serial");
 			ObjectOutputStream objetStreamPartie= new ObjectOutputStream(fileStreamPartie);
 			try{
 				objetStreamPartie.writeObject(this);
@@ -196,7 +196,7 @@ public class JeuModele extends Observable implements Serializable {
 	public static JeuModele charger() {
 		JeuModele partieCharger = null;
 		try {
-			FileInputStream fileStreamPartie = new FileInputStream("partie.serial");
+			FileInputStream fileStreamPartie = new FileInputStream("fichier/partie.serial");
 			ObjectInputStream objetStreamPartie= new ObjectInputStream(fileStreamPartie);
 			try {	
 				partieCharger = (JeuModele) objetStreamPartie.readObject(); 

@@ -9,7 +9,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Modele.Partie;
+import Modele.PartieDJ;
+
 import javax.swing.JLabel;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -27,7 +30,7 @@ public class ScoreVue extends JDialog {
 	public JTabbedPane tabbedPane;
 	
 	public ScoreVue() {
-		setSize(450, 360);
+		setSize(700, 360);
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Scores");
@@ -35,36 +38,41 @@ public class ScoreVue extends JDialog {
 		getContentPane().setLayout(null);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(6, 6, 438, 266);
+		tabbedPane.setBounds(6, 6, 700, 266);
 		getContentPane().add(tabbedPane);
 		
 		JPanel panelUnJ = new JPanel();
 		tabbedPane.addTab("Un joueur", null, panelUnJ, null);
 		panelUnJ.setLayout(null);
 		
-		String col[] = {"Lignes","Colonnes", "Bombes", "Temps"};
+		String col[] = {"Date","Lignes","Colonnes", "Bombes", "Temps"};
 		DefaultTableModel tableModel = new DefaultTableModel(col, 0);
 		tableModel.addRow(col);
-		ArrayList<Partie> liste = Partie.lectureXML("scoreXML.xml");
+		ArrayList<Partie> liste = Partie.lectureXML("fichier/scoreXML.xml");
 		for(Partie score : liste) {
-			Object[] objs = {score.getLignes(), score.getColonnes(), score.getBombes(), score.getTemps()};
+			Object[] objs = {score.getDate(),score.getLignes(), score.getColonnes(), score.getBombes(), score.getTemps()};
 			tableModel.addRow(objs);
 		}
 		
 		table1J = new JTable(tableModel);
-		table1J.setBounds(6, 6, 405, 209);
+		table1J.setBounds(6, 6, 700, 209);
 		panelUnJ.add(table1J);
 		
-		String col2[] = {"Score joueur 1","Score joueur 2", "Bombes"};
+		String col2[] = {"Date","Score joueur 1","Score joueur 2", "Bombes"};
 		tableModel = new DefaultTableModel(col2, 0);
 		tableModel.addRow(col2);
+		ArrayList<PartieDJ> listeDJ = PartieDJ.lectureXML("fichier/scoreXMLDJ.xml");
+		for(PartieDJ score : listeDJ) {
+			Object[] objs = {score.getDate(),score.getScoreJ1(), score.getScoreJ2(), score.getBombes()};
+			tableModel.addRow(objs);
+		}
 		
 		JPanel panel2J = new JPanel();
 		tabbedPane.addTab("Deux joueurs", null, panel2J, null);
 		panel2J.setLayout(null);
 		
 		table2J = new JTable(tableModel);
-		table2J.setBounds(6, 6, 405, 208);
+		table2J.setBounds(6, 6, 700, 208);
 		panel2J.add(table2J);
 		
 		JPanel panel = new JPanel();

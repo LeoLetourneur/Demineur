@@ -238,7 +238,7 @@ public class JeuVue extends JFrame implements Observer {
 				iconeMilieu.setIcon(iconGagne);
 				if(modele.isSauvegarde())
 					modele.sauvegarde();
-				Partie.ecritureXML(modele,"scoreXML.xml");
+				Partie.ecritureXML(modele,"fichier/scoreXML.xml");
 				if(modele.isAllowSounds())
 					modele.getSonWin().jouer();
 				JOptionPane.showMessageDialog(null, "Vous avez gagné");
