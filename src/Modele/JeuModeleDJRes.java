@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -40,7 +41,14 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 	public boolean recevoir()
 	{
 		try {
-			int index = (Integer)entree.readObject();
+			Object objet = entree.readObject();
+			
+			if(objet instanceof String) {
+				traiterString((String)objet);
+				return true;
+			}
+		
+			int index = (Integer)objet;
 			CaseModele caseM = getListeCase().get(index);
 			caseM.setEtat(Commun.VarCommun.etatCase.DISCOVER.value);
 			if(caseM.getValeur() == VarCommun.typeCase.BOMB.value) {
@@ -56,12 +64,33 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 					setJoueurCourant(getJoueur1());
 			}
 			return true;
-		} catch (ClassNotFoundException e) { e.printStackTrace();
+		} catch (ClassNotFoundException e) { System.out.println("Classe inconnue");
 		} catch (IOException e) { System.out.println("Vous avez été déconnecté"); }
 		return false;
 	}
 	
-	public void envoyer(int index)
+	private void traiterString(String objet) {
+		if(objet.equals(VarCommun.MSG_NOUVELLE_PARTIE)) {
+			JOptionPane.showMessageDialog(null, "Votre adversaire a relancé une partie");
+			initialiser();
+			setJoueurCourant(moi);
+			recevoirNouvellesCases();
+		}
+		else if(objet.equals(VarCommun.MSG_DECOUVRIR)) {
+			for(int i=0;i<(getNbColonne()*getNbLigne());i++)
+				getListeCase().get(i).setEtat(VarCommun.etatCase.DISCOVER.value);
+			setFini(true);
+			setEtat(VarCommun.etatJeu.GAGNE.value);
+			JOptionPane.showMessageDialog(null, "Votre adversaire a découvert le jeu et a donc perdu");
+		}
+		else if(objet.equals(VarCommun.MSG_QUITTER)) {
+			this.deconnexion();
+			this.setFini(true);
+			JOptionPane.showMessageDialog(null, "Déconnexion de l'autre joueur");
+		}
+	}
+	
+	public void envoyerCase(int index)
 	{
 		try
 		{
@@ -70,6 +99,89 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 		}
 		catch(IOException io)
 		{JOptionPane.showMessageDialog(null, "Vous avez été déconnecté");}
+	}
+	
+	public void envoyerNouvellePartie()
+	{
+		try
+		{
+			sortie.writeObject("GAME_MSG_NEWGAME");
+			sortie.flush();
+		}
+		catch(IOException io)
+		{JOptionPane.showMessageDialog(null, "Vous avez été déconnecté");}
+	}
+	
+	public void envoyerDecouvrir()
+	{
+		try
+		{
+			sortie.writeObject("GAME_MSG_DISCOVER");
+			sortie.flush();
+		}
+		catch(IOException io)
+		{JOptionPane.showMessageDialog(null, "Vous avez été déconnecté");}
+	}
+	
+	public void envoyerQuitter()
+	{
+		try
+		{
+			if(!flux.isClosed()) {
+				sortie.writeObject("GAME_MSG_QUIT");
+				sortie.flush();
+				deconnexion();
+			}
+		}
+		catch(IOException io)
+		{JOptionPane.showMessageDialog(null, "Vous avez été déconnecté");}
+	}
+	
+	public void envoiDimensionsGrille() {
+		int[] tab = { getNbLigne(), getNbColonne(), getNbBombe() };
+		try {
+			sortie.writeObject(tab);
+			sortie.flush();
+		} catch (IOException e) { e.printStackTrace(); }
+	}
+	
+	public void envoiEnsembleCases() {
+		try {
+			sortie.writeObject(((JeuModeleDJRes)this).getListeCase());
+			sortie.flush();
+			sortie.reset();
+		} catch (IOException e) { e.printStackTrace(); }
+	}
+	
+	public void recevoirPlateau() {
+		try {
+			int[] tab = (int[])getEntree().readObject();
+			this.nbLigne = tab[0];
+			this.nbColonne = tab[1];
+			this.nbBombe = tab[2];
+			
+			setListeCase(new ArrayList<CaseModele>());
+			for(int i = 0; i<nbColonne*nbLigne; i++) {
+				CaseModele caseM = new CaseModele(i, this);
+				caseM.sAjouterAuxVoisins(getListeCase());
+				getListeCase().add(caseM);
+			}
+		} catch (IOException e) { e.printStackTrace(); 
+		} catch (ClassNotFoundException e) { e.printStackTrace(); }
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void recevoirNouvellesCases() {
+		try {
+			ArrayList<CaseModele> al = (ArrayList<CaseModele>)getEntree().readObject();
+			
+			for(int i = 0; i<nbColonne*nbLigne; i++) {
+				getListeCase().get(i).setNbBombeVoisin(al.get(i).getNbBombeVoisin());
+				getListeCase().get(i).setValeur(al.get(i).getValeur());
+				getListeCase().get(i).setEtat(VarCommun.etatCase.COVER.value);
+			}
+		} catch (ClassNotFoundException e) { e.printStackTrace();
+		} catch (IOException e) { e.printStackTrace(); }
 	}
 
 	public void deconnexion()

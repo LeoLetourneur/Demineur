@@ -67,6 +67,7 @@ public class CaseModele extends Observable implements Serializable {
 				&& caseVoisine.getEtat() != VarCommun.etatCase.FLAG.value)
 				{
 					caseVoisine.setEtat(VarCommun.etatCase.DISCOVER.value);
+					//Seulement à 1J pour le double clique
 					if(caseVoisine.getValeur() == VarCommun.typeCase.BOMB.value) {
 						getModeleJeu().setEtat(VarCommun.etatJeu.PERDU.value);
 						return;
@@ -144,5 +145,9 @@ public class CaseModele extends Observable implements Serializable {
 
 	public void setModeleJeu(JeuModele modeleJeu) {
 		this.modeleJeu = modeleJeu;
+	}
+	
+	public String toString() {
+		return "Index :"+getIndex()+" / valeur :"+getValeur()+" / nbBombe :"+nbBombeVoisin+"\n";
 	}
 }

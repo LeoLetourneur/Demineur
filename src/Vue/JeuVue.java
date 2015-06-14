@@ -1,4 +1,4 @@
-package Vue;
+﻿package Vue;
 
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -12,6 +12,7 @@ import Controleur.CaseControleur;
 import Modele.CaseModele;
 import Modele.EcritureXMLJeu;
 import Modele.JeuModele;
+import Modele.JeuModeleDJ;
 
 import java.awt.Component;
 
@@ -164,7 +165,7 @@ public class JeuVue extends JFrame implements Observer {
 
 	public void chargerJeu()
 	{
-		getLabelDroit().setVisible(modele.isAllowTime());
+		getLabelDroit().setVisible((modele.isAllowTime() || modele instanceof JeuModeleDJ));
 		
 		container.remove(panelCases);
 		panelCases = new JPanel (new GridLayout(modele.getNbLigne(), modele.getNbColonne()));
@@ -172,6 +173,10 @@ public class JeuVue extends JFrame implements Observer {
         container.add(panelCases);
         
         chargerIconeMilieu();
+	}
+	
+	public void reinitialiser() {
+		iconeMilieu.setIcon(iconTete);
 	}
 	
 	public void chargerIconeMilieu() {
@@ -209,6 +214,8 @@ public class JeuVue extends JFrame implements Observer {
 				if(modele.isSauvegarde())
 					modele.sauvegarde();
 				EcritureXMLJeu.ecritureXML(modele,"scoreXML.xml");
+				if(modele.isAllowSounds())
+					modele.getSonWin().jouer();
 				JOptionPane.showMessageDialog(null, "Vous avez gagné");
 			}
 		}
@@ -229,10 +236,5 @@ public class JeuVue extends JFrame implements Observer {
 
 	public void setLabelDroit(JLabel labelDroit) {
 		this.labelDroit = labelDroit;
-	}
-
-	public void reinitialiser() {
-		
-		iconeMilieu.setIcon(iconTete);
 	}
 }

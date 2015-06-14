@@ -20,10 +20,14 @@ public class JeuVueDJ extends JeuVue {
     }
 
 	public void changeLabel() {
-        
+		
 		labelGauche.setText("J1 : "+((JeuModeleDJ)getModele()).getJoueur1().getScore());
-		labelGauche.setForeground(Color.red);
 		labelDroit.setText("J2 : "+((JeuModeleDJ)getModele()).getJoueur2().getScore());
+		
+		if(((JeuModeleDJ)modele).getJoueurCourant() == ((JeuModeleDJ)modele).getJoueur1())
+			labelGauche.setForeground(Color.red);
+		else
+			labelDroit.setForeground(Color.red);
     }
 	
 	public void chargerCasesVueControleur() {
@@ -40,12 +44,7 @@ public class JeuVueDJ extends JeuVue {
 	public void update(Observable o, Object arg) {
 		if(arg != null && arg.equals("ChangeTheme")){
 			loadIcons();
-			if(modele.getEtat() == VarCommun.etatJeu.PERDU.value)
-				iconeMilieu.setIcon(iconPerdu);
-			else if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value)
-				iconeMilieu.setIcon(iconGagne);
-			else
-				iconeMilieu.setIcon(iconTete);
+			chargerIconeMilieu();
 		}
 		
 		labelGauche.setText("J1 : "+(((JeuModeleDJ)modele).getJoueur1().getScore()));
@@ -56,7 +55,6 @@ public class JeuVueDJ extends JeuVue {
 			labelGauche.setForeground(Color.red);
 			labelDroit.setForeground(Color.black);
 		}
-		
 		else
 		{
 			labelDroit.setForeground(Color.red);
@@ -69,7 +67,8 @@ public class JeuVueDJ extends JeuVue {
 				if(modele.isSauvegarde())
 					modele.sauvegarde();
 				iconeMilieu.setIcon(iconGagne);
-				
+				if(modele.isAllowSounds())
+					modele.getSonWin().jouer();
 				if(((JeuModeleDJ)modele).getJoueur1().getScore() > ((JeuModeleDJ)modele).getJoueur2().getScore())
 					JOptionPane.showMessageDialog(null, "Le joueur 1 gagne");
 				else if(((JeuModeleDJ)modele).getJoueur1().getScore() < ((JeuModeleDJ)modele).getJoueur2().getScore())

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import Commun.VarCommun;
@@ -31,9 +32,14 @@ public class JeuModele extends Observable implements Serializable {
 	private boolean allowQuestion;
 	private boolean allowTime;
 	private boolean defiTemps;
-	private ArrayList<CaseModele> listeCase;
+	private boolean saveBeforeQuit;
 	private boolean sauvegarde;
+	private boolean allowSounds;
+	private ArrayList<CaseModele> listeCase;
 	
+	transient private Son sonBombe;
+	transient private Son sonVide;
+	transient private Son sonWin;
 	
 	public JeuModele() {
 		
@@ -44,6 +50,8 @@ public class JeuModele extends Observable implements Serializable {
 		
 		themeJeu = VarCommun.themeJeu.Mario;
 		setSauvegarde(false);
+		setSaveBeforeQuit(false);
+		setAllowSounds(false);
 		setDefiTemps(false);
 		setAllowQuestion(true);
 		setAllowTime(true);
@@ -60,12 +68,16 @@ public class JeuModele extends Observable implements Serializable {
 		setSecondes(0);
 		setPremierTour(true);
 		setNbBombeRestante(0);
+		
+		setSonBombe(new Son("sons/bombe.wav"));
+		setSonVide(new Son("sons/vide.wav"));
+		setSonWin(new Son("sons/win.wav"));
 	}
 
 	public void construireCases() {
 		
 		initialiser();
-		setListeCase(new ArrayList<CaseModele>());
+		listeCase = new ArrayList<CaseModele>();
 		int nbCase = nbLigne*nbColonne;
 		ArrayList<Integer> listeCaseVide = new ArrayList<Integer>();
 		for(int i=0; i<nbCase; i++) {
@@ -82,8 +94,6 @@ public class JeuModele extends Observable implements Serializable {
 		int random;
 		while(nbBombeRestante<nbBombe) {
 			random = rnd.nextInt(listeCaseVide.size());
-			if(listeCase.get(listeCaseVide.get(random)).getValeur() == 1)
-				System.out.println("ERROR : Déjà à 1");
 			listeCase.get(listeCaseVide.get(random)).setValeur(1);
 			listeCase.get(listeCaseVide.get(random)).incrementerVoisin(1);
 			listeCaseVide.remove(random);
@@ -132,7 +142,7 @@ public class JeuModele extends Observable implements Serializable {
 		} catch (IOException e) { e.printStackTrace();
 		}
 		this.setSauvegarde(true);
-		System.out.println("Sauvegardé");
+		JOptionPane.showMessageDialog(null, "Partie sauvegardée !");
 	}
 	
 	public static JeuModele charger() {
@@ -155,7 +165,6 @@ public class JeuModele extends Observable implements Serializable {
 			cnfe.printStackTrace();
 		}
 		partieCharger.setSauvegarde(true);
-		System.out.println("Chargé");
 		return partieCharger;
 	}
 
@@ -165,6 +174,8 @@ public class JeuModele extends Observable implements Serializable {
 
 	public void setListeCase(ArrayList<CaseModele> listeCase) {
 		this.listeCase = listeCase;
+		setChanged();
+		notifyObservers();
 	}
 	
 	public int getNbBombeRestante() {
@@ -203,9 +214,12 @@ public class JeuModele extends Observable implements Serializable {
 
 	public void setPremierTour(Boolean premierTour) {
 		this.premierTour = premierTour;
-		if(premierTour == false && !(this instanceof JeuModeleDJ)) {
+		if(premierTour == false) {
 			setEtat(VarCommun.etatJeu.ENJEU.value);
-			timer.start();
+			if(isAllowTime())
+				timer.start();
+			if(isAllowSounds())
+				getSonVide().jouer();
 		}
 	}
 
@@ -309,5 +323,45 @@ public class JeuModele extends Observable implements Serializable {
 
 	public void setSauvegarde(boolean sauvegarde) {
 		this.sauvegarde = sauvegarde;
+	}
+
+	public boolean isSaveBeforeQuit() {
+		return saveBeforeQuit;
+	}
+
+	public void setSaveBeforeQuit(boolean saveBeforeQuit) {
+		this.saveBeforeQuit = saveBeforeQuit;
+	}
+
+	public boolean isAllowSounds() {
+		return allowSounds;
+	}
+
+	public void setAllowSounds(boolean allowSounds) {
+		this.allowSounds = allowSounds;
+	}
+
+	public Son getSonBombe() {
+		return sonBombe;
+	}
+
+	public void setSonBombe(Son sonBombe) {
+		this.sonBombe = sonBombe;
+	}
+
+	public Son getSonVide() {
+		return sonVide;
+	}
+
+	public void setSonVide(Son sonVide) {
+		this.sonVide = sonVide;
+	}
+
+	public Son getSonWin() {
+		return sonWin;
+	}
+
+	public void setSonWin(Son sonWin) {
+		this.sonWin = sonWin;
 	}
 }

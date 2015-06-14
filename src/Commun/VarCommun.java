@@ -2,6 +2,10 @@ package Commun;
 
 public class VarCommun {
 	
+	public static final String MSG_NOUVELLE_PARTIE = "GAME_MSG_NEWGAME";
+	public static final String MSG_DECOUVRIR = "GAME_MSG_DISCOVER";
+	public static final String MSG_QUITTER = "GAME_MSG_QUIT";
+	
 	public static enum typeCase { 
 		EMPTY(0), BOMB(1);
 		public final int value;

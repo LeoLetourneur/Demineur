@@ -8,6 +8,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import javax.swing.JOptionPane;
+
 import Commun.VarCommun;
 
 public class JeuModeleDJ extends JeuModele implements Serializable {
@@ -28,8 +30,14 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 		joueur2 = new Joueur("Joueur2", 2);
 		
 		setAllowQuestion(false);
-		setPremierTour(false);
+		setAllowTime(false);
 		setJoueurCourant(joueur1);
+	}
+	
+	public void initialiser() {
+		super.initialiser();
+		getJoueur1().setScore(0);
+		getJoueur2().setScore(0);
 	}
 
 	public Joueur getJoueur1() {
@@ -71,7 +79,6 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 		getJoueur1().setScore(0);
 		getJoueur2().setScore(0);
 		setJoueurCourant(getJoueur1());
-		
 	}
 	
 	public void setNbCasesRetournees(int p_nbCasesRetournes) {
@@ -80,11 +87,9 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 			setEtat(VarCommun.etatJeu.GAGNE.value);
 		setChanged();
 		notifyObservers();
-		
 	}
 	
-public void sauvegarde() {
-		
+	public void sauvegarde() {	
 		try {
 			FileOutputStream fileStreamPartie = new FileOutputStream("partieDJ.serial");
 			ObjectOutputStream objetStreamPartie= new ObjectOutputStream(fileStreamPartie);
@@ -103,7 +108,7 @@ public void sauvegarde() {
 		} catch (IOException e) { e.printStackTrace();
 		}
 		this.setSauvegarde(true);
-		System.out.println("Sauvegardé");
+		JOptionPane.showMessageDialog(null, "Partie sauvegardée !");
 	}
 	
 	public static JeuModeleDJ charger() {
@@ -126,8 +131,6 @@ public void sauvegarde() {
 			cnfe.printStackTrace();
 		}
 		partieCharger.setSauvegarde(true);
-		System.out.println("Chargé");
 		return partieCharger;
 	}
-	
 }

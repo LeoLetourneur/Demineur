@@ -4,13 +4,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.JMenuItem;
 
 import Commun.VarCommun;
-import Modele.JeuModele;
-import Vue.ParametreVue;
-import Vue.JeuVue;
+import Modele.JeuModeleDJ;
+import Modele.JeuModeleDJRes;
+import Vue.JeuVueDJRes;
 
 public class JeuControleurDJRes extends JeuControleur {
     
-	public JeuControleurDJRes(JeuModele p_model, JeuVue p_view) {
+	public JeuControleurDJRes(JeuModeleDJRes p_model, JeuVueDJRes p_view) {
 		super(p_model, p_view);
 	}
 
@@ -18,34 +18,26 @@ public class JeuControleurDJRes extends JeuControleur {
 	public void actionPerformed(ActionEvent e)
 	{
 		if(e.getSource() == vue.mntmNouvellePartie) {
-			//TODO
-			/*modele.getTimer().stop();
 			modele.reinitialiserCase();
-			vue.reinitialiser();*/
+			((JeuModeleDJRes)modele).envoyerNouvellePartie();
+			((JeuModeleDJRes)modele).envoiEnsembleCases();
+			vue.reinitialiser();
+			
+			if(((JeuModeleDJRes) modele).getMoi() == ((JeuModeleDJ) modele).getJoueur1())
+				((JeuModeleDJRes) modele).setJoueurCourant(((JeuModeleDJRes) modele).getJoueur2());
+			else
+				((JeuModeleDJRes) modele).setJoueurCourant(((JeuModeleDJRes) modele).getJoueur1());
 		}
 		else if(e.getSource() == vue.mntmDecouvrir) {
-			//TODO
-			/*modele.setEtat(VarCommun.etatJeu.PERDU.value);
+			((JeuModeleDJRes)modele).envoyerDecouvrir();
+			modele.setFini(true);
+			modele.setEtat(VarCommun.etatJeu.PERDU.value);
 			for(int i=0;i<(modele.getNbColonne()*modele.getNbLigne());i++)
-				modele.getListeCase().get(i).setEtat(VarCommun.etatCase.DISCOVER.value);*/
+				modele.getListeCase().get(i).setEtat(VarCommun.etatCase.DISCOVER.value);
 		}
 		else if(e.getSource() == vue.mntmQuitter) {
-			//TODO
+			((JeuModeleDJRes)modele).envoyerQuitter();
 			vue.dispose();
-		}
-		else if(e.getSource() == vue.mntmParametres) {
-			//TODO
-			modele.getTimer().stop();
-			ParametreVue pv = new ParametreVue(modele);
-			pv.setVisible(true);
-			if(pv.isAccept()) {
-				modele.construireCases();
-				vue.chargerJeu();
-				vue.chargerCasesVueControleur();
-				vue.repaint();
-			} else
-				modele.getTimer().start();
-			pv.dispose();
 		}
 		//Tous les thèmes
 		else if(e.getSource() instanceof JMenuItem)
