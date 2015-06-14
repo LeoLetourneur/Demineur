@@ -27,6 +27,7 @@ public class JeuVueDJRes extends JeuVueDJ {
 	}
 	
 	public void update(Observable o, Object arg) {
+		super.update(o, arg);
 		if(modele.isFini())
 			chargerIconeMilieu();
 	}
