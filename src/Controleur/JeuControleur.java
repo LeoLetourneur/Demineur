@@ -41,7 +41,7 @@ public class JeuControleur implements ActionListener {
 		if(e.getSource() == vue.mntmNouvellePartie) {
 			modele.getTimer().stop();
 			modele.reinitialiserCase();
-			vue.reinitialiser();
+			vue.chargerIconeMilieu();
 		}
 		else if(e.getSource() == vue.mntmSauvegarder) {
 			modele.sauvegarde();

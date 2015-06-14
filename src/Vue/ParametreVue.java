@@ -31,6 +31,13 @@ import Commun.VarCommun;
 import Modele.JeuModele;
 import Modele.JeuModeleDJ;
 
+/**
+ * Classe de paramètres du jeu.
+ * Classe représentant la vue et le controleur du menu paramètres.
+ * 
+ * @author LETOURNEUR Léo
+ * @version 2.0
+ */
 public class ParametreVue extends JDialog implements ItemListener, ActionListener {
 	private static final long serialVersionUID = 504012887671145390L;
 	
@@ -50,14 +57,18 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 	private JSpinner spinnerColonne;
 	private JSpinner spinnerBombe;
 	
-	JCheckBox chckbxPlaySound;
-	JCheckBox chckbxSaveQuitGame;
-	JCheckBox chckbxUseQuestionMark;
-	JCheckBox chckbxUseTime;
+	private JCheckBox chckbxPlaySound;
+	private JCheckBox chckbxSaveQuitGame;
+	private JCheckBox chckbxUseQuestionMark;
+	private JCheckBox chckbxUseTime;
 	
 	private JeuModele modele;
 	private boolean accept;
 
+	/** 
+	* Constructeur de la fenêtre
+	*
+	*/
 	public ParametreVue(JeuModele p_modele) {
 		modele = p_modele;
 		
@@ -261,6 +272,10 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 		}
 	}
 	
+	/** 
+	* Rendre modifiable les paramêtres de la grille en fonction du checkbox
+	*
+	*/
 	private void setEnabledPerso(boolean coche) {
 		panelPerso.setEnabled(coche);
 		spinnerLigne.setEnabled(coche);
@@ -270,6 +285,7 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
+		//Rendre modifiable la personnalisation
 		if(e.getSource() == this.rdbtnPersonnalise)
 			setEnabledPerso(((JRadioButton)e.getItemSelectable()).isSelected());
 	}
@@ -314,7 +330,6 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 			this.setAccept(false);
 		}
 		this.setVisible(false);
-		
 	}
 
 	public boolean isAccept() {

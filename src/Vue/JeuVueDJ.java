@@ -10,19 +10,33 @@ import Controleur.CaseControleurDJ;
 import Modele.CaseModele;
 import Modele.JeuModeleDJ;
 
+/**
+ * Classe Vue du jeu pour deux joueurs.
+ * 
+ * @author LETOURNEUR Léo
+ * @version 3.0
+ */
 public class JeuVueDJ extends JeuVue {
 	private static final long serialVersionUID = 7563232298946244699L;
 
+	/** 
+	* Constructeur
+	*
+	*/
 	public JeuVueDJ(JeuModeleDJ model) {
         super(model);
         
         changeLabel();
     }
 
+	/** 
+	* Changement des labels pour afficher les scores des deux joueurs
+	*
+	*/
 	public void changeLabel() {
 		
-		labelGauche.setText("J1 : "+((JeuModeleDJ)getModele()).getJoueur1().getScore());
-		labelDroit.setText("J2 : "+((JeuModeleDJ)getModele()).getJoueur2().getScore());
+		//TODO Voir pour supprimer la méthode
+		chargerIconeMilieu();
 		
 		if(((JeuModeleDJ)modele).getJoueurCourant() == ((JeuModeleDJ)modele).getJoueur1())
 			labelGauche.setForeground(Color.red);
@@ -30,6 +44,10 @@ public class JeuVueDJ extends JeuVue {
 			labelDroit.setForeground(Color.red);
     }
 	
+	/** 
+	* Chargement des cases pour deux joueurs
+	*
+	*/
 	public void chargerCasesVueControleur() {
         for(CaseModele caseM : modele.getListeCase())
         {
@@ -42,14 +60,17 @@ public class JeuVueDJ extends JeuVue {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		//Changement de thème
 		if(arg != null && arg.equals("ChangeTheme")){
 			loadIcons();
 			chargerIconeMilieu();
 		}
 		
+		//Mise à jour des labels
 		labelGauche.setText("J1 : "+(((JeuModeleDJ)modele).getJoueur1().getScore()));
 		labelDroit.setText("J2 : "+(((JeuModeleDJ)modele).getJoueur2().getScore()));
 		
+		//Mise à jour graphique du joueur courant
 		if(((JeuModeleDJ) modele).getJoueurCourant()==((JeuModeleDJ)modele).getJoueur1())
 		{
 			labelGauche.setForeground(Color.red);
@@ -61,6 +82,7 @@ public class JeuVueDJ extends JeuVue {
 			labelGauche.setForeground(Color.black);
 		}
 	
+		//Fin de partie
 		if(!modele.isFini()) {
 			if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value) {
 				modele.setFini(true);
@@ -79,8 +101,8 @@ public class JeuVueDJ extends JeuVue {
 		}
 	}
 	
-	public void reinitialiser() {
-		super.reinitialiser();
+	public void chargerIconeMilieu() {
+		super.chargerIconeMilieu();
 		labelGauche.setText("J1 : "+(((JeuModeleDJ)modele).getJoueur1().getScore()));
 		labelDroit.setText("J2 : "+(((JeuModeleDJ)modele).getJoueur2().getScore()));
 	}

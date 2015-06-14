@@ -16,6 +16,12 @@ import Modele.JeuModeleDJ;
 
 import java.awt.Component;
 
+/**
+ * Classe Vue du jeu.
+ * 
+ * @author LETOURNEUR Léo
+ * @version 1.0
+ */
 public class JeuVue extends JFrame implements Observer {
 	private static final long serialVersionUID = 3267840040749382412L;
 	
@@ -56,12 +62,20 @@ public class JeuVue extends JFrame implements Observer {
         buildFrame();
     }
     
+	/** 
+	* Chargement des icones en fonction du thème
+	*
+	*/
     protected void loadIcons() {
     	iconTete = new ImageIcon("sprite/"+modele.getThemeJeu()+"/tete.png");
         iconPerdu = new ImageIcon("sprite/"+modele.getThemeJeu()+"/perdu.png");
         iconGagne = new ImageIcon("sprite/"+modele.getThemeJeu()+"/gagne.png");
     }
 
+    /** 
+	* Construction de la fenêtre
+	*
+	*/
 	public void buildFrame() {
         
         setTitle("Démineur");
@@ -153,6 +167,10 @@ public class JeuVue extends JFrame implements Observer {
         chargerCasesVueControleur();
     }
 	
+	/** 
+	* Chargement de la Vue et du controleur des cases en fonction des modèles.
+	*
+	*/
 	public void chargerCasesVueControleur() {
         for(CaseModele caseM : modele.getListeCase())
         {
@@ -163,6 +181,10 @@ public class JeuVue extends JFrame implements Observer {
         }
 	}
 
+	/** 
+	* Réinitialisation du panel de case
+	*
+	*/
 	public void chargerJeu()
 	{
 		getLabelDroit().setVisible((modele.isAllowTime() || modele instanceof JeuModeleDJ));
@@ -175,10 +197,10 @@ public class JeuVue extends JFrame implements Observer {
         chargerIconeMilieu();
 	}
 	
-	public void reinitialiser() {
-		iconeMilieu.setIcon(iconTete);
-	}
-	
+	/** 
+	* Charger l'icone du milieu en fonction de l'état du jeu
+	*
+	*/
 	public void chargerIconeMilieu() {
 		if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value)
         	iconeMilieu.setIcon(iconGagne);
@@ -190,14 +212,17 @@ public class JeuVue extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		//Changement de thème
 		if(arg != null && arg.equals("ChangeTheme")){
 			loadIcons();
 			chargerIconeMilieu();
 		}
 		
+		//Mise à jour des labels
 		labelGauche.setText(modele.getNbBombeRestante()+"");
 		labelDroit.setText(modele.getSecondes()+"");
 		
+		//Fin de partie
 		if(!modele.isFini()) {
 			if(modele.getEtat() == VarCommun.etatJeu.PERDU.value) {
 				modele.setFini(true);

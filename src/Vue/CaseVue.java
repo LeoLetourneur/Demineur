@@ -14,7 +14,12 @@ import javax.swing.SwingConstants;
 import Commun.VarCommun;
 import Modele.CaseModele;
 
-
+/**
+ * Classe Vue de la case.
+ * 
+ * @author COUTURIER Cyril
+ * @version 1.0
+ */
 public class CaseVue extends JButton implements Observer {
 	private static final long serialVersionUID = 3969339859887656340L;
 	
@@ -26,6 +31,10 @@ public class CaseVue extends JButton implements Observer {
 	
 	private CaseModele modele;
 	
+	/** 
+	* Constructeur
+	*
+	*/
 	public CaseVue(CaseModele p_modele) {
 		super();
 		setModele(p_modele);
@@ -41,6 +50,10 @@ public class CaseVue extends JButton implements Observer {
         this.setMargin(new Insets(0,0,0,0));
 	}
 	
+	/** 
+	* Chargement des icones en fonction du thème
+	*
+	*/
     private void loadIcon() {
 		iconCase = new ImageIcon("sprite/"+modele.getModeleJeu().getThemeJeu()+"/case.png");
 		iconVide = new ImageIcon("sprite/"+modele.getModeleJeu().getThemeJeu()+"/vide.png");
@@ -58,27 +71,33 @@ public class CaseVue extends JButton implements Observer {
 	}
 
 	public void update(Observable o, Object arg) {
+		//Changement de thème
 		if(modele.isChangeTheme()) {
 			loadIcon();
 			modele.setChangeTheme(false);
 		}
 		
+		//Réinitialisation (Couvrir la case)
 		if(modele.getEtat() == VarCommun.etatCase.COVER.value) {
 			this.setIcon(iconCase);
 			this.setText("");
-		}
+		} 
+		//Découvrir la case
 		else if(modele.getEtat() == VarCommun.etatCase.DISCOVER.value) {
+			//Case vide
 			if(modele.getValeur() == VarCommun.typeCase.EMPTY.value) {
 				this.setIcon(iconVide);
 				if(modele.getNbBombeVoisin() != 0)
 					this.setText(modele.getNbBombeVoisin()+"");
 			}
-			else
+			else //Case contenant une bombe
 				this.setIcon(iconBombe);
 		}
+		//Poser un drapeau
 		else if(modele.getEtat() == VarCommun.etatCase.FLAG.value) {
 			this.setIcon(iconDrapeau);
 		}
+		//Poser un point d'interrogation
 		else if(modele.getEtat() == VarCommun.etatCase.QUESTION.value) {
 			this.setIcon(iconQuestion);
 		}

@@ -21,7 +21,7 @@ public class JeuControleurDJRes extends JeuControleur {
 			modele.reinitialiserCase();
 			((JeuModeleDJRes)modele).envoyerNouvellePartie();
 			((JeuModeleDJRes)modele).envoiEnsembleCases();
-			vue.reinitialiser();
+			vue.chargerIconeMilieu();
 			
 			if(((JeuModeleDJRes) modele).getMoi() == ((JeuModeleDJ) modele).getJoueur1())
 				((JeuModeleDJRes) modele).setJoueurCourant(((JeuModeleDJRes) modele).getJoueur2());
