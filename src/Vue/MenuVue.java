@@ -42,7 +42,7 @@ import javax.swing.JSlider;
  * Classe représentant la vue et le controleur du Menu.
  * 
  * @author LETOURNEUR Léo
- * @version 3.0
+ * @since 3.0
  */
 public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	private static final long serialVersionUID = 4722648722327719604L;

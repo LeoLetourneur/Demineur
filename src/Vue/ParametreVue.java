@@ -36,7 +36,7 @@ import Modele.JeuModeleDJ;
  * Classe représentant la vue et le controleur du menu paramètres.
  * 
  * @author LETOURNEUR Léo
- * @version 2.0
+ * @since 2.0
  */
 public class ParametreVue extends JDialog implements ItemListener, ActionListener {
 	private static final long serialVersionUID = 504012887671145390L;

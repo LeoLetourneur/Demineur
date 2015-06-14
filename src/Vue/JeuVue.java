@@ -20,7 +20,7 @@ import java.awt.Component;
  * Classe Vue du jeu.
  * 
  * @author LETOURNEUR Léo
- * @version 1.0
+ * @since 1.0
  */
 public class JeuVue extends JFrame implements Observer {
 	private static final long serialVersionUID = 3267840040749382412L;

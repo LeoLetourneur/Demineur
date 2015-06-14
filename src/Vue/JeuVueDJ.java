@@ -14,7 +14,7 @@ import Modele.JeuModeleDJ;
  * Classe Vue du jeu pour deux joueurs.
  * 
  * @author LETOURNEUR Léo
- * @version 3.0
+ * @since 3.0
  */
 public class JeuVueDJ extends JeuVue {
 	private static final long serialVersionUID = 7563232298946244699L;
@@ -26,23 +26,18 @@ public class JeuVueDJ extends JeuVue {
 	public JeuVueDJ(JeuModeleDJ model) {
         super(model);
         
-        changeLabel();
-    }
-
-	/** 
-	* Changement des labels pour afficher les scores des deux joueurs
-	*
-	*/
-	public void changeLabel() {
-		
-		//TODO Voir pour supprimer la méthode
-		chargerIconeMilieu();
-		
-		if(((JeuModeleDJ)modele).getJoueurCourant() == ((JeuModeleDJ)modele).getJoueur1())
+        chargerIconeMilieu();
+        if(((JeuModeleDJ)modele).getJoueurCourant() == ((JeuModeleDJ)modele).getJoueur1())
 			labelGauche.setForeground(Color.red);
 		else
 			labelDroit.setForeground(Color.red);
     }
+	
+	public void chargerIconeMilieu() {
+		super.chargerIconeMilieu();
+		labelGauche.setText("J1 : "+(((JeuModeleDJ)modele).getJoueur1().getScore()));
+		labelDroit.setText("J2 : "+(((JeuModeleDJ)modele).getJoueur2().getScore()));
+	}
 	
 	/** 
 	* Chargement des cases pour deux joueurs
@@ -100,11 +95,4 @@ public class JeuVueDJ extends JeuVue {
 			}
 		}
 	}
-	
-	public void chargerIconeMilieu() {
-		super.chargerIconeMilieu();
-		labelGauche.setText("J1 : "+(((JeuModeleDJ)modele).getJoueur1().getScore()));
-		labelDroit.setText("J2 : "+(((JeuModeleDJ)modele).getJoueur2().getScore()));
-	}
-	
 }

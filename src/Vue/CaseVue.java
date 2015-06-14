@@ -18,7 +18,7 @@ import Modele.CaseModele;
  * Classe Vue de la case.
  * 
  * @author COUTURIER Cyril
- * @version 1.0
+ * @since 1.0
  */
 public class CaseVue extends JButton implements Observer {
 	private static final long serialVersionUID = 3969339859887656340L;
