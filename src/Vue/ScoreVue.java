@@ -30,7 +30,7 @@ public class ScoreVue extends JDialog {
 	public JTabbedPane tabbedPane;
 	
 	public ScoreVue() {
-		setSize(700, 360);
+		setSize(715, 360);
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Scores");
@@ -76,7 +76,7 @@ public class ScoreVue extends JDialog {
 		panel2J.add(table2J);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(16, 268, 415, 64);
+		panel.setBounds(16, 268, 678, 64);
 		getContentPane().add(panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{208, 0, 208, 0};
@@ -92,6 +92,13 @@ public class ScoreVue extends JDialog {
 		gbc_lblCouturierCyril.gridx = 0;
 		gbc_lblCouturierCyril.gridy = 0;
 		panel.add(lblCouturierCyril, gbc_lblCouturierCyril);
+		
+		JLabel lblVersion = new JLabel("Version 4.0");
+		GridBagConstraints gbc_lblVersion = new GridBagConstraints();
+		gbc_lblVersion.insets = new Insets(0, 0, 5, 5);
+		gbc_lblVersion.gridx = 1;
+		gbc_lblVersion.gridy = 0;
+		panel.add(lblVersion, gbc_lblVersion);
 		
 		JLabel lblLetourneurLo = new JLabel("LETOURNEUR Léo");
 		GridBagConstraints gbc_lblLetourneurLo = new GridBagConstraints();
