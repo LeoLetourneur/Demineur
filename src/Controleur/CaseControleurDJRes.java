@@ -8,13 +8,26 @@ import Modele.JeuModeleDJ;
 import Modele.JeuModeleDJRes;
 import Vue.CaseVue;
 
+/**
+ * Classe Contrôleur d'une case à deux joueurs en réseau
+ * 
+ * @author LETOURNEUR Léo
+ * @since 4.0
+ */
 public class CaseControleurDJRes extends CaseControleurDJ {
 
-
+	/** 
+	* Constructeur
+	*
+	*/
 	public CaseControleurDJRes(CaseModele p_modele, CaseVue p_vue) {
 		super(p_modele, p_vue);
 	}
 	
+	/** 
+	* Gestion de la souris
+	*
+	*/
 	public void mouseClicked(MouseEvent e) {
 		if(getModele().getModeleJeu().isFini())
 			return;

@@ -7,13 +7,26 @@ import Modele.CaseModele;
 import Modele.JeuModeleDJ;
 import Vue.CaseVue;
 
+/**
+ * Classe Contrôleur d'une case à deux joueurs
+ * 
+ * @author LETOURNEUR Léo
+ * @since 3.0
+ */
 public class CaseControleurDJ extends CaseControleur {
 
-
+	/** 
+	* Constructeur
+	*
+	*/
 	public CaseControleurDJ(CaseModele p_modele, CaseVue p_vue) {
 		super(p_modele, p_vue);
 	}
 	
+	/** 
+	* Gestion de la souris
+	*
+	*/
 	public void mouseClicked(MouseEvent e) {
 		if(getModele().getModeleJeu().isFini())
 			return;

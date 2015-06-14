@@ -11,6 +11,12 @@ import Modele.JeuModeleDJRes;
 import Vue.ParametreVue;
 import Vue.JeuVue;
 
+/**
+ * Classe Contrôleur du jeu
+ * 
+ * @author LETOURNEUR Léo
+ * @since 2.0
+ */
 public class JeuControleur implements ActionListener {
 
 	JeuModele modele;
@@ -35,6 +41,10 @@ public class JeuControleur implements ActionListener {
 		modele.setTimer(new Timer(1000, this));
 	}
 
+	/**
+	 * Gestion des évènements
+	 * 
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{

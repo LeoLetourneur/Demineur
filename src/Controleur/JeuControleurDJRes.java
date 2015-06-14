@@ -8,12 +8,26 @@ import Modele.JeuModeleDJ;
 import Modele.JeuModeleDJRes;
 import Vue.JeuVueDJRes;
 
+/**
+ * Classe Contrôleur du jeu à deux joueurs en réseau
+ * 
+ * @author LETOURNEUR Léo
+ * @since 4.0
+ */
 public class JeuControleurDJRes extends JeuControleur {
     
+	/**
+	 * Constructeur
+	 * 
+	 */
 	public JeuControleurDJRes(JeuModeleDJRes p_model, JeuVueDJRes p_view) {
 		super(p_model, p_view);
 	}
 
+	/**
+	 * Gestion des évènements
+	 * 
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{

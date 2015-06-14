@@ -8,16 +8,30 @@ import Commun.VarCommun;
 import Modele.CaseModele;
 import Vue.CaseVue;
 
+/**
+ * Classe Contrôleur d'une case
+ * 
+ * @author COUTURIER Cyril
+ * @since 1.0
+ */
 public class CaseControleur implements MouseListener {
 
 	private CaseModele modele;
 	private CaseVue vue;
 	
+	/** 
+	* Constructeur
+	*
+	*/
 	public CaseControleur(CaseModele p_modele, CaseVue p_vue) {
 		setModele(p_modele);
 		setVue(p_vue);
 	}
 
+	/** 
+	* Déplacement d'une bombe si l'on clique dessus au premier tour.
+	*
+	*/
 	public void switchCaseBombe() {
 		System.out.println("Case bombe switchée");
 		modele.getModeleJeu().setPremierTour(false);
@@ -48,6 +62,10 @@ public class CaseControleur implements MouseListener {
 		modele.setNbBombeVoisin(nbBombe);
 	}
 	
+	/** 
+	* Gestion de la souris
+	*
+	*/
 	public void mouseClicked(MouseEvent e) {
 		if(modele.getModeleJeu().isFini())
 			return;

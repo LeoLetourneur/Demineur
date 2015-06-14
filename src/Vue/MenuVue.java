@@ -23,6 +23,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
+import Commun.VarCommun;
 import Controleur.JeuControleur;
 import Controleur.JeuControleurDJRes;
 import Modele.CaseModele;
@@ -425,19 +426,19 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		
 		//Changement du niveau de la partie
 		if(((JSlider)e.getSource()).getValue() == 1) {
-			spinnerLigne.setValue(9);
-			spinnerColonne.setValue(9);
-			spinnerBombe.setValue(10);
+			spinnerLigne.setValue(VarCommun.nombreLCB.DEBUTANT.nbLigne);
+			spinnerColonne.setValue(VarCommun.nombreLCB.DEBUTANT.nbColonne);
+			spinnerBombe.setValue(VarCommun.nombreLCB.DEBUTANT.nbBombe);
 		}
 		else if(((JSlider)e.getSource()).getValue() == 2) {
-			spinnerLigne.setValue(16);
-			spinnerColonne.setValue(16);
-			spinnerBombe.setValue(40);
+			spinnerLigne.setValue(VarCommun.nombreLCB.INTERMEDIAIRE.nbLigne);
+			spinnerColonne.setValue(VarCommun.nombreLCB.INTERMEDIAIRE.nbColonne);
+			spinnerBombe.setValue(VarCommun.nombreLCB.INTERMEDIAIRE.nbBombe);
 		}
 		else if(((JSlider)e.getSource()).getValue() == 3) {
-			spinnerLigne.setValue(16);
-			spinnerColonne.setValue(30);
-			spinnerBombe.setValue(99);
+			spinnerLigne.setValue(VarCommun.nombreLCB.DIFFICILE.nbLigne);
+			spinnerColonne.setValue(VarCommun.nombreLCB.DIFFICILE.nbColonne);
+			spinnerBombe.setValue(VarCommun.nombreLCB.DIFFICILE.nbBombe);
 		}
 	}
 
