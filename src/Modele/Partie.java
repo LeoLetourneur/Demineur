@@ -65,7 +65,7 @@ public class Partie {
 			for (int event = parser.next(); event != XMLStreamConstants.END_DOCUMENT; event = parser
 					.next()) {
 				// traitement selon l'evenement
-				System.out.println(objetCourant);
+				
 				switch (event) {
 				case XMLStreamConstants.START_ELEMENT:
 					if (parser.getLocalName().equals("Partie")) {
@@ -142,7 +142,6 @@ public class Partie {
 			writer.writeEndElement();
 			writer.writeEndElement();
 			for (int i = 0; i < listePartie.size(); i++) {
-				System.out.println("test");
 				writer.writeStartElement("Partie");
 				writer.writeStartElement("Date");
 				writer.writeCharacters(listePartie.get(i).getDate().toString());

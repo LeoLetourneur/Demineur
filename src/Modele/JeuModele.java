@@ -86,12 +86,12 @@ public class JeuModele extends Observable implements Serializable {
 		setEtat(VarCommun.etatJeu.DEBUT.value);
 		setNbCasesRetournees(0);
 		setFini(false);
+		setPremierTour(true);
+		setNbBombeRestante(0);
 		if(isDefiTemps())
 			setSecondes(getSecondesDefi());
 		else
 			setSecondes(0);
-		setPremierTour(true);
-		setNbBombeRestante(0);
 		
 		setSonBombe(new Son("sons/bombe.wav"));
 		setSonVide(new Son("sons/vide.wav"));

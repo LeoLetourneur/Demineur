@@ -60,6 +60,8 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	private JButton btnReseauServeur;
 	private JButton btnReseauClient;
 	private JButton btnCharger2JLocal;
+	private JButton btnScore;
+	private JButton btnScore2;
 	
 	private JSpinner spinnerLigne;
 	private JSpinner spinnerColonne;
@@ -78,6 +80,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	private JCheckBox cbSaveGameBefore;
 	private JCheckBox cbUseSoundsDJ;
 	private JCheckBox cbSaveBeforeDJ;
+	
 
 	/** Lancement du jeu.
     * 
@@ -138,7 +141,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		panelUnJoueur.setLayout(null);
 		
 		btn1Joueur = new JButton("Jouer");
-		btn1Joueur.setBounds(204, 135, 112, 43);
+		btn1Joueur.setBounds(228, 135, 105, 43);
 		btn1Joueur.addActionListener(this);
 		panelUnJoueur.add(btn1Joueur);
 		
@@ -167,7 +170,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		panelUnJoueur.add(spinnerTemps);
 		
 		btnCharger = new JButton("Charger");
-		btnCharger.setBounds(20, 135, 112, 43);
+		btnCharger.setBounds(117, 135, 105, 43);
 		btnCharger.addActionListener(this);
 		panelUnJoueur.add(btnCharger);
 		
@@ -178,6 +181,11 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		cbSaveGameBefore = new JCheckBox("Sauvegarder avant de quitter");
 		cbSaveGameBefore.setBounds(6, 102, 327, 23);
 		panelUnJoueur.add(cbSaveGameBefore);
+		
+		btnScore = new JButton("Scores");
+		btnScore.setBounds(6, 135, 105, 43);
+		btnScore.addActionListener(this);
+		panelUnJoueur.add(btnScore);
 		
 		JPanel panelDJ = new JPanel();
 		tabbedPane1Ou2.addTab("Deux joueurs", null, panelDJ, null);
@@ -192,12 +200,12 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		panelLocal.setLayout(null);
 		
 		btnLocal = new JButton("Jouer");
-		btnLocal.setBounds(188, 77, 112, 43);
+		btnLocal.setBounds(205, 77, 95, 43);
 		btnLocal.addActionListener(this);
 		panelLocal.add(btnLocal);
 		
 		btnCharger2JLocal = new JButton("Charger");
-		btnCharger2JLocal.setBounds(6, 77, 112, 43);
+		btnCharger2JLocal.setBounds(105, 77, 95, 43);
 		btnCharger2JLocal.addActionListener(this);
 		panelLocal.add(btnCharger2JLocal);
 		
@@ -208,6 +216,11 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		cbSaveBeforeDJ = new JCheckBox("Sauvegarder avant de quitter");
 		cbSaveBeforeDJ.setBounds(6, 30, 294, 35);
 		panelLocal.add(cbSaveBeforeDJ);
+		
+		btnScore2 = new JButton("Scores");
+		btnScore2.addActionListener(this);
+		btnScore2.setBounds(6, 77, 95, 43);
+		panelLocal.add(btnScore2);
 		
 		JPanel panelReseau = new JPanel();
 		tabbedPaneResLocal.addTab("Réseau", null, panelReseau, null);
@@ -335,7 +348,15 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 			return;
 		}
 		
-		if(e.getSource() == btnCharger) {
+		if(e.getSource() == btnScore || e.getSource() == btnScore2) {
+			ScoreVue sv = new ScoreVue();
+			if(e.getSource() == btnScore)
+				sv.tabbedPane.setSelectedIndex(0);
+			else
+				sv.tabbedPane.setSelectedIndex(1);
+			sv.setVisible(true);
+		}
+		else if(e.getSource() == btnCharger) {
 		    JeuModele model = JeuModele.charger();
 			JeuVue view = new JeuVue(model);
 			new JeuControleur(model, view);
