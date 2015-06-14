@@ -42,8 +42,8 @@ public class CaseControleurDJRes extends CaseControleurDJ {
 			
 			getModele().setEtat(VarCommun.etatCase.DISCOVER.value);
 			if(getModele().getValeur() == VarCommun.typeCase.BOMB.value) {
-				((JeuModeleDJRes)getModele().getModeleJeu()).incrementerScore();
 				((JeuModeleDJRes)getModele().getModeleJeu()).envoyerCase(getModele().getIndex());
+				((JeuModeleDJRes)getModele().getModeleJeu()).incrementerScore();
 			}
 			else {
 				if(getModele().getNbBombeVoisin() == 0)
