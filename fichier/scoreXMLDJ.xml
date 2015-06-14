@@ -4,29 +4,16 @@
   <void method="add">
    <object class="Modele.PartieDJ">
     <void property="bombes">
-     <int>5</int>
-    </void>
-    <void property="date">
-     <string>Sun Jun 14 23:53:45 CEST 2015</string>
-    </void>
-    <void property="scoreJ2">
-     <int>5</int>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="Modele.PartieDJ">
-    <void property="bombes">
      <int>10</int>
     </void>
     <void property="date">
-     <string>Sun Jun 14 23:48:49 CEST 2015</string>
+     <string>2015-06-15  00:16</string>
     </void>
     <void property="scoreJ1">
-     <int>4</int>
+     <int>5</int>
     </void>
     <void property="scoreJ2">
-     <int>6</int>
+     <int>5</int>
     </void>
    </object>
   </void>

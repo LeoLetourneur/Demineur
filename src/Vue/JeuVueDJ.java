@@ -1,7 +1,9 @@
 package Vue;
 
 import java.awt.Color;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Observable;
 
 import javax.swing.*;
@@ -94,7 +96,7 @@ public class JeuVueDJ extends JeuVue {
 					JOptionPane.showMessageDialog(null, "Le joueur 2 gagne");
 				else
 					JOptionPane.showMessageDialog(null, "Egalité");
-				PartieDJ partie = new PartieDJ(((JeuModeleDJ)modele).getJoueur1().getScore(),((JeuModeleDJ)modele).getJoueur2().getScore(),modele.getNbBombe(),new Date().toString());
+				PartieDJ partie = new PartieDJ(((JeuModeleDJ)modele).getJoueur1().getScore(),((JeuModeleDJ)modele).getJoueur2().getScore(),modele.getNbBombe(),new SimpleDateFormat("yyyy-MM-dd  HH:mm",Locale.FRANCE).format(new Date()).toString());
 				PartieDJ.ecritureXML(partie, "fichier/scoreXMLDJ.xml");
 			}
 		}

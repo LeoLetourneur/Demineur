@@ -4,8 +4,10 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
@@ -126,7 +128,7 @@ public class Partie {
 			writer.writeStartElement("Parties");
 			writer.writeStartElement("Partie");
 			writer.writeStartElement("Date");
-			writer.writeCharacters(new Date().toString());
+			writer.writeCharacters(new SimpleDateFormat("yyyy-MM-dd  HH:mm",Locale.FRANCE).format(new Date()).toString());
 			writer.writeEndElement();
 			writer.writeStartElement("Colonnes");
 			writer.writeCharacters(Integer.toString(model.getNbColonne()));

@@ -51,6 +51,7 @@ public class PartieDJ {
 	* Lecture des scores en XML
 	*
 	*/
+	@SuppressWarnings("unchecked")
 	public static ArrayList<PartieDJ> lectureXML(String nomFichier) {
 
 		ArrayList<PartieDJ> listePartie = new ArrayList<PartieDJ>();
