@@ -39,6 +39,7 @@ public class JeuModele extends Observable implements Serializable {
 	private boolean allowQuestion;
 	private boolean allowTime;
 	private boolean defiTemps;
+	private int secondesDefi;
 	private boolean saveBeforeQuit;
 	private boolean sauvegarde;
 	private boolean allowSounds;
@@ -68,6 +69,7 @@ public class JeuModele extends Observable implements Serializable {
 		setSaveBeforeQuit(false);
 		setAllowSounds(false);
 		setDefiTemps(false);
+		setSecondesDefi(0);
 		setAllowQuestion(true);
 		setAllowTime(true);
 		setNbColonne(nbColonne);
@@ -84,7 +86,10 @@ public class JeuModele extends Observable implements Serializable {
 		setEtat(VarCommun.etatJeu.DEBUT.value);
 		setNbCasesRetournees(0);
 		setFini(false);
-		setSecondes(0);
+		if(isDefiTemps())
+			setSecondes(getSecondesDefi());
+		else
+			setSecondes(0);
 		setPremierTour(true);
 		setNbBombeRestante(0);
 		
@@ -406,5 +411,13 @@ public class JeuModele extends Observable implements Serializable {
 
 	public void setSonWin(Son sonWin) {
 		this.sonWin = sonWin;
+	}
+
+	public int getSecondesDefi() {
+		return secondesDefi;
+	}
+
+	public void setSecondesDefi(int secondesDefi) {
+		this.secondesDefi = secondesDefi;
 	}
 }

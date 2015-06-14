@@ -363,6 +363,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		    JeuModele model = new JeuModele(lignes, colonnes, bombes);
 		    model.construireCases();
 		    if(cbDefiTemps.isSelected()) {
+		    	model.setSecondesDefi((Integer) spinnerTemps.getValue());
 		    	model.setSecondes((Integer) spinnerTemps.getValue());
 		    	model.setDefiTemps(true);
 		    }
