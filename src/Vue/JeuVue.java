@@ -257,6 +257,8 @@ public class JeuVue extends JFrame implements Observer {
 				modele.setFini(true);
 				modele.getTimer().stop();
 				iconeMilieu.setIcon(iconGagne);
+				if(modele.isDefiTemps())
+					modele.setSecondes(modele.getSecondesDefi()-modele.getSecondes());
 				if(modele.isSauvegarde())
 					modele.sauvegarde();
 				Partie.ecritureXML(modele,"fichier/scoreXML.xml");
