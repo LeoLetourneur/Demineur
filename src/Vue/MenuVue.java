@@ -360,6 +360,15 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		    JeuModele model = JeuModele.charger();
 		    model.loadIcon();
 		    model.loadSounds();
+		    if(cbDefiTemps.isSelected()) {
+		    	model.setSecondesDefi((Integer) spinnerTemps.getValue());
+		    	model.setSecondes((Integer) spinnerTemps.getValue());
+		    	model.setDefiTemps(true);
+		    }
+		    model.setAllowQuestion(cbUseInterrogation.isSelected());
+		    model.setAllowTime(cbUseTemps.isSelected());
+		    model.setAllowSounds(cbUseSounds.isSelected());
+		    model.setSaveBeforeQuit(cbSaveGameBefore.isSelected());
 			JeuVue view = new JeuVue(model);
 			new JeuControleur(model, view);
 			for(CaseModele caseM : model.getListeCase())
@@ -375,6 +384,8 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 			 	JeuModeleDJ model = JeuModeleDJ.charger();
 			 	model.loadIcon();
 			 	model.loadSounds();
+			 	model.setAllowSounds(cbUseSoundsDJ.isSelected());
+			    model.setSaveBeforeQuit(cbSaveBeforeDJ.isSelected());
 				JeuVueDJ view = new JeuVueDJ(model);
 				new JeuControleur(model, view);
 				for(CaseModele caseM : model.getListeCase())
