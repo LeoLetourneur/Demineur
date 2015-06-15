@@ -19,7 +19,7 @@ import javax.swing.Timer;
 import Commun.VarCommun;
 
 /**
- * Classe Modèle du jeu.
+ * Classe Modï¿½le du jeu.
  * 
  * @author COUTURIER Cyril
  * @since 1.0
@@ -85,7 +85,7 @@ public class JeuModele extends Observable implements Serializable {
 	}
 	
 	/** 
-	* Chargement des icones en fonction du thème
+	* Chargement des icones en fonction du thï¿½me
 	*
 	*/
     public void loadIcon() {
@@ -127,7 +127,7 @@ public class JeuModele extends Observable implements Serializable {
 	}
 
 	/** 
-	* Construction de toutes les cases modèles.
+	* Construction de toutes les cases modï¿½les.
 	*
 	*/
 	public void construireCases() {
@@ -146,7 +146,7 @@ public class JeuModele extends Observable implements Serializable {
 	}
 	
 	/** 
-	* Répartir les bombes dans toutes les cases modèles au hasard.
+	* Rï¿½partir les bombes dans toutes les cases modï¿½les au hasard.
 	*
 	*/
 	public void repartirBombe(ArrayList<Integer> listeCaseVide) {
@@ -180,7 +180,7 @@ public class JeuModele extends Observable implements Serializable {
 	}
 	
 	/** 
-	* Retourner toutes les bombes lors d'une défaite.
+	* Retourner toutes les bombes lors d'une dï¿½faite.
 	*
 	*/
 	public void retournerBombes() {
@@ -210,11 +210,14 @@ public class JeuModele extends Observable implements Serializable {
 					}
 			}
 			
-		} catch (FileNotFoundException e) { System.out.println("Problème de fichier");
-		} catch (IOException e) { System.out.println("Problème de sérialisation");
+		} catch (FileNotFoundException e) { System.out.println("Problï¿½me de fichier");
+		} catch (IOException e) { System.out.println("Problï¿½me de sï¿½rialisation");
+		} catch (StackOverflowError e) { 
+			JOptionPane.showMessageDialog(null, "Grille trop grosse pour la sauvegarde");
+			return;
 		}
 		this.setSauvegarde(true);
-		JOptionPane.showMessageDialog(null, "Partie sauvegardée !");
+		JOptionPane.showMessageDialog(null, "Partie sauvegardï¿½e !");
 	}
 	
 	/** 
@@ -236,9 +239,9 @@ public class JeuModele extends Observable implements Serializable {
 				}
 			}
 		} catch(IOException ioe) {
-			System.out.println("Problème de sérialisation");
+			System.out.println("Problï¿½me de sï¿½rialisation");
 		} catch(ClassNotFoundException cnfe) {
-			System.out.println("Problème de classe");
+			System.out.println("Problï¿½me de classe");
 		}
 		partieCharger.setSauvegarde(true);
 		return partieCharger;
