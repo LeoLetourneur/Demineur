@@ -82,6 +82,7 @@ public class JeuVue extends JFrame implements Observer {
         
         setTitle("Démineur");
         setSize(900, 600);
+        setMinimumSize(new Dimension(900,400));
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -139,7 +140,6 @@ public class JeuVue extends JFrame implements Observer {
     	labelDroit.setHorizontalAlignment(SwingConstants.CENTER);
         
         panelTexte = new JPanel (new GridLayout(1, 3));
-        panelTexte.setBounds(6, 10, 888, 50);
         
         Component horizontalStrut_2 = Box.createHorizontalStrut(20);
         panelTexte.add(horizontalStrut_2);
@@ -212,9 +212,10 @@ public class JeuVue extends JFrame implements Observer {
 		if(ligne > 16) ligne = 16;
 		
 		setSize(col*28 + 100, ligne*28 + 120);
-		panelTexte.setBounds(5, 5, getSize().width-10, 50);
+		System.out.println(getSize()+"");
+		panelTexte.setBounds(0, 5, getSize().width, 50);
 		panelCases.setPreferredSize(new Dimension(28 * modele.getNbColonne(), 28 * modele.getNbLigne()));
-		scroller.setBounds((this.getWidth()/2-14 * col), 60, 28 * col+4, 28 * ligne+5);
+		scroller.setBounds((this.getWidth()/2-14 * col), (this.getHeight()/2-14 * ligne), 28 * col+4, 28 * ligne+5);
 		
 	}
 
