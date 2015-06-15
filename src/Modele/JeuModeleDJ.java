@@ -1,5 +1,6 @@
 package Modele;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,7 +17,7 @@ import javax.swing.JOptionPane;
 import Commun.VarCommun;
 
 /**
- * Classe Modèle du jeu pour deux joueurs
+ * Classe Modï¿½le du jeu pour deux joueurs
  * 
  * @author COUTURIER Cyril
  * @since 3.0
@@ -117,11 +118,16 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 					}
 			}
 			
-		} catch (FileNotFoundException e) { System.out.println("Problème de fichier");
-		} catch (IOException e) { System.out.println("Problème de sérialisation");
+		} catch (FileNotFoundException e) { System.out.println("Problï¿½me de fichier");
+		} catch (IOException e) { System.out.println("Problï¿½me de sï¿½rialisation");
+		} catch (StackOverflowError e) { 
+			JOptionPane.showMessageDialog(null, "Grille trop grosse pour la sauvegarde");
+			File file = new File("fichier/partieDJ.serial"); 
+			file.delete(); 
+			return;
 		}
 		this.setSauvegarde(true);
-		JOptionPane.showMessageDialog(null, "Partie sauvegardée !");
+		JOptionPane.showMessageDialog(null, "Partie sauvegardï¿½e !");
 	}
 	
 	/** 
@@ -142,10 +148,15 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 					objetStreamPartie.close();
 				}
 			}
+		} catch (FileNotFoundException e) { 
+			JOptionPane.showMessageDialog(null, "Aucune partie sauvegardï¿½e");
+			return null;
 		} catch(IOException ioe) {
-			System.out.println("Problème de sérialisation");
+			System.out.println("Problï¿½me de sï¿½rialisation");
+			return null;
 		} catch(ClassNotFoundException cnfe) {
-			System.out.println("Problème de classe");
+			System.out.println("Problï¿½me de classe");
+			return null;
 		}
 		partieCharger.setSauvegarde(true);
 		return partieCharger;

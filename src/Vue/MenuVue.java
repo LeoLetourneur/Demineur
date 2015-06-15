@@ -40,9 +40,9 @@ import javax.swing.JSlider;
 
 /**
  * Classe de lancement du jeu.
- * Classe représentant la vue et le controleur du Menu.
+ * Classe reprï¿½sentant la vue et le controleur du Menu.
  * 
- * @author LETOURNEUR Léo
+ * @author LETOURNEUR Lï¿½o
  * @since 3.0
  */
 public class MenuVue extends JFrame implements ActionListener, ChangeListener {
@@ -85,13 +85,13 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	/** Lancement du jeu.
     * 
     * @param args
-    *            Paramêtres de la fonction main.
+    *            Paramï¿½tres de la fonction main.
     */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					System.out.println("Démineur par Léo Letourneur et Cyril Couturier");
+					System.out.println("Dï¿½mineur par Lï¿½o Letourneur et Cyril Couturier");
 					MenuVue frame = new MenuVue();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -156,7 +156,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		cbUseInterrogation.setBounds(6, 6, 327, 23);
 		panelUnJoueur.add(cbUseInterrogation);
 		
-		cbDefiTemps = new JCheckBox("Défi temps (secondes)");
+		cbDefiTemps = new JCheckBox("Dï¿½fi temps (secondes)");
 		cbDefiTemps.setBounds(6, 54, 178, 23);
 		cbDefiTemps.addActionListener(this);
 		panelUnJoueur.add(cbDefiTemps);
@@ -223,7 +223,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		panelLocal.add(btnScore2);
 		
 		JPanel panelReseau = new JPanel();
-		tabbedPaneResLocal.addTab("Réseau", null, panelReseau, null);
+		tabbedPaneResLocal.addTab("Rï¿½seau", null, panelReseau, null);
 		tabbedPaneResLocal.addChangeListener(this);
 		panelReseau.setLayout(null);
 		
@@ -256,7 +256,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		
 		String monAdresse = "127.0.0.1";
 		try { monAdresse = InetAddress.getLocalHost().getHostAddress();
-		} catch (UnknownHostException e) { System.out.println("Host non trouvé"); }
+		} catch (UnknownHostException e) { System.out.println("Host non trouvï¿½"); }
 		
 		txtAdresseClient = new JTextField(monAdresse);
 		txtAdresseClient.setColumns(10);
@@ -328,7 +328,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		//Vérification des checkbox useTemps et DefiTemps qui sont liés
+		//Vï¿½rification des checkbox useTemps et DefiTemps qui sont liï¿½s
 		if(e.getSource() == cbUseTemps) {
 			if(cbDefiTemps.isSelected())
 				cbUseTemps.setSelected(true);
@@ -339,7 +339,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 				cbUseTemps.setSelected(true);
 		}
 
-		//Vérification du nombre de bombes
+		//Vï¿½rification du nombre de bombes
 		int lignes = (Integer) spinnerLigne.getValue();
 		int colonnes = (Integer) spinnerColonne.getValue();
 		int bombes = (Integer) spinnerBombe.getValue();
@@ -358,6 +358,8 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		}
 		else if(e.getSource() == btnCharger) {
 		    JeuModele model = JeuModele.charger();
+		    if(model == null)
+		    	return;
 		    model.loadIcon();
 		    model.loadSounds();
 		    if(cbDefiTemps.isSelected()) {
@@ -381,19 +383,21 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 				model.getTimer().start();
 		}
 		else if(e.getSource() == btnCharger2JLocal) {
-			 	JeuModeleDJ model = JeuModeleDJ.charger();
-			 	model.loadIcon();
-			 	model.loadSounds();
-			 	model.setAllowSounds(cbUseSoundsDJ.isSelected());
-			    model.setSaveBeforeQuit(cbSaveBeforeDJ.isSelected());
-				JeuVueDJ view = new JeuVueDJ(model);
-				new JeuControleur(model, view);
-				for(CaseModele caseM : model.getListeCase())
-				{
-					caseM.setModeleJeu(model);
-					caseM.setEtat(caseM.getEtat());
-				}	
-				view.setVisible(true);
+		 	JeuModeleDJ model = JeuModeleDJ.charger();
+		 	if(model == null)
+		    	return;
+		 	model.loadIcon();
+		 	model.loadSounds();
+		 	model.setAllowSounds(cbUseSoundsDJ.isSelected());
+		    model.setSaveBeforeQuit(cbSaveBeforeDJ.isSelected());
+			JeuVueDJ view = new JeuVueDJ(model);
+			new JeuControleur(model, view);
+			for(CaseModele caseM : model.getListeCase())
+			{
+				caseM.setModeleJeu(model);
+				caseM.setEtat(caseM.getEtat());
+			}	
+			view.setVisible(true);
 		}
 		else if(e.getSource() == btn1Joueur) {
 		    JeuModele model = new JeuModele(lignes, colonnes, bombes);
@@ -463,7 +467,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		
-		//Cache les paramêtres si on clique sur l'onglet client
+		//Cache les paramï¿½tres si on clique sur l'onglet client
 		if(e.getSource() == tabbedPaneReseauClient) {
 			panelNiveau.setVisible(((JTabbedPane)tabbedPaneReseauClient).getSelectedIndex() == 0);
 			return;

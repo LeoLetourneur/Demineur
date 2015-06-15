@@ -1,5 +1,6 @@
 package Modele;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -214,6 +215,8 @@ public class JeuModele extends Observable implements Serializable {
 		} catch (IOException e) { System.out.println("Probl�me de s�rialisation");
 		} catch (StackOverflowError e) { 
 			JOptionPane.showMessageDialog(null, "Grille trop grosse pour la sauvegarde");
+			File file = new File("fichier/partie.serial"); 
+			file.delete(); 
 			return;
 		}
 		this.setSauvegarde(true);
@@ -238,10 +241,15 @@ public class JeuModele extends Observable implements Serializable {
 					objetStreamPartie.close();
 				}
 			}
+		} catch (FileNotFoundException e) { 
+			JOptionPane.showMessageDialog(null, "Aucune partie sauvegard�e");
+			return null;
 		} catch(IOException ioe) {
 			System.out.println("Probl�me de s�rialisation");
+			return null;
 		} catch(ClassNotFoundException cnfe) {
 			System.out.println("Probl�me de classe");
+			return null;
 		}
 		partieCharger.setSauvegarde(true);
 		return partieCharger;
