@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.8.0_05" class="java.beans.XMLDecoder">
+<java version="1.7.0_71" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="Modele.PartieDJ">
+    <void property="bombes">
+     <int>5</int>
+    </void>
+    <void property="date">
+     <string>2015-06-15  16:32</string>
+    </void>
+    <void property="scoreJ1">
+     <int>3</int>
+    </void>
+    <void property="scoreJ2">
+     <int>2</int>
+    </void>
+   </object>
+  </void>
   <void method="add">
    <object class="Modele.PartieDJ">
     <void property="bombes">

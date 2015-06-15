@@ -1,6 +1,7 @@
 package Vue;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -107,7 +108,6 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	*/
 	public MenuVue() {
 		setTitle("Menu");
-		
         setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(644, 391);
@@ -332,21 +332,25 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		if(e.getSource() == cbUseTemps) {
 			if(cbDefiTemps.isSelected())
 				cbUseTemps.setSelected(true);
+			return;
 		}
 		if(e.getSource() == cbDefiTemps) {
 			spinnerTemps.setEnabled(cbDefiTemps.isSelected());
 			if(cbDefiTemps.isSelected())
 				cbUseTemps.setSelected(true);
+			return;
 		}
 
 		//V�rification du nombre de bombes
 		int lignes = (Integer) spinnerLigne.getValue();
 		int colonnes = (Integer) spinnerColonne.getValue();
 		int bombes = (Integer) spinnerBombe.getValue();
-		if(lignes*colonnes < bombes) {
+		if(lignes*colonnes-1 < bombes) {
 			spinnerBombe.setBorder(BorderFactory.createLineBorder(Color.red));
 			return;
 		}
+		else
+			spinnerBombe.setBorder(null);
 		
 		if(e.getSource() == btnScore || e.getSource() == btnScore2) {
 			ScoreVue sv = new ScoreVue();

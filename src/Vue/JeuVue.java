@@ -14,7 +14,9 @@ import Modele.CaseModele;
 import Modele.JeuModele;
 import Modele.JeuModeleDJ;
 
-import java.awt.Component;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 /**
  * Classe Vue du jeu.
@@ -81,7 +83,7 @@ public class JeuVue extends JFrame implements Observer {
         
         setTitle("Démineur");
         setSize(900, 600);
-        setMinimumSize(new Dimension(900,400));
+        setMinimumSize(new Dimension(500,400));
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -131,30 +133,44 @@ public class JeuVue extends JFrame implements Observer {
     	mntmPacman = new JMenuItem("Pacman");
     	mntmPacman.setActionCommand("Pacman");
     	mnTheme.add(mntmPacman);
-    	labelGauche = new JLabel(modele.getNbBombeRestante()+"");
-    	labelGauche.setFont(font);
-    	labelGauche.setHorizontalAlignment(SwingConstants.CENTER);
-    	labelDroit = new JLabel(modele.getSecondes()+"");
-    	labelDroit.setFont(font);
-    	labelDroit.setHorizontalAlignment(SwingConstants.CENTER);
         
-        panelTexte = new JPanel (new GridLayout(1, 3));
+        panelTexte = new JPanel();
         
-        Component horizontalStrut_2 = Box.createHorizontalStrut(20);
-        panelTexte.add(horizontalStrut_2);
-        panelTexte.add(labelGauche);
-        Component horizontalStrut = Box.createHorizontalStrut(20);
-        panelTexte.add(horizontalStrut);
+        GridBagLayout gbl_panelTexte = new GridBagLayout();
+        gbl_panelTexte.columnWeights = new double[]{1.0, 0.0, 0.0, 1.0, 0.0};
+        gbl_panelTexte.rowHeights = new int[]{50, 0};
+        gbl_panelTexte.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+        panelTexte.setLayout(gbl_panelTexte);
+        labelGauche = new JLabel(modele.getNbBombeRestante()+"");
+        labelGauche.setFont(font);
+        labelGauche.setHorizontalAlignment(SwingConstants.CENTER);
+        GridBagConstraints gbc_labelGauche = new GridBagConstraints();
+        gbc_labelGauche.fill = GridBagConstraints.VERTICAL;
+        gbc_labelGauche.gridwidth = 2;
+        gbc_labelGauche.insets = new Insets(0, 0, 0, 5);
+        gbc_labelGauche.gridx = 0;
+        gbc_labelGauche.gridy = 0;
+        panelTexte.add(labelGauche, gbc_labelGauche);
         
         iconeMilieu = new JLabel();
         iconeMilieu.setIcon(iconTete);
         iconeMilieu.setHorizontalAlignment(SwingConstants.CENTER);
-        panelTexte.add(iconeMilieu);
-        Component horizontalStrut_1 = Box.createHorizontalStrut(20);
-        panelTexte.add(horizontalStrut_1);
-        panelTexte.add(labelDroit);
-        Component horizontalStrut_3 = Box.createHorizontalStrut(20);
-        panelTexte.add(horizontalStrut_3);
+        GridBagConstraints gbc_iconeMilieu = new GridBagConstraints();
+        gbc_iconeMilieu.fill = GridBagConstraints.BOTH;
+        gbc_iconeMilieu.insets = new Insets(0, 0, 0, 5);
+        gbc_iconeMilieu.gridx = 2;
+        gbc_iconeMilieu.gridy = 0;
+        panelTexte.add(iconeMilieu, gbc_iconeMilieu);
+        
+        labelDroit = new JLabel(modele.getSecondes()+"");
+        labelDroit.setFont(font);
+        labelDroit.setHorizontalAlignment(SwingConstants.CENTER);
+        GridBagConstraints gbc_labelDroit = new GridBagConstraints();
+        gbc_labelDroit.gridwidth = 2;
+        gbc_labelDroit.fill = GridBagConstraints.BOTH;
+        gbc_labelDroit.gridx = 3;
+        gbc_labelDroit.gridy = 0;
+        panelTexte.add(labelDroit, gbc_labelDroit);
         
         panelCases = new JPanel (new GridLayout(modele.getNbLigne(), modele.getNbColonne()));
         scroller = new JScrollPane(panelCases);
@@ -202,6 +218,10 @@ public class JeuVue extends JFrame implements Observer {
         resize();
 	}
 	
+	/** 
+	* Redimentionnement de la fenêtre en fonction du nombre de ligne et colonne
+	*
+	*/
 	private void resize() {
 		
 		int col = modele.getNbColonne();
