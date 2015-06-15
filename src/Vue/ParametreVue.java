@@ -129,8 +129,8 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 		JLabel lblNombreDeLignes = new JLabel("Nombre de lignes");
 		panelPerso.add(lblNombreDeLignes);
 		
-		SpinnerModel modelLigne = new SpinnerNumberModel(15, 3, 30, 1);
-		SpinnerModel modelColonne = new SpinnerNumberModel(15, 3, 30, 1);
+		SpinnerModel modelLigne = new SpinnerNumberModel(15, 3, 50, 1);
+		SpinnerModel modelColonne = new SpinnerNumberModel(15, 3, 50, 1);
 		SpinnerNumberModel modelBombe = new SpinnerNumberModel();
 		modelBombe.setValue(55);
 		modelBombe.setMinimum(2);

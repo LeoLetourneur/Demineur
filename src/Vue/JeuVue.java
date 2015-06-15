@@ -1,5 +1,6 @@
 ﻿package Vue;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.Observable;
@@ -28,6 +29,7 @@ public class JeuVue extends JFrame implements Observer {
 	protected JPanel container;
 	protected JPanel panelCases;
 	protected JPanel panelTexte;
+	JScrollPane scroller;
 	
 	protected JLabel labelGauche;
 	protected JLabel labelDroit;
@@ -156,10 +158,13 @@ public class JeuVue extends JFrame implements Observer {
         panelTexte.add(horizontalStrut_3);
         
         panelCases = new JPanel (new GridLayout(modele.getNbLigne(), modele.getNbColonne()));
+        scroller = new JScrollPane(panelCases);
+        scroller.setSize(modele.getNbColonne()*28+4, modele.getNbLigne()*28+5);
         
         container = new JPanel();
         container.setLayout(null);
-        container.add(panelCases);
+        //container.add(panelCases);
+        container.add(scroller);
         container.add(panelTexte);
         setContentPane(container);
         
@@ -189,14 +194,30 @@ public class JeuVue extends JFrame implements Observer {
 	{
 		getLabelDroit().setVisible((modele.isAllowTime() || modele instanceof JeuModeleDJ));
 		
-		container.remove(panelCases);
+		container.remove(scroller);
 		panelCases = new JPanel (new GridLayout(modele.getNbLigne(), modele.getNbColonne()));
-        panelCases.setBounds((this.getWidth()/2-14 * modele.getNbColonne()), (this.getHeight()/2-14 * modele.getNbLigne()), 28 * modele.getNbColonne(), 28 * modele.getNbLigne());
-        container.add(panelCases);
+		scroller = new JScrollPane(panelCases);
+        container.add(scroller);
         
         chargerIconeMilieu();
+        
+        resize();
 	}
 	
+	private void resize() {
+		
+		int col = modele.getNbColonne();
+		int ligne = modele.getNbLigne();
+		if(col > 30) col = 30;
+		if(ligne > 16) ligne = 16;
+		
+		setSize(col*28 + 100, ligne*28 + 120);
+		panelTexte.setBounds(5, 5, getSize().width-10, 50);
+		panelCases.setPreferredSize(new Dimension(28 * modele.getNbColonne(), 28 * modele.getNbLigne()));
+		scroller.setBounds((this.getWidth()/2-14 * col), 60, 28 * col+4, 28 * ligne+5);
+		
+	}
+
 	/** 
 	* Charger l'icone du milieu en fonction de l'état du jeu
 	*

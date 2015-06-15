@@ -123,8 +123,8 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		contentPane.add(panelNiveau);
 		panelNiveau.setLayout(null);
 		
-		SpinnerModel modelLigne = new SpinnerNumberModel(9, 3, 30, 1);
-		SpinnerModel modelColonne = new SpinnerNumberModel(9, 3, 30, 1);
+		SpinnerModel modelLigne = new SpinnerNumberModel(9, 3, 50, 1);
+		SpinnerModel modelColonne = new SpinnerNumberModel(9, 3, 50, 1);
 		SpinnerNumberModel modelBombe = new SpinnerNumberModel();
 		modelBombe.setValue(10);
 		modelBombe.setMinimum(2);
