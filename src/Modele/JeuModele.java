@@ -96,6 +96,16 @@ public class JeuModele extends Observable implements Serializable {
 		iconQuestion = new ImageIcon("sprite/"+getThemeJeu()+"/question.png");
 	}
     
+    /** 
+	* Chargement les sons
+	*
+	*/
+    public void loadSounds() {
+    	setSonBombe(new Son("sons/bombe.wav"));
+		setSonVide(new Son("sons/vide.wav"));
+		setSonWin(new Son("sons/win.wav"));
+	}
+    
 	/** 
 	* Initialisation des variables qui changent entre chaque partie.
 	*
@@ -112,9 +122,7 @@ public class JeuModele extends Observable implements Serializable {
 		else
 			setSecondes(0);
 		
-		setSonBombe(new Son("sons/bombe.wav"));
-		setSonVide(new Son("sons/vide.wav"));
-		setSonWin(new Son("sons/win.wav"));
+		loadSounds();
 		loadIcon();
 	}
 

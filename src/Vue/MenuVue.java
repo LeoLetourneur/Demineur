@@ -358,6 +358,8 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		}
 		else if(e.getSource() == btnCharger) {
 		    JeuModele model = JeuModele.charger();
+		    model.loadIcon();
+		    model.loadSounds();
 			JeuVue view = new JeuVue(model);
 			new JeuControleur(model, view);
 			for(CaseModele caseM : model.getListeCase())
@@ -371,6 +373,8 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		}
 		else if(e.getSource() == btnCharger2JLocal) {
 			 	JeuModeleDJ model = JeuModeleDJ.charger();
+			 	model.loadIcon();
+			 	model.loadSounds();
 				JeuVueDJ view = new JeuVueDJ(model);
 				new JeuControleur(model, view);
 				for(CaseModele caseM : model.getListeCase())
