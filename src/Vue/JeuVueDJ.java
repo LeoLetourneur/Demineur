@@ -1,9 +1,6 @@
 package Vue;
 
 import java.awt.Color;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Observable;
 
 import javax.swing.*;
@@ -12,12 +9,10 @@ import Commun.VarCommun;
 import Controleur.CaseControleurDJ;
 import Modele.CaseModele;
 import Modele.JeuModeleDJ;
-import Modele.PartieDJ;
-
 /**
  * Classe Vue du jeu pour deux joueurs.
  * 
- * @author LETOURNEUR LÃ©o
+ * @author LETOURNEUR Léo
  * @since 3.0
  */
 public class JeuVueDJ extends JeuVue {
@@ -59,7 +54,7 @@ public class JeuVueDJ extends JeuVue {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//Changement de thÃ¨me
+		//Changement de thème
 		if(arg != null && arg.equals("ChangeTheme")){
 			getModele().loadIcon();
 			loadIcons();
@@ -86,19 +81,13 @@ public class JeuVueDJ extends JeuVue {
 		if(!modele.isFini()) {
 			if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value) {
 				modele.setFini(true);
-				if(modele.isSauvegarde())
-					modele.sauvegarde();
 				iconeMilieu.setIcon(iconGagne);
-				if(modele.isAllowSounds())
-					modele.getSonWin().jouer();
 				if(((JeuModeleDJ)modele).getJoueur1().getScore() > ((JeuModeleDJ)modele).getJoueur2().getScore())
 					JOptionPane.showMessageDialog(null, "Le joueur 1 gagne");
 				else if(((JeuModeleDJ)modele).getJoueur1().getScore() < ((JeuModeleDJ)modele).getJoueur2().getScore())
 					JOptionPane.showMessageDialog(null, "Le joueur 2 gagne");
 				else
-					JOptionPane.showMessageDialog(null, "EgalitÃ©");
-				PartieDJ partie = new PartieDJ(((JeuModeleDJ)modele).getJoueur1().getScore(),((JeuModeleDJ)modele).getJoueur2().getScore(),modele.getNbBombe(),new SimpleDateFormat("yyyy-MM-dd  HH:mm",Locale.FRANCE).format(new Date()).toString());
-				PartieDJ.ecritureXML(partie, "fichier/scoreXMLDJ.xml");
+					JOptionPane.showMessageDialog(null, "Egalité");
 			}
 		}
 	}

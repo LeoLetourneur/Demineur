@@ -50,12 +50,12 @@ public class CaseVue extends JButton implements Observer {
 
 	public void update(Observable o, Object arg) {
 		
-		//RÃ©initialisation (Couvrir la case)
+		//Réinitialisation (Couvrir la case)
 		if(modele.getEtat() == VarCommun.etatCase.COVER.value) {
 			this.setIcon(modele.getModeleJeu().iconCase);
 			this.setText("");
 		} 
-		//DÃ©couvrir la case
+		//Découvrir la case
 		else if(modele.getEtat() == VarCommun.etatCase.DISCOVER.value) {
 			//Case vide
 			if(modele.getValeur() == VarCommun.typeCase.EMPTY.value) {

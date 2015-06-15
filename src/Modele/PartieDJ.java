@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 /**
- * ReprÃ©sentation d'une partie pour la sauvegarde XML des scores d'une partie 2 joueurs.
+ * Représentation d'une partie pour la sauvegarde XML des scores d'une partie 2 joueurs.
  * 
  * @author COUTURIER Cyril
  * @since 4.0

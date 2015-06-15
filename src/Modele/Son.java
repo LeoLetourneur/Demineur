@@ -32,14 +32,14 @@ public class Son implements LineListener {
 			audio = AudioSystem.getClip();
 			audio.addLineListener( this );
 			audio.open(audioInput);
-		} catch (UnsupportedAudioFileException e) { e.printStackTrace();
-		} catch (IOException e) { e.printStackTrace();
-		} catch (LineUnavailableException e) { e.printStackTrace(); }
+		} catch (UnsupportedAudioFileException e) { System.out.println("Problème de fichier son");
+		} catch (IOException e) { System.out.println("Problème de flux");
+		} catch (LineUnavailableException e) { System.out.println("Problème de fichier"); }
         
     }
     
     /** 
-	* MÃ©thode pour jouer le son
+	* Méthode pour jouer le son
 	*
 	*/
     public void jouer() {
@@ -51,7 +51,7 @@ public class Son implements LineListener {
     }
     
     /** 
-	* Reset du son lorsqu'il est terminÃ©
+	* Reset du son lorsqu'il est terminé
 	*
 	*/
 	@Override

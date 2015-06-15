@@ -14,7 +14,7 @@ import Vue.JeuVue;
 /**
  * Classe Contr√¥leur du jeu
  * 
- * @author LETOURNEUR L√©o
+ * @author LETOURNEUR LÈo
  * @since 2.0
  */
 public class JeuControleur implements ActionListener {
@@ -42,7 +42,7 @@ public class JeuControleur implements ActionListener {
 	}
 
 	/**
-	 * Gestion des √©v√®nements
+	 * Gestion des ÈvËnements
 	 * 
 	 */
 	@Override

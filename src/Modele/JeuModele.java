@@ -19,7 +19,7 @@ import javax.swing.Timer;
 import Commun.VarCommun;
 
 /**
- * Classe ModÃ¨le du jeu.
+ * Classe Modèle du jeu.
  * 
  * @author COUTURIER Cyril
  * @since 1.0
@@ -34,7 +34,7 @@ public class JeuModele extends Observable implements Serializable {
 	private int secondes;
 	private int nbBombeRestante;
 	protected int nbCasesRetournes;
-	private int etat;
+	protected int etat;
 	private VarCommun.themeJeu themeJeu;
 	private boolean premierTour;
 	private boolean fini;
@@ -85,7 +85,7 @@ public class JeuModele extends Observable implements Serializable {
 	}
 	
 	/** 
-	* Chargement des icones en fonction du thÃ¨me
+	* Chargement des icones en fonction du thème
 	*
 	*/
     public void loadIcon() {
@@ -127,7 +127,7 @@ public class JeuModele extends Observable implements Serializable {
 	}
 
 	/** 
-	* Construction de toutes les cases modÃ¨les.
+	* Construction de toutes les cases modèles.
 	*
 	*/
 	public void construireCases() {
@@ -146,7 +146,7 @@ public class JeuModele extends Observable implements Serializable {
 	}
 	
 	/** 
-	* RÃ©partir les bombes dans toutes les cases modÃ¨les au hasard.
+	* Répartir les bombes dans toutes les cases modèles au hasard.
 	*
 	*/
 	public void repartirBombe(ArrayList<Integer> listeCaseVide) {
@@ -180,7 +180,7 @@ public class JeuModele extends Observable implements Serializable {
 	}
 	
 	/** 
-	* Retourner toutes les bombes lors d'une dÃ©faite.
+	* Retourner toutes les bombes lors d'une défaite.
 	*
 	*/
 	public void retournerBombes() {
@@ -210,11 +210,11 @@ public class JeuModele extends Observable implements Serializable {
 					}
 			}
 			
-		} catch (FileNotFoundException e) { e.printStackTrace();
-		} catch (IOException e) { e.printStackTrace();
+		} catch (FileNotFoundException e) { System.out.println("Problème de fichier");
+		} catch (IOException e) { System.out.println("Problème de sérialisation");
 		}
 		this.setSauvegarde(true);
-		JOptionPane.showMessageDialog(null, "Partie sauvegardÃ©e !");
+		JOptionPane.showMessageDialog(null, "Partie sauvegardée !");
 	}
 	
 	/** 
@@ -236,9 +236,9 @@ public class JeuModele extends Observable implements Serializable {
 				}
 			}
 		} catch(IOException ioe) {
-			ioe.printStackTrace();
+			System.out.println("Problème de sérialisation");
 		} catch(ClassNotFoundException cnfe) {
-			cnfe.printStackTrace();
+			System.out.println("Problème de classe");
 		}
 		partieCharger.setSauvegarde(true);
 		return partieCharger;
@@ -305,8 +305,23 @@ public class JeuModele extends Observable implements Serializable {
 
 	public void setEtat(int etat) {
 		this.etat = etat;
-		if(etat == VarCommun.etatJeu.PERDU.value)
-			retournerBombes();
+		
+		if(!isFini()) {
+			if(getEtat() == VarCommun.etatJeu.PERDU.value) {
+				retournerBombes();
+				getTimer().stop();
+			}
+			else if(getEtat() == VarCommun.etatJeu.GAGNE.value) {
+				getTimer().stop();
+				if(isDefiTemps())
+					setSecondes(getSecondesDefi()-getSecondes());
+				if(isSauvegarde())
+					sauvegarde();
+				Partie.ecritureXML(this,"fichier/scoreXML.xml");
+				if(isAllowSounds())
+					getSonWin().jouer();
+			}
+		}
 		setChanged();
 		notifyObservers();
 	}

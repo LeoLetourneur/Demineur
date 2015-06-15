@@ -20,7 +20,7 @@ import java.awt.Insets;
 /**
  * Classe d'affichage des scores
  * 
- * @author LETOURNEUR LÃ©o
+ * @author LETOURNEUR Léo
  * @since 4.0
  */
 public class ScoreVue extends JDialog {
@@ -100,7 +100,7 @@ public class ScoreVue extends JDialog {
 		gbc_lblVersion.gridy = 0;
 		panel.add(lblVersion, gbc_lblVersion);
 		
-		JLabel lblLetourneurLo = new JLabel("LETOURNEUR LÃ©o");
+		JLabel lblLetourneurLo = new JLabel("LETOURNEUR Léo");
 		GridBagConstraints gbc_lblLetourneurLo = new GridBagConstraints();
 		gbc_lblLetourneurLo.anchor = GridBagConstraints.EAST;
 		gbc_lblLetourneurLo.fill = GridBagConstraints.VERTICAL;
@@ -109,7 +109,7 @@ public class ScoreVue extends JDialog {
 		gbc_lblLetourneurLo.gridy = 0;
 		panel.add(lblLetourneurLo, gbc_lblLetourneurLo);
 		
-		JLabel lblNewLabel = new JLabel("Polytech Lyon Â©");
+		JLabel lblNewLabel = new JLabel("Polytech Lyon ©");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.fill = GridBagConstraints.BOTH;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);

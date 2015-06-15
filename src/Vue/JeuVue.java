@@ -13,7 +13,6 @@ import Controleur.CaseControleur;
 import Modele.CaseModele;
 import Modele.JeuModele;
 import Modele.JeuModeleDJ;
-import Modele.Partie;
 
 import java.awt.Component;
 
@@ -214,7 +213,6 @@ public class JeuVue extends JFrame implements Observer {
 		panelTexte.setBounds(0, 5, getSize().width, 50);
 		panelCases.setPreferredSize(new Dimension(28 * modele.getNbColonne(), 28 * modele.getNbLigne()));
 		scroller.setBounds((this.getWidth()/2-14 * col), (this.getHeight()/2-14 * ligne), 28 * col+4, 28 * ligne+5);
-		
 	}
 
 	/** 
@@ -247,23 +245,12 @@ public class JeuVue extends JFrame implements Observer {
 		if(!modele.isFini()) {
 			if(modele.getEtat() == VarCommun.etatJeu.PERDU.value) {
 				modele.setFini(true);
-				modele.getTimer().stop();
 				iconeMilieu.setIcon(iconPerdu);
-				if(modele.isSauvegarde())
-					modele.sauvegarde();
 				JOptionPane.showMessageDialog(null, "Vous avez perdu");
 			}
 			else if(modele.getEtat() == VarCommun.etatJeu.GAGNE.value) {
 				modele.setFini(true);
-				modele.getTimer().stop();
 				iconeMilieu.setIcon(iconGagne);
-				if(modele.isDefiTemps())
-					modele.setSecondes(modele.getSecondesDefi()-modele.getSecondes());
-				if(modele.isSauvegarde())
-					modele.sauvegarde();
-				Partie.ecritureXML(modele,"fichier/scoreXML.xml");
-				if(modele.isAllowSounds())
-					modele.getSonWin().jouer();
 				JOptionPane.showMessageDialog(null, "Vous avez gagné");
 			}
 		}

@@ -3,9 +3,9 @@ package Modele;
 import java.io.Serializable;
 
 /**
- * Classe reprÃ©sentant un joueur
+ * Classe représentant un joueur
  * 
- * @author LETOURNEUR LÃ©o
+ * @author LETOURNEUR Léo
  * @since 3.0
  */
 public class Joueur implements Serializable {

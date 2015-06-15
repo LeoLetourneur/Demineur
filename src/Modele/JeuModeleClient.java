@@ -8,9 +8,9 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 /**
- * Classe ModÃ¨le du serveur
+ * Classe Modèle du serveur
  * 
- * @author LETOURNEUR LÃ©o
+ * @author LETOURNEUR Léo
  * @since 4.0
  */
 public class JeuModeleClient extends JeuModeleDJRes implements Serializable {
@@ -40,7 +40,7 @@ public class JeuModeleClient extends JeuModeleDJRes implements Serializable {
 			setFlux(new Socket(InetAddress.getByName(getIpServeur()), getPortServeur()));
 			setSortie(new ObjectOutputStream(getFlux().getOutputStream()));
 			setEntree(new ObjectInputStream(getFlux().getInputStream()));
-		} catch (IOException e) { e.printStackTrace(); }
+		} catch (IOException e) { System.out.println("Problème de connexion"); }
 	}
 	
 	public String getIpServeur() {

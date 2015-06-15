@@ -17,7 +17,7 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
 /**
- * ReprÃ©sentation d'une partie pour la sauvegarde XML des scores.
+ * Représentation d'une partie pour la sauvegarde XML des scores.
  * 
  * @author COUTURIER Cyril
  * @since 4.0
@@ -176,8 +176,8 @@ public class Partie {
 			writer.flush();
 			writer.close();
 
-		} catch (XMLStreamException e) { e.printStackTrace();
-		} catch (IOException e) { e.printStackTrace(); }
+		} catch (XMLStreamException e) { System.out.println("Problème XML");
+		} catch (IOException e) { System.out.println("Problème de sérialisation"); }
 	}
 	
 	public String getDate() {

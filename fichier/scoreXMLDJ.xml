@@ -7,6 +7,35 @@
      <int>10</int>
     </void>
     <void property="date">
+     <string>2015-06-15  11:34</string>
+    </void>
+    <void property="scoreJ1">
+     <int>10</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="Modele.PartieDJ">
+    <void property="bombes">
+     <int>10</int>
+    </void>
+    <void property="date">
+     <string>2015-06-15  11:32</string>
+    </void>
+    <void property="scoreJ1">
+     <int>2</int>
+    </void>
+    <void property="scoreJ2">
+     <int>8</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="Modele.PartieDJ">
+    <void property="bombes">
+     <int>10</int>
+    </void>
+    <void property="date">
      <string>2015-06-15  10:47</string>
     </void>
     <void property="scoreJ1">

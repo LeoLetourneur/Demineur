@@ -7,13 +7,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.swing.JOptionPane;
 
 import Commun.VarCommun;
 
 /**
- * Classe ModÃ¨le du jeu pour deux joueurs
+ * Classe Modèle du jeu pour deux joueurs
  * 
  * @author COUTURIER Cyril
  * @since 3.0
@@ -77,6 +80,24 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 		notifyObservers();
 	}
 	
+	public void setEtat(int etat) {
+		this.etat = etat;
+		
+		if(!isFini()) {
+			if(getEtat() == VarCommun.etatJeu.GAGNE.value) {
+				if(isSauvegarde())
+					sauvegarde();
+				if(isAllowSounds())
+					getSonWin().jouer();
+				PartieDJ partie = new PartieDJ(getJoueur1().getScore(),getJoueur2().getScore(),getNbBombe(),
+						new SimpleDateFormat("yyyy-MM-dd  HH:mm",Locale.FRANCE).format(new Date()).toString());
+				PartieDJ.ecritureXML(partie, "fichier/scoreXMLDJ.xml");
+			}
+		}
+		setChanged();
+		notifyObservers();
+	}
+	
 	/** 
 	* Sauvegarde de la partie deux joueurs dans un fichier binaire.
 	*
@@ -96,11 +117,11 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 					}
 			}
 			
-		} catch (FileNotFoundException e) { e.printStackTrace();
-		} catch (IOException e) { e.printStackTrace();
+		} catch (FileNotFoundException e) { System.out.println("Problème de fichier");
+		} catch (IOException e) { System.out.println("Problème de sérialisation");
 		}
 		this.setSauvegarde(true);
-		JOptionPane.showMessageDialog(null, "Partie sauvegardÃ©e !");
+		JOptionPane.showMessageDialog(null, "Partie sauvegardée !");
 	}
 	
 	/** 
@@ -122,9 +143,9 @@ public class JeuModeleDJ extends JeuModele implements Serializable {
 				}
 			}
 		} catch(IOException ioe) {
-			ioe.printStackTrace();
+			System.out.println("Problème de sérialisation");
 		} catch(ClassNotFoundException cnfe) {
-			cnfe.printStackTrace();
+			System.out.println("Problème de classe");
 		}
 		partieCharger.setSauvegarde(true);
 		return partieCharger;

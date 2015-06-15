@@ -9,9 +9,9 @@ import Modele.JeuModeleDJRes;
 import Vue.CaseVue;
 
 /**
- * Classe Contrôleur d'une case à deux joueurs en réseau
+ * Classe Contrôleur d'une case à deux joueurs en r�seau
  * 
- * @author LETOURNEUR Léo
+ * @author LETOURNEUR L�o
  * @since 4.0
  */
 public class CaseControleurDJRes extends CaseControleurDJ {
