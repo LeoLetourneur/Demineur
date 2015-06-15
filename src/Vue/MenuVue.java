@@ -448,6 +448,8 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		    model.connexion();
 		    model.recevoirPlateau();
 			model.recevoirNouvellesCases();
+			model.loadIcon();
+		    model.loadSounds();
 		    
 		    JeuVueDJRes view = new JeuVueDJRes(model);
 			new JeuControleurDJRes(model, view);
