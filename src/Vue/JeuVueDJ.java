@@ -61,6 +61,7 @@ public class JeuVueDJ extends JeuVue {
 	public void update(Observable o, Object arg) {
 		//Changement de thème
 		if(arg != null && arg.equals("ChangeTheme")){
+			getModele().loadIcon();
 			loadIcons();
 			chargerIconeMilieu();
 		}

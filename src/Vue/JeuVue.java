@@ -29,7 +29,7 @@ public class JeuVue extends JFrame implements Observer {
 	protected JPanel container;
 	protected JPanel panelCases;
 	protected JPanel panelTexte;
-	JScrollPane scroller;
+	protected JScrollPane scroller;
 	
 	protected JLabel labelGauche;
 	protected JLabel labelDroit;
@@ -163,7 +163,6 @@ public class JeuVue extends JFrame implements Observer {
         
         container = new JPanel();
         container.setLayout(null);
-        //container.add(panelCases);
         container.add(scroller);
         container.add(panelTexte);
         setContentPane(container);
@@ -212,7 +211,6 @@ public class JeuVue extends JFrame implements Observer {
 		if(ligne > 16) ligne = 16;
 		
 		setSize(col*28 + 100, ligne*28 + 120);
-		System.out.println(getSize()+"");
 		panelTexte.setBounds(0, 5, getSize().width, 50);
 		panelCases.setPreferredSize(new Dimension(28 * modele.getNbColonne(), 28 * modele.getNbLigne()));
 		scroller.setBounds((this.getWidth()/2-14 * col), (this.getHeight()/2-14 * ligne), 28 * col+4, 28 * ligne+5);
@@ -236,6 +234,7 @@ public class JeuVue extends JFrame implements Observer {
 	public void update(Observable o, Object arg) {
 		//Changement de thème
 		if(arg != null && arg.equals("ChangeTheme")){
+			modele.loadIcon();
 			loadIcons();
 			chargerIconeMilieu();
 		}

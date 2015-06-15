@@ -19,7 +19,6 @@ public class CaseModele extends Observable implements Serializable {
 	private int valeur;
 	private int etat;
 	private int nbBombeVoisin;
-	private boolean changeTheme;
 	private ArrayList<CaseModele> caseVoisines;
 	private JeuModele modeleJeu;
 
@@ -29,7 +28,6 @@ public class CaseModele extends Observable implements Serializable {
 	*/
 	public CaseModele(int p_numero, JeuModele p_modeleJeu) {
 		super();
-		setChangeTheme(false);
 		setIndex(p_numero);
 		setNbBombeVoisin(0);
 		setValeur(VarCommun.typeCase.EMPTY.value);
@@ -153,14 +151,6 @@ public class CaseModele extends Observable implements Serializable {
 	
 	public void addVoisin(CaseModele caseAAjouter){
 		this.caseVoisines.add(caseAAjouter);
-	}
-
-	public boolean isChangeTheme() {
-		return changeTheme;
-	}
-
-	public void setChangeTheme(boolean changeTheme) {
-		this.changeTheme = changeTheme;
 	}
 
 	public JeuModele getModeleJeu() {

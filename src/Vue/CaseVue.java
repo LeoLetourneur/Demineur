@@ -6,8 +6,6 @@ import java.awt.Insets;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
@@ -23,12 +21,6 @@ import Modele.CaseModele;
 public class CaseVue extends JButton implements Observer {
 	private static final long serialVersionUID = 3969339859887656340L;
 	
-	private Icon iconCase;
-	private Icon iconVide;
-	private Icon iconBombe;
-	private Icon iconDrapeau;
-	private Icon iconQuestion;
-	
 	private CaseModele modele;
 	
 	/** 
@@ -40,26 +32,12 @@ public class CaseVue extends JButton implements Observer {
 		setModele(p_modele);
 		modele.addObserver(this);
 		
-		loadIcon();
-		
 		this.setFont(new Font("Courier New", Font.BOLD, 14));
         this.setForeground(Color.white);
-		this.setIcon(iconCase);
-        this.setIconTextGap( - iconCase.getIconWidth() );
+		this.setIcon(modele.getModeleJeu().iconCase);
+        this.setIconTextGap( - modele.getModeleJeu().iconCase.getIconWidth() );
         this.setHorizontalTextPosition(SwingConstants.CENTER);
         this.setMargin(new Insets(0,0,0,0));
-	}
-	
-	/** 
-	* Chargement des icones en fonction du thème
-	*
-	*/
-    private void loadIcon() {
-		iconCase = new ImageIcon("sprite/"+modele.getModeleJeu().getThemeJeu()+"/case.png");
-		iconVide = new ImageIcon("sprite/"+modele.getModeleJeu().getThemeJeu()+"/vide.png");
-		iconBombe = new ImageIcon("sprite/"+modele.getModeleJeu().getThemeJeu()+"/bombe.png");
-		iconDrapeau = new ImageIcon("sprite/"+modele.getModeleJeu().getThemeJeu()+"/drapeau.png");
-		iconQuestion = new ImageIcon("sprite/"+modele.getModeleJeu().getThemeJeu()+"/question.png");
 	}
 
 	public CaseModele getModele() {
@@ -71,35 +49,30 @@ public class CaseVue extends JButton implements Observer {
 	}
 
 	public void update(Observable o, Object arg) {
-		//Changement de thème
-		if(modele.isChangeTheme()) {
-			loadIcon();
-			modele.setChangeTheme(false);
-		}
 		
 		//Réinitialisation (Couvrir la case)
 		if(modele.getEtat() == VarCommun.etatCase.COVER.value) {
-			this.setIcon(iconCase);
+			this.setIcon(modele.getModeleJeu().iconCase);
 			this.setText("");
 		} 
 		//Découvrir la case
 		else if(modele.getEtat() == VarCommun.etatCase.DISCOVER.value) {
 			//Case vide
 			if(modele.getValeur() == VarCommun.typeCase.EMPTY.value) {
-				this.setIcon(iconVide);
+				this.setIcon(modele.getModeleJeu().iconVide);
 				if(modele.getNbBombeVoisin() != 0)
 					this.setText(modele.getNbBombeVoisin()+"");
 			}
 			else //Case contenant une bombe
-				this.setIcon(iconBombe);
+				this.setIcon(modele.getModeleJeu().iconBombe);
 		}
 		//Poser un drapeau
 		else if(modele.getEtat() == VarCommun.etatCase.FLAG.value) {
-			this.setIcon(iconDrapeau);
+			this.setIcon(modele.getModeleJeu().iconDrapeau);
 		}
 		//Poser un point d'interrogation
 		else if(modele.getEtat() == VarCommun.etatCase.QUESTION.value) {
-			this.setIcon(iconQuestion);
+			this.setIcon(modele.getModeleJeu().iconQuestion);
 		}
 	}
 }

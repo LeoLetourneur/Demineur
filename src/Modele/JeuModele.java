@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -48,6 +50,11 @@ public class JeuModele extends Observable implements Serializable {
 	transient private Son sonBombe;
 	transient private Son sonVide;
 	transient private Son sonWin;
+	transient public Icon iconCase;
+	transient public Icon iconVide;
+	transient public Icon iconBombe;
+	transient public Icon iconDrapeau;
+	transient public Icon iconQuestion;
 	
 	/** 
 	* Constructeur vide
@@ -78,6 +85,18 @@ public class JeuModele extends Observable implements Serializable {
 	}
 	
 	/** 
+	* Chargement des icones en fonction du thème
+	*
+	*/
+    public void loadIcon() {
+		iconCase = new ImageIcon("sprite/"+getThemeJeu()+"/case.png");
+		iconVide = new ImageIcon("sprite/"+getThemeJeu()+"/vide.png");
+		iconBombe = new ImageIcon("sprite/"+getThemeJeu()+"/bombe.png");
+		iconDrapeau = new ImageIcon("sprite/"+getThemeJeu()+"/drapeau.png");
+		iconQuestion = new ImageIcon("sprite/"+getThemeJeu()+"/question.png");
+	}
+    
+	/** 
 	* Initialisation des variables qui changent entre chaque partie.
 	*
 	*/
@@ -96,6 +115,7 @@ public class JeuModele extends Observable implements Serializable {
 		setSonBombe(new Son("sons/bombe.wav"));
 		setSonVide(new Son("sons/vide.wav"));
 		setSonWin(new Son("sons/win.wav"));
+		loadIcon();
 	}
 
 	/** 
@@ -289,12 +309,12 @@ public class JeuModele extends Observable implements Serializable {
 
 	public void setThemeJeu(VarCommun.themeJeu themeJeu) {
 		this.themeJeu = themeJeu;
-		for(CaseModele caseMode : getListeCase()) {
-			caseMode.setChangeTheme(true);
-			caseMode.setEtat(caseMode.getEtat());
-		}
 		setChanged();
 		notifyObservers("ChangeTheme");
+		for(CaseModele caseMode : getListeCase()) {
+			caseMode.setEtat(caseMode.getEtat());
+		}
+		
 	}
 	
 	public int getNbCasesRetournees() {
