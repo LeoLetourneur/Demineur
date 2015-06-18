@@ -40,9 +40,9 @@ import javax.swing.JSlider;
 
 /**
  * Classe de lancement du jeu.
- * Classe repr�sentant la vue et le controleur du Menu.
+ * Classe représentant la vue et le controleur du Menu.
  * 
- * @author LETOURNEUR L�o
+ * @author LETOURNEUR Léo
  * @since 3.0
  */
 public class MenuVue extends JFrame implements ActionListener, ChangeListener {
@@ -81,26 +81,6 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	private JCheckBox cbUseSoundsDJ;
 	private JCheckBox cbSaveBeforeDJ;
 	
-
-	/** Lancement du jeu.
-    * 
-    * @param args
-    *            Param�tres de la fonction main.
-    */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					System.out.println("D�mineur par L�o Letourneur et Cyril Couturier");
-					MenuVue frame = new MenuVue();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					System.out.println("Lancement du jeu impossible");
-				}
-			}
-		});
-	}
-
 	/** 
 	* Constructeur du menu
 	*
@@ -155,7 +135,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		cbUseInterrogation.setBounds(6, 6, 327, 23);
 		panelUnJoueur.add(cbUseInterrogation);
 		
-		cbDefiTemps = new JCheckBox("D�fi temps (secondes)");
+		cbDefiTemps = new JCheckBox("Défi temps (secondes)");
 		cbDefiTemps.setBounds(6, 54, 178, 23);
 		cbDefiTemps.addActionListener(this);
 		panelUnJoueur.add(cbDefiTemps);
@@ -222,7 +202,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		panelLocal.add(btnScore2);
 		
 		JPanel panelReseau = new JPanel();
-		tabbedPaneResLocal.addTab("R�seau", null, panelReseau, null);
+		tabbedPaneResLocal.addTab("Réseau", null, panelReseau, null);
 		tabbedPaneResLocal.addChangeListener(this);
 		panelReseau.setLayout(null);
 		
@@ -255,7 +235,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 		
 		String monAdresse = "127.0.0.1";
 		try { monAdresse = InetAddress.getLocalHost().getHostAddress();
-		} catch (UnknownHostException e) { System.out.println("Host non trouv�"); }
+		} catch (UnknownHostException e) { System.out.println("Host non trouvé"); }
 		
 		txtAdresseClient = new JTextField(monAdresse);
 		txtAdresseClient.setColumns(10);
@@ -327,7 +307,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		//V�rification des checkbox useTemps et DefiTemps qui sont li�s
+		//Vérification des checkbox useTemps et DefiTemps qui sont liés
 		if(e.getSource() == cbUseTemps) {
 			if(cbDefiTemps.isSelected())
 				cbUseTemps.setSelected(true);
@@ -340,7 +320,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 			return;
 		}
 
-		//V�rification du nombre de bombes
+		//Vérification du nombre de bombes
 		int lignes = (Integer) spinnerLigne.getValue();
 		int colonnes = (Integer) spinnerColonne.getValue();
 		int bombes = (Integer) spinnerBombe.getValue();
@@ -470,7 +450,7 @@ public class MenuVue extends JFrame implements ActionListener, ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		
-		//Cache les param�tres si on clique sur l'onglet client
+		//Cache les paramétres si on clique sur l'onglet client
 		if(e.getSource() == tabbedPaneReseauClient) {
 			panelNiveau.setVisible(((JTabbedPane)tabbedPaneReseauClient).getSelectedIndex() == 0);
 			return;

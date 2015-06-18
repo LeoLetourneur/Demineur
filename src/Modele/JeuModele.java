@@ -20,7 +20,7 @@ import javax.swing.Timer;
 import Commun.VarCommun;
 
 /**
- * Classe Mod�le du jeu.
+ * Classe Modele du jeu.
  * 
  * @author COUTURIER Cyril
  * @since 1.0
@@ -86,7 +86,7 @@ public class JeuModele extends Observable implements Serializable {
 	}
 	
 	/** 
-	* Chargement des icones en fonction du th�me
+	* Chargement des icones en fonction du Thème
 	*
 	*/
     public void loadIcon() {
@@ -128,7 +128,7 @@ public class JeuModele extends Observable implements Serializable {
 	}
 
 	/** 
-	* Construction de toutes les cases mod�les.
+	* Construction de toutes les cases Modeles.
 	*
 	*/
 	public void construireCases() {
@@ -147,7 +147,7 @@ public class JeuModele extends Observable implements Serializable {
 	}
 	
 	/** 
-	* R�partir les bombes dans toutes les cases mod�les au hasard.
+	* Répartir les bombes dans toutes les cases Modeles au hasard.
 	*
 	*/
 	public void repartirBombe(ArrayList<Integer> listeCaseVide) {
@@ -181,7 +181,7 @@ public class JeuModele extends Observable implements Serializable {
 	}
 	
 	/** 
-	* Retourner toutes les bombes lors d'une d�faite.
+	* Retourner toutes les bombes lors d'une défaite.
 	*
 	*/
 	public void retournerBombes() {
@@ -211,8 +211,8 @@ public class JeuModele extends Observable implements Serializable {
 					}
 			}
 			
-		} catch (FileNotFoundException e) { System.out.println("Probl�me de fichier");
-		} catch (IOException e) { System.out.println("Probl�me de s�rialisation");
+		} catch (FileNotFoundException e) { System.out.println("Problème de fichier");
+		} catch (IOException e) { System.out.println("Problème de sérialisation");
 		} catch (StackOverflowError e) { 
 			JOptionPane.showMessageDialog(null, "Grille trop grosse pour la sauvegarde");
 			File file = new File("fichier/partie.serial"); 
@@ -220,7 +220,7 @@ public class JeuModele extends Observable implements Serializable {
 			return;
 		}
 		this.setSauvegarde(true);
-		JOptionPane.showMessageDialog(null, "Partie sauvegard�e !");
+		JOptionPane.showMessageDialog(null, "Partie sauvegardée !");
 	}
 	
 	/** 
@@ -242,13 +242,13 @@ public class JeuModele extends Observable implements Serializable {
 				}
 			}
 		} catch (FileNotFoundException e) { 
-			JOptionPane.showMessageDialog(null, "Aucune partie sauvegard�e");
+			JOptionPane.showMessageDialog(null, "Aucune partie sauvegardée");
 			return null;
 		} catch(IOException ioe) {
-			System.out.println("Probl�me de s�rialisation");
+			System.out.println("Problème de sérialisation");
 			return null;
 		} catch(ClassNotFoundException cnfe) {
-			System.out.println("Probl�me de classe");
+			System.out.println("Problème de classe");
 			return null;
 		}
 		partieCharger.setSauvegarde(true);

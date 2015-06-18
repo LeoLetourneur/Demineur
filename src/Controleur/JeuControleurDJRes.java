@@ -9,9 +9,9 @@ import Modele.JeuModeleDJRes;
 import Vue.JeuVueDJRes;
 
 /**
- * Classe Contr√¥leur du jeu √† deux joueurs en rÈseau
+ * Classe Contr√¥leur du jeu √† deux joueurs en r√©seau
  * 
- * @author LETOURNEUR LÈo
+ * @author LETOURNEUR L√©o
  * @since 4.0
  */
 public class JeuControleurDJRes extends JeuControleur {
@@ -25,7 +25,7 @@ public class JeuControleurDJRes extends JeuControleur {
 	}
 
 	/**
-	 * Gestion des ÈvËnements
+	 * Gestion des √©v√©nements
 	 * 
 	 */
 	@Override
@@ -53,7 +53,7 @@ public class JeuControleurDJRes extends JeuControleur {
 			((JeuModeleDJRes)modele).envoyerQuitter();
 			vue.dispose();
 		}
-		//Tous les thËmes
+		//Tous les Th√®mes
 		else if(e.getSource() instanceof JMenuItem)
 			modele.setThemeJeu(VarCommun.themeJeu.valueOf(((JMenuItem)e.getSource()).getActionCommand()));
 	}

@@ -7,6 +7,22 @@
      <int>10</int>
     </void>
     <void property="date">
+     <string>2015-06-18  11:29</string>
+    </void>
+    <void property="scoreJ1">
+     <int>2</int>
+    </void>
+    <void property="scoreJ2">
+     <int>8</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="Modele.PartieDJ">
+    <void property="bombes">
+     <int>10</int>
+    </void>
+    <void property="date">
      <string>2015-06-15  17:11</string>
     </void>
     <void property="scoreJ1">

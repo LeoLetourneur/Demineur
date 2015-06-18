@@ -7,9 +7,9 @@ import java.io.Serializable;
 import java.net.ServerSocket;
 
 /**
- * Classe Modèle du serveur
+ * Classe Modele du serveur
  * 
- * @author LETOURNEUR Léo
+ * @author LETOURNEUR LÃ©o
  * @since 4.0
  */
 public class JeuModeleServeur extends JeuModeleDJRes implements Serializable {
@@ -42,6 +42,6 @@ public class JeuModeleServeur extends JeuModeleDJRes implements Serializable {
 			setSortie(new ObjectOutputStream(getFlux().getOutputStream()));
 			setEntree(new ObjectInputStream(getFlux().getInputStream()));
 			
-		} catch (IOException e) { System.out.println("Problème de connexion"); }
+		} catch (IOException e) { System.out.println("ProblÃ¨me de connexion"); }
 	}
 }

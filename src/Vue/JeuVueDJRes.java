@@ -7,9 +7,9 @@ import Modele.CaseModele;
 import Modele.JeuModeleDJ;
 
 /**
- * Classe Vue du jeu pour deux joueurs en réseau.
+ * Classe Vue du jeu pour deux joueurs en rÃ©seau.
  * 
- * @author LETOURNEUR Léo
+ * @author LETOURNEUR LÃ©o
  * @since 4.0
  */
 public class JeuVueDJRes extends JeuVueDJ {
@@ -26,7 +26,7 @@ public class JeuVueDJRes extends JeuVueDJ {
     }
 	
 	/** 
-	* Chargement des cases pour deux joueurs en réseau
+	* Chargement des cases pour deux joueurs en rÃ©seau
 	*
 	*/
 	public void chargerCasesVueControleur() {

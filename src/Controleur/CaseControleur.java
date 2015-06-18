@@ -29,13 +29,13 @@ public class CaseControleur implements MouseListener {
 	}
 
 	/** 
-	* D�placement d'une bombe si l'on clique dessus au premier tour.
+	* Déplacement d'une bombe si l'on clique dessus au premier tour.
 	*
 	*/
 	public void switchCaseBombe() {
 		modele.getModeleJeu().setPremierTour(false);
 		
-		//Si il n'y à que des bombes à cot� de la case, pas de switch
+		//Si il n'y à que des bombes à coté de la case, pas de switch
 		if(modele.getNbBombeVoisin() == modele.getVoisins().size())
 			return;
 		

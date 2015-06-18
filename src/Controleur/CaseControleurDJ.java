@@ -10,7 +10,7 @@ import Vue.CaseVue;
 /**
  * Classe Contrôleur d'une case à deux joueurs
  * 
- * @author LETOURNEUR L�o
+ * @author LETOURNEUR Léo
  * @since 3.0
  */
 public class CaseControleurDJ extends CaseControleur {

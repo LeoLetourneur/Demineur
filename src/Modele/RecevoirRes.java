@@ -1,10 +1,10 @@
 package Modele;
 
 /**
- * Gestion de la réception de message TCP.
- * Extends Thread pour que la réception soit dissociée du reste.
+ * Gestion de la rÃ©ception de message TCP.
+ * Extends Thread pour que la rÃ©ception soit dissociÃ©e du reste.
  * 
- * @author LETOURNEUR Léo
+ * @author LETOURNEUR LÃ©o
  * @since 4.0
  */
 public class RecevoirRes extends Thread{
@@ -22,7 +22,7 @@ public class RecevoirRes extends Thread{
 	}
 	
 	/** 
-	* Lancement de la réception
+	* Lancement de la rÃ©ception
 	*
 	*/
 	public void run() {

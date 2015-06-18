@@ -32,10 +32,10 @@ import Modele.JeuModele;
 import Modele.JeuModeleDJ;
 
 /**
- * Classe de param�tres du jeu.
- * Classe repr�sentant la vue et le controleur du menu param�tres.
+ * Classe de paramétres du jeu.
+ * Classe représentant la vue et le controleur du menu paramétres.
  * 
- * @author LETOURNEUR L�o
+ * @author LETOURNEUR Léo
  * @since 2.0
  */
 public class ParametreVue extends JDialog implements ItemListener, ActionListener {
@@ -66,7 +66,7 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 	private boolean accept;
 
 	/** 
-	* Constructeur de la fen�tre
+	* Constructeur de la fenétre
 	*
 	*/
 	public ParametreVue(JeuModele p_modele) {
@@ -74,7 +74,7 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 		
 		setModal(true);
 		setAccept(false);
-		setTitle("Param�tres");
+		setTitle("Paramétres");
         setResizable(false);
 		setSize(460, 342);
 		setLocationRelativeTo(null);
@@ -99,13 +99,13 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 		
 		ButtonGroup groupe = new ButtonGroup();
 		
-		rdbtnDebutant = new JRadioButton("D�butant (9,9,10)");
+		rdbtnDebutant = new JRadioButton("Débutant (9,9,10)");
 		rdbtnDebutant.setSelected(true);
 		rdbtnDebutant.addItemListener(this);
 		btnLayout.add(rdbtnDebutant);
 		groupe.add(rdbtnDebutant);
 		
-		rdbtnIntermediaire = new JRadioButton("Interm�diaire (16,16,40)");
+		rdbtnIntermediaire = new JRadioButton("Intermédiaire (16,16,40)");
 		rdbtnIntermediaire.addItemListener(this);
 		btnLayout.add(rdbtnIntermediaire);
 		groupe.add(rdbtnIntermediaire);
@@ -115,7 +115,7 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 		btnLayout.add(rdbtnDifficile);
 		groupe.add(rdbtnDifficile);
 		
-		rdbtnPersonnalise = new JRadioButton("Personnalis�e");
+		rdbtnPersonnalise = new JRadioButton("Personnalisée");
 		rdbtnPersonnalise.addItemListener(this);
 		btnLayout.add(rdbtnPersonnalise);
 		groupe.add(rdbtnPersonnalise);
@@ -177,7 +177,7 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 		panelOptions.add(chckbxUseTime);
 		
 		JPanel panelTheme = new JPanel();
-		tabbedPane.addTab("Th�me", null, panelTheme, null);
+		tabbedPane.addTab("Thème", null, panelTheme, null);
 		panelTheme.setLayout(new GridLayout(5, 6, 0, 0));
 		
 		JLabel label = new JLabel("Mario");
@@ -252,7 +252,7 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 		
-		JLabel labelAttention = new JLabel("Attention votre partie sera r�initialis�e");
+		JLabel labelAttention = new JLabel("Attention votre partie sera réinitialisée");
 		buttonPane.add(labelAttention);
 		
 		okButton = new JButton("OK");
@@ -273,7 +273,7 @@ public class ParametreVue extends JDialog implements ItemListener, ActionListene
 	}
 	
 	/** 
-	* Rendre modifiable les param�tres de la grille en fonction du checkbox
+	* Rendre modifiable les paramétres de la grille en fonction du checkbox
 	*
 	*/
 	private void setEnabledPerso(boolean coche) {

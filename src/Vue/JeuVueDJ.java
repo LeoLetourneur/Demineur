@@ -12,7 +12,7 @@ import Modele.JeuModeleDJ;
 /**
  * Classe Vue du jeu pour deux joueurs.
  * 
- * @author LETOURNEUR Léo
+ * @author LETOURNEUR LÃ©o
  * @since 3.0
  */
 public class JeuVueDJ extends JeuVue {
@@ -54,7 +54,7 @@ public class JeuVueDJ extends JeuVue {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//Changement de thème
+		//Changement de ThÃ¨me
 		if(arg != null && arg.equals("ChangeTheme")){
 			getModele().loadIcon();
 			loadIcons();
@@ -87,7 +87,7 @@ public class JeuVueDJ extends JeuVue {
 				else if(((JeuModeleDJ)modele).getJoueur1().getScore() < ((JeuModeleDJ)modele).getJoueur2().getScore())
 					JOptionPane.showMessageDialog(null, "Le joueur 2 gagne");
 				else
-					JOptionPane.showMessageDialog(null, "Egalité");
+					JOptionPane.showMessageDialog(null, "EgalitÃ©");
 			}
 		}
 	}

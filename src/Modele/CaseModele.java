@@ -7,9 +7,9 @@ import java.util.Observable;
 import Commun.VarCommun;
 
 /**
- * Classe ModËle de la case.
+ * Classe Modele de la case.
  * 
- * @author LETOURNEUR LÈo
+ * @author LETOURNEUR L√©o
  * @since 1.0
  */
 public class CaseModele extends Observable implements Serializable {
@@ -37,7 +37,7 @@ public class CaseModele extends Observable implements Serializable {
 	}
 	
 	/** 
-	* MÈthode qui permet de se faire connaitre de ses voisins,
+	* M√©thode qui permet de se faire connaitre de ses voisins,
 	* et ainsi contruire les ArrayList de voisin de chaque case.
 	*
 	*/
@@ -135,7 +135,7 @@ public class CaseModele extends Observable implements Serializable {
 		setChanged();
 		notifyObservers();
 		
-		//Incrementer la variable avec laquelle on connait le nombre de cases vides dÈj√† retournÈes.
+		//Incrementer la variable avec laquelle on connait le nombre de cases vides d√©j√† retourn√©es.
 		if(etat!=etatPrecedant && etat == VarCommun.etatCase.DISCOVER.value && valeur == VarCommun.typeCase.EMPTY.value )
 			modeleJeu.setNbCasesRetournees(modeleJeu.getNbCasesRetournees()+1);
 	}

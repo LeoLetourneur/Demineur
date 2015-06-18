@@ -1,9 +1,9 @@
 package Commun;
 
 /**
- * Classe des constantes et énumarations communes.
+ * Classe des constantes et Ã©numarations communes.
  * 
- * @author LETOURNEUR Léo
+ * @author LETOURNEUR LÃ©o
  * @since 1.0
  */
 public class VarCommun {
@@ -13,7 +13,7 @@ public class VarCommun {
 	public static final String MSG_QUITTER = "GAME_MSG_QUIT";
 	
 	/**
-	 * Enumération représantant le type d'une case.
+	 * EnumÃ©ration reprÃ©santant le type d'une case.
 	 * 
 	 */
 	public static enum typeCase { 
@@ -25,7 +25,7 @@ public class VarCommun {
 	}
 	
 	/**
-	 * Enumération représantant l'état d'une case.
+	 * EnumÃ©ration reprÃ©santant l'Ã©tat d'une case.
 	 * 
 	 */
 	public static enum etatCase { 
@@ -37,7 +37,7 @@ public class VarCommun {
 	}
 	
 	/**
-	 * Enumération représantant l'état du jeu.
+	 * EnumÃ©ration reprÃ©santant l'Ã©tat du jeu.
 	 * 
 	 */
 	public static enum etatJeu { 
@@ -49,7 +49,7 @@ public class VarCommun {
 	}
 	
 	/**
-	 * Enumération représantant le nombre de ligne, colonne et bombe en fonction de la difficulté.
+	 * EnumÃ©ration reprÃ©santant le nombre de ligne, colonne et bombe en fonction de la difficultÃ©.
 	 * 
 	 */
 	public static enum nombreLCB { 
@@ -65,7 +65,7 @@ public class VarCommun {
 	}
 
 	/**
-	 * Enumération représantant les différents thèmes.
+	 * EnumÃ©ration reprÃ©santant les diffÃ©rents ThÃ¨mes.
 	 * 
 	 */
 	public static enum themeJeu { Mario, Caisse, Disco, Golf, Pacman }

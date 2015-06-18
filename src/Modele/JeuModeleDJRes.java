@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import Commun.VarCommun;
 
 /**
- * Classe Modèle du jeu pour deux joueurs en réseau
+ * Classe Modele du jeu pour deux joueurs en rÃ©seau
  * 
  * @author COUTURIER Cyril
  * @since 4.0
@@ -45,7 +45,7 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 	}
 	
 	/** 
-	* Définir quel joueur est celui qui utilise ce modèle.
+	* DÃ©finir quel joueur est celui qui utilise ce Modele.
 	*
 	*/
 	public void definirJoueurs() {
@@ -62,7 +62,7 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 	public abstract void connexion();
 	
 	/** 
-	* Gestion de la réception des messages
+	* Gestion de la rÃ©ception des messages
 	*
 	*/
 	public boolean recevoir()
@@ -92,7 +92,7 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 			}
 			return true;
 		} catch (ClassNotFoundException e) { System.out.println("Classe inconnue");
-		} catch (IOException e) { System.out.println("Vous avez été déconnecté"); }
+		} catch (IOException e) { System.out.println("Vous avez Ã©tÃ© dÃ©connectÃ©"); }
 		return false;
 	}
 	
@@ -102,7 +102,7 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 	*/
 	private void traiterString(String objet) {
 		if(objet.equals(VarCommun.MSG_NOUVELLE_PARTIE)) {
-			JOptionPane.showMessageDialog(null, "Votre adversaire a relancé une partie");
+			JOptionPane.showMessageDialog(null, "Votre adversaire a relancÃ© une partie");
 			initialiser();
 			setJoueurCourant(moi);
 			recevoirNouvellesCases();
@@ -112,12 +112,12 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 				getListeCase().get(i).setEtat(VarCommun.etatCase.DISCOVER.value);
 			setFini(true);
 			setEtat(VarCommun.etatJeu.GAGNE.value);
-			JOptionPane.showMessageDialog(null, "Votre adversaire a découvert le jeu et a donc perdu");
+			JOptionPane.showMessageDialog(null, "Votre adversaire a dÃ©couvert le jeu et a donc perdu");
 		}
 		else if(objet.equals(VarCommun.MSG_QUITTER)) {
 			this.deconnexion();
 			this.setFini(true);
-			JOptionPane.showMessageDialog(null, "Déconnexion de l'autre joueur");
+			JOptionPane.showMessageDialog(null, "DÃ©connexion de l'autre joueur");
 		}
 	}
 	
@@ -133,7 +133,7 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 			sortie.flush();
 		}
 		catch(IOException io)
-		{JOptionPane.showMessageDialog(null, "Vous avez été déconnecté");}
+		{JOptionPane.showMessageDialog(null, "Vous avez Ã©tÃ© dÃ©connectÃ©");}
 	}
 	
 	/** 
@@ -148,11 +148,11 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 			sortie.flush();
 		}
 		catch(IOException io)
-		{JOptionPane.showMessageDialog(null, "Vous avez été déconnecté");}
+		{JOptionPane.showMessageDialog(null, "Vous avez Ã©tÃ© dÃ©connectÃ©");}
 	}
 	
 	/** 
-	* Avertir l'autre joueur que l'on a découvert les cases.
+	* Avertir l'autre joueur que l'on a dÃ©couvert les cases.
 	*
 	*/
 	public void envoyerDecouvrir()
@@ -163,11 +163,11 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 			sortie.flush();
 		}
 		catch(IOException io)
-		{JOptionPane.showMessageDialog(null, "Vous avez été déconnecté");}
+		{JOptionPane.showMessageDialog(null, "Vous avez Ã©tÃ© dÃ©connectÃ©");}
 	}
 	
 	/** 
-	* Avertir l'autre joueur que je me suis déconnecté.
+	* Avertir l'autre joueur que je me suis dÃ©connectÃ©.
 	*
 	*/
 	public void envoyerQuitter()
@@ -181,7 +181,7 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 			}
 		}
 		catch(IOException io)
-		{JOptionPane.showMessageDialog(null, "Vous avez été déconnecté");}
+		{JOptionPane.showMessageDialog(null, "Vous avez Ã©tÃ© dÃ©connectÃ©");}
 	}
 	
 	/** 
@@ -193,7 +193,7 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 		try {
 			sortie.writeObject(tab);
 			sortie.flush();
-		} catch (IOException e) { System.out.println("Problème d'envoi de la grille"); }
+		} catch (IOException e) { System.out.println("ProblÃ¨me d'envoi de la grille"); }
 	}
 	
 	/** 
@@ -205,7 +205,7 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 			sortie.writeObject(((JeuModeleDJRes)this).getListeCase());
 			sortie.flush();
 			sortie.reset();
-		} catch (IOException e) { System.out.println("Problème d'envoi de la liste de cases"); }
+		} catch (IOException e) { System.out.println("ProblÃ¨me d'envoi de la liste de cases"); }
 	}
 	
 	/** 
@@ -225,8 +225,8 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 				caseM.sAjouterAuxVoisins(getListeCase());
 				getListeCase().add(caseM);
 			}
-		} catch (IOException e) { System.out.println("Problème de réception du plateau"); 
-		} catch (ClassNotFoundException e) { System.out.println("Problème de classe"); }
+		} catch (IOException e) { System.out.println("ProblÃ¨me de rÃ©ception du plateau"); 
+		} catch (ClassNotFoundException e) { System.out.println("ProblÃ¨me de classe"); }
 	}
 	
 	/** 
@@ -243,8 +243,8 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 				getListeCase().get(i).setValeur(al.get(i).getValeur());
 				getListeCase().get(i).setEtat(VarCommun.etatCase.COVER.value);
 			}
-		} catch (ClassNotFoundException e) { System.out.println("Problème de case");
-		} catch (IOException e) { System.out.println("Problème de réception des cases"); }
+		} catch (ClassNotFoundException e) { System.out.println("ProblÃ¨me de case");
+		} catch (IOException e) { System.out.println("ProblÃ¨me de rÃ©ception des cases"); }
 	}
 
 	/** 
@@ -257,7 +257,7 @@ public abstract class JeuModeleDJRes extends JeuModeleDJ implements Serializable
 			sortie.close();
 			entree.close();
 			flux.close(); 
-		} catch (IOException e) { System.out.println("Déconnexion"); }
+		} catch (IOException e) { System.out.println("DÃ©connexion"); }
 		   
 	}
 	
