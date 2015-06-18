@@ -100,6 +100,86 @@ public class CaseModele extends Observable implements Serializable {
 		}
 	}
 	
+	/** 
+	* Déplacement d'une bombe si l'on clique dessus au premier tour.
+	*
+	*/
+	public void switchCaseBombe() {
+		getModeleJeu().setPremierTour(false);
+		
+		//Si il n'y à que des bombes à coté de la case, pas de switch
+		if(getNbBombeVoisin() == getVoisins().size())
+			return;
+		
+		ArrayList<CaseModele> caseNonBombe = new ArrayList<CaseModele>();
+		for(CaseModele caseM : getVoisins()) {
+			if(caseM.getValeur() == VarCommun.typeCase.EMPTY.value)
+				caseNonBombe.add(caseM);
+		}
+		
+		int random;
+		random=(int)(Math.random()*caseNonBombe.size());
+		caseNonBombe.get(random).setValeur(VarCommun.typeCase.BOMB.value);
+		caseNonBombe.get(random).incrementerVoisin(1);
+		caseNonBombe.get(random).setNbBombeVoisin(0);
+		
+		int nbBombe = 0;
+		for(CaseModele caseM : getVoisins()) {
+			if(caseM.getValeur() == VarCommun.typeCase.BOMB.value)
+				nbBombe++;
+		}
+		setValeur(VarCommun.typeCase.EMPTY.value);
+		incrementerVoisin(-1);
+		setNbBombeVoisin(nbBombe);
+	}
+	
+	/** 
+	* Clique droit sur la case
+	*
+	*/
+	public void cliqueDroit() {
+		if(getEtat() == VarCommun.etatCase.COVER.value) {
+			setEtat(VarCommun.etatCase.FLAG.value);
+			getModeleJeu().setNbBombeRestante(getModeleJeu().getNbBombeRestante()-1);
+		}
+		else if(getEtat() == VarCommun.etatCase.FLAG.value) {
+			if(getModeleJeu().isAllowQuestion())
+				setEtat(VarCommun.etatCase.QUESTION.value);
+			else
+				setEtat(VarCommun.etatCase.COVER.value);
+			getModeleJeu().setNbBombeRestante(getModeleJeu().getNbBombeRestante()+1);
+		}
+		else if(getEtat() == VarCommun.etatCase.QUESTION.value)
+			setEtat(VarCommun.etatCase.COVER.value);
+	}
+
+	/** 
+	* Clique gauche sur la case
+	*
+	*/
+	public void cliqueGauche() {
+		if(getEtat() != VarCommun.etatCase.COVER.value)
+			return;
+		
+		if(getModeleJeu().isPremierTour() 
+		&& getValeur() == VarCommun.typeCase.BOMB.value) {
+			switchCaseBombe();
+		}
+		
+		if(getValeur() == VarCommun.typeCase.BOMB.value) {
+			if(getModeleJeu().isAllowSounds())
+				getModeleJeu().getSonBombe().jouer();
+			getModeleJeu().setEtat(VarCommun.etatJeu.PERDU.value);
+		}
+		else {
+			setEtat(VarCommun.etatCase.DISCOVER.value);
+			if(getNbBombeVoisin() == 0)
+				retournerVoisin();
+			if(getModeleJeu().isPremierTour())
+				getModeleJeu().setPremierTour(false);
+		}
+	}
+	
 	public int getIndex() {
 		return index;
 	}
